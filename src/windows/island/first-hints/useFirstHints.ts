@@ -4,22 +4,22 @@ import { loadFirstHints, saveFirstHints } from "./storage.ts";
 
 const SHOW_MS = 8000;
 
-export type FirstHintTriggers = { agent: boolean; message: boolean; tuck: boolean };
+export type FirstHintTriggers = { message: boolean; tuck: boolean };
 
-export function useFirstHints({ agent, message, tuck }: FirstHintTriggers, { canShow, paused }: { canShow: boolean; paused: boolean }) {
+export function useFirstHints({ message, tuck }: FirstHintTriggers, { canShow, paused }: { canShow: boolean; paused: boolean }) {
   const [pending, setPending] = useState<FirstHintId[]>([]);
   const [current, setCurrent] = useState<FirstHintId | null>(null);
   const [held, setHeld] = useState(false);
 
   useEffect(() => {
     if (paused) return;
-    const fired: FirstHintId[] = [...(agent ? ["agent" as const] : []), ...(message ? ["message" as const] : []), ...(tuck ? ["tuck" as const] : [])];
+    const fired: FirstHintId[] = [...(message ? ["message" as const] : []), ...(tuck ? ["tuck" as const] : [])];
     if (fired.length === 0) return;
     setPending((list) => {
       const added = fired.filter((id) => !list.includes(id));
       return added.length === 0 ? list : [...list, ...added];
     });
-  }, [agent, message, tuck, paused]);
+  }, [message, tuck, paused]);
 
   useEffect(() => {
     if (current || !canShow || paused || pending.length === 0) return;

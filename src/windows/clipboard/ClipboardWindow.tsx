@@ -143,7 +143,6 @@ export function ClipboardWindow() {
         linkPreview={linkPreview}
         pinFavorites={clipboardHistory.settings.pinFavorites !== false}
         onPeek={previewBroken ? undefined : onPeek}
-        aiPrompts={clipboardHistory.settings.aiPrompts}
       />
       )}
     </div>

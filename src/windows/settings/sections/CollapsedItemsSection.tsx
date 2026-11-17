@@ -3,11 +3,8 @@ import { ArrowDown, ArrowLeftRight, ArrowUp } from "lucide-react";
 import { SettingsGroup } from "../../../components/settings/SettingsGroup";
 import { ToggleControl } from "../../../components/controls/ToggleControl";
 import { useLocale, useTranslation } from "../../../i18n";
-import { shownUsageProviders, usageItemId } from "../../../features/claude-usage/usageRing";
 import { pluginStatusItemId } from "../../../features/plugin-views/usePluginStatusItems";
 import { usePluginStatusItemList } from "../../../features/plugin-views/usePluginViews";
-import { OWNER as CLAUDE_USAGE } from "../../../features/claude-usage/plugin/owner";
-import { useBuiltinConfig, useBuiltinEnabled } from "../../../features/plugin-kernel/useBuiltinPlugins";
 import {
   arrangeCollapsedItems,
   moveCollapsedItem,
@@ -25,13 +22,10 @@ export function CollapsedItemsSection() {
   const { locale } = useLocale();
   const text = t.settings.collapsedItems;
   const { placements: saved, save } = useCollapsedPlacements();
-  const usageOn = useBuiltinEnabled(CLAUDE_USAGE);
-  const usageConfig = useBuiltinConfig(CLAUDE_USAGE);
   const declared = usePluginStatusItemList();
 
   const names = useMemo(() => {
     const entries: [string, string][] = [
-      ["status-light", text.item.statusLight],
       ["mail", text.item.mail],
       ["update", text.item.update],
     ];
@@ -41,12 +35,8 @@ export function CollapsedItemsSection() {
       entries.push([pluginStatusItemId(item.pluginId, item.itemId), several ? `${plugin} · ${item.itemId}` : plugin]);
     }
     entries.push(["device-use", text.item.deviceUse], ["shelf", text.item.shelf], ["music", text.item.music]);
-    if (usageOn) {
-      for (const provider of shownUsageProviders(usageConfig)) entries.push([usageItemId(provider), text.item.usage(provider.name)]);
-    }
-    entries.push(["session-count", text.item.sessionCount]);
     return new Map(entries);
-  }, [declared, locale, text, usageOn, usageConfig]);
+  }, [declared, locale, text]);
 
   const listed = useMemo(() => [...names.keys()], [names]);
   const placements = useMemo(() => arrangeCollapsedItems(listed, saved), [listed, saved]);

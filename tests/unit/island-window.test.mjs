@@ -6,7 +6,6 @@ import {
   MIN_COLLAPSED_ISLAND_WIDTH,
   alignCollapsedIslandWidth,
   getCollapsedIslandWidth,
-  getTodoScrollStartRows,
 } from "../../src/windows/island/layout.ts";
 import { ISLAND_POSITION_STORAGE_KEY, loadIslandPosition } from "../../src/windows/island/storage.ts";
 
@@ -48,12 +47,6 @@ test("the collapsed width setting moves the whole range, and alignment stays ins
   }
 });
 
-test("the todo list scrolls after as many rows as fit under the max panel height", () => {
-  assert.equal(getTodoScrollStartRows(490), 7);
-  assert.equal(getTodoScrollStartRows(339), 2);
-  assert.equal(getTodoScrollStartRows(340), 3);
-});
-
 test("the collapsed width is nudged so the centred island starts on a whole device pixel", () => {
   const leftEdge = (width, ratio) => ((820 - width) / 2) * ratio;
   assert.equal(alignCollapsedIslandWidth(301, 820, 1), 300);
@@ -82,15 +75,15 @@ test("a stored island position is rounded and invalid data is ignored", () => {
 test("pages and message sources that are switched off fall back to ones still on", async () => {
   const { isPageEnabled, resolveIslandPage } = await import("../../src/windows/island/features.ts");
   const { resolveMessageSource } = await import("../../src/features/messages/island/messageSource.ts");
-  const all = { todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true };
+  const all = { music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true };
   assert.equal(resolveIslandPage("music", all), "music");
-  assert.equal(resolveIslandPage("todo", { ...all, todo: false }), "music");
-  assert.equal(resolveIslandPage("todo", { ...all, todo: false, music: false, clipboard: false }), "shelf");
-  assert.equal(resolveIslandPage("todo", { ...all, todo: false, music: false, clipboard: false, shelf: false }), "qq");
+  assert.equal(resolveIslandPage("music", { ...all, music: false }), "clipboard");
+  assert.equal(resolveIslandPage("music", { ...all, music: false, clipboard: false }), "shelf");
+  assert.equal(resolveIslandPage("music", { ...all, music: false, clipboard: false, shelf: false }), "qq");
   assert.equal(isPageEnabled("qq", { ...all, qq: false, wechat: false }), true);
-  const none = { todo: false, music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false };
+  const none = { music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false };
   assert.equal(isPageEnabled("qq", none), false);
-  assert.equal(resolveIslandPage("todo", none), null);
+  assert.equal(resolveIslandPage("music", none), null);
   assert.equal(resolveMessageSource("qq", { ...all, qq: false }), "wechat");
   assert.equal(resolveMessageSource("wechat", { ...all, qq: false, wechat: false }), "qqMail");
   assert.equal(resolveMessageSource("qqMail", none), "qqMail");
@@ -99,21 +92,23 @@ test("pages and message sources that are switched off fall back to ones still on
 test("Alt+number follows the header from left to right and skips modules that are off", async () => {
   const { pageForAltDigit, pageShortcutLabel, cycleShortcutPage } = await import("../../src/windows/island/features.ts");
   const { pageDigitFromEvent, pageCycleDirection, normalizePageDigitModifiers, normalizePageCycleShortcut } = await import("../../src/lib/settings/pageShortcuts.ts");
-  const all = { agents: true, todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: false, qqMail: false };
-  assert.equal(pageForAltDigit(all, 1), "agents");
-  assert.equal(pageForAltDigit(all, 2), "todo");
-  assert.equal(pageForAltDigit(all, 5), "shelf");
+  const all = { music: true, clipboard: true, shelf: true, screenshots: true, timer: true, qq: true, wechat: false, qqMail: false };
+  assert.equal(pageForAltDigit(all, 1), "music");
+  assert.equal(pageForAltDigit(all, 2), "clipboard");
+  assert.equal(pageForAltDigit(all, 3), "shelf");
+  assert.equal(pageForAltDigit(all, 4), "screenshots");
+  assert.equal(pageForAltDigit(all, 5), "timer");
   assert.equal(pageForAltDigit(all, 6), "qq");
   assert.equal(pageForAltDigit(all, 7), null);
-  assert.equal(pageForAltDigit({ ...all, music: false, agents: false }, 1), "todo");
-  assert.equal(pageForAltDigit({ ...all, music: false, agents: false }, 2), "clipboard");
-  assert.equal(pageForAltDigit({ ...all, qq: false, wechat: true, agents: false, todo: false, music: false, clipboard: false, shelf: false }, 1), "qq");
-  assert.equal(pageShortcutLabel({ ...all, agents: false }, "todo", "Ctrl"), "Ctrl+1");
-  assert.equal(pageShortcutLabel({ ...all, todo: false }, "todo", "Alt"), null);
-  assert.equal(cycleShortcutPage(all, "todo", 1), "music");
-  assert.equal(cycleShortcutPage(all, "agents", -1), "qq");
-  assert.equal(cycleShortcutPage({ ...all, music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false }, "agents", 1), "todo");
-  assert.equal(cycleShortcutPage({ ...all, todo: false, music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false }, "agents", 1), null);
+  assert.equal(pageForAltDigit({ ...all, music: false }, 1), "clipboard");
+  assert.equal(pageForAltDigit({ ...all, music: false }, 2), "shelf");
+  assert.equal(pageForAltDigit({ ...all, qq: false, wechat: true, music: false, clipboard: false, shelf: false }, 1), "screenshots");
+  assert.equal(pageShortcutLabel(all, "music", "Ctrl"), "Ctrl+1");
+  assert.equal(pageShortcutLabel({ ...all, music: false }, "music", "Alt"), null);
+  assert.equal(cycleShortcutPage(all, "music", 1), "clipboard");
+  assert.equal(cycleShortcutPage(all, "music", -1), "qq");
+  assert.equal(cycleShortcutPage({ ...all, shelf: false, screenshots: false, timer: false, qq: false, wechat: false, qqMail: false }, "music", 1), "clipboard");
+  assert.equal(cycleShortcutPage({ ...all, music: false, clipboard: false, shelf: false, screenshots: false, timer: false, qq: false, wechat: false, qqMail: false }, "music", 1), null);
   const down = { altKey: true, ctrlKey: false, metaKey: false, shiftKey: false, repeat: false, key: "4" };
   assert.equal(pageDigitFromEvent({ ...down, code: "Digit4" }, "Alt"), 4);
   assert.equal(pageDigitFromEvent({ ...down, code: "Digit4", ctrlKey: true, altKey: false }, "Ctrl"), 4);
@@ -132,44 +127,44 @@ test("Alt+number follows the header from left to right and skips modules that ar
 test("page shortcuts go through every page in the header's order, plugin pages before the bell", async () => {
   const { pageShortcutOrder, cycleShortcutPage, headerDotPages } = await import("../../src/windows/island/features.ts");
   const { pageSlot } = await import("../../src/windows/island/slots/pageSlot.ts");
-  const every = { agents: true, todo: true, calendar: true, music: true, clipboard: true, shelf: true, screenshots: true, timer: true, qq: true, wechat: false, qqMail: false, translation: true, pluginPages: ["plugin:a", "plugin:b"] };
+  const every = { music: true, clipboard: true, shelf: true, screenshots: true, timer: true, qq: true, wechat: false, qqMail: false, pluginPages: ["plugin:a", "plugin:b"] };
   const dots = (features) => headerDotPages(pageSlot.items(), features).map((item) => item.id);
-  assert.deepEqual(pageShortcutOrder(every), ["agents", ...dots(every), "plugin:a", "plugin:b", "qq", "translation"]);
-  assert.deepEqual(dots(every), ["todo", "music", "calendar", "clipboard", "shelf", "screenshots", "timer"]);
-  assert.deepEqual(dots({ ...every, music: false, timer: false }), ["todo", "calendar", "clipboard", "shelf", "screenshots"]);
-  assert.equal(cycleShortcutPage(every, "music", 1), "calendar");
+  assert.deepEqual(pageShortcutOrder(every), [...dots(every), "plugin:a", "plugin:b", "qq"]);
+  assert.deepEqual(dots(every), ["music", "clipboard", "shelf", "screenshots", "timer"]);
+  assert.deepEqual(dots({ ...every, music: false, timer: false }), ["clipboard", "shelf", "screenshots"]);
+  assert.equal(cycleShortcutPage(every, "music", 1), "clipboard");
   assert.equal(cycleShortcutPage(every, "screenshots", 1), "timer");
   assert.equal(cycleShortcutPage(every, "timer", 1), "plugin:a");
   assert.equal(cycleShortcutPage(every, "plugin:b", 1), "qq");
-  assert.equal(cycleShortcutPage(every, "agents", -1), "translation");
-  const mac = { ...every, music: false, clipboard: false, timer: false, qq: false, translation: false, pluginPages: [] };
-  assert.deepEqual(pageShortcutOrder(mac), ["agents", "todo", "calendar", "shelf", "screenshots"]);
+  assert.equal(cycleShortcutPage(every, "music", -1), "qq");
+  const mac = { ...every, music: false, clipboard: false, timer: false, qq: false, pluginPages: [] };
+  assert.deepEqual(pageShortcutOrder(mac), ["shelf", "screenshots"]);
 });
 
-test("the translation page comes last in the page shortcuts, and only when it is an island page", async () => {
+test("the message page comes last in the page shortcuts, as it is not a header dot page", async () => {
   const { pageForAltDigit, pageShortcutOrder } = await import("../../src/windows/island/features.ts");
-  const all = { agents: true, todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true };
-  assert.equal(pageShortcutOrder(all).includes("translation"), false);
-  assert.equal(pageForAltDigit({ ...all, translation: true }, 7), "translation");
-  assert.equal(pageForAltDigit({ ...all, translation: true }, 1), "agents");
+  const all = { music: true, clipboard: true, shelf: true, screenshots: true, timer: true, qq: true, wechat: true, qqMail: true };
+  assert.equal(pageShortcutOrder(all).at(-1), "qq");
+  assert.equal(pageForAltDigit(all, 6), "qq");
+  assert.equal(pageForAltDigit(all, 1), "music");
+  assert.equal(pageForAltDigit({ ...all, qq: false, wechat: false, qqMail: false }, 6), null);
 });
 
 test("pages the system lacks are switched off and the island skips them", async () => {
   const { withoutUnsupported, resolveIslandPage } = await import("../../src/windows/island/features.ts");
-  const all = { todo: true, calendar: true, music: true, clipboard: true, shelf: true, screenshots: true, qq: true, wechat: true, qqMail: true, agents: true, translation: true };
-  const mac = withoutUnsupported(all, new Set(["music", "clipboard", "screenshot", "qq", "wechat", "translation"]));
+  const all = { music: true, clipboard: true, shelf: true, screenshots: true, timer: true, qq: true, wechat: true, qqMail: true };
+  const mac = withoutUnsupported(all, new Set(["music", "clipboard", "screenshot", "qq", "wechat"]));
   assert.equal(mac.music, false);
   assert.equal(mac.clipboard, false);
   assert.equal(mac.screenshots, false);
-  assert.equal(mac.translation, false);
   assert.equal(mac.qqMail, true);
-  assert.equal(resolveIslandPage("music", mac), "todo");
+  assert.equal(resolveIslandPage("music", mac), "shelf");
   assert.equal(withoutUnsupported(all, new Set()), all);
 });
 
 test("with the clipboard on, screenshot history lives in the clipboard page instead of its own", async () => {
   const { foldScreenshotsIntoClipboard, pageShortcutOrder, resolveIslandPage } = await import("../../src/windows/island/features.ts");
-  const all = { todo: true, calendar: true, music: true, clipboard: true, shelf: true, screenshots: true, qq: false, wechat: false, qqMail: false, agents: true, translation: false };
+  const all = { music: true, clipboard: true, shelf: true, screenshots: true, qq: false, wechat: false, qqMail: false };
   const folded = foldScreenshotsIntoClipboard(all);
   assert.equal(folded.screenshots, false);
   assert.equal(folded.clipboardScreenshots, true);

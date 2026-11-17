@@ -3,25 +3,22 @@ import test from "node:test";
 import { hasNewUnreadMail, hasUnreadMessages, holdsTuck, mailSeen, nextMailBaselines } from "../../src/features/messages/island/tuckHold.ts";
 import { normalizeSettings } from "../../src/lib/settings/settings.ts";
 
-const idle = { todoInProgress: false, agentWaiting: false, musicPlaying: false, messagesUnread: false };
+const idle = { musicPlaying: false, messagesUnread: false };
 
-test("by default a todo in progress or an agent waiting keeps the island out, music does not (issue #29)", () => {
+test("by default music does not keep the island out, unread messages do", () => {
   const settings = normalizeSettings({});
-  assert.equal(settings.autoTuckHoldTodo, true);
-  assert.equal(settings.autoTuckHoldAgent, true);
   assert.equal(settings.autoTuckHoldMusic, false);
+  assert.equal(settings.autoTuckHoldMessages, true);
   assert.equal(holdsTuck(settings, idle), false);
-  assert.equal(holdsTuck(settings, { ...idle, todoInProgress: true }), true);
-  assert.equal(holdsTuck(settings, { ...idle, agentWaiting: true }), true);
   assert.equal(holdsTuck(settings, { ...idle, musicPlaying: true }), false);
+  assert.equal(holdsTuck(settings, { ...idle, messagesUnread: true }), true);
 });
 
 test("each hold follows its switch and its feature", () => {
-  const settings = normalizeSettings({ autoTuckHoldMusic: true, autoTuckHoldTodo: false });
+  const settings = normalizeSettings({ autoTuckHoldMusic: true });
   assert.equal(holdsTuck(settings, { ...idle, musicPlaying: true }), true);
-  assert.equal(holdsTuck(settings, { ...idle, todoInProgress: true }), false);
   assert.equal(holdsTuck({ ...settings, musicEnabled: false }, { ...idle, musicPlaying: true }), false);
-  assert.equal(holdsTuck({ ...settings, agentStatusEnabled: false }, { ...idle, agentWaiting: true }), false);
+  assert.equal(holdsTuck({ ...settings, autoTuckHoldMessages: false }, { ...idle, messagesUnread: true }), false);
 });
 
 test("unread messages keep the island out by default, and only while the switch is on (issue #314)", () => {

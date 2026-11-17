@@ -1,13 +1,11 @@
 import type { IslandSettings } from "../../../lib/settings/types";
 
 export type TuckHoldState = {
-  todoInProgress: boolean;
-  agentWaiting: boolean;
   musicPlaying: boolean;
   messagesUnread: boolean;
 };
 
-type HoldSettings = Pick<IslandSettings, "autoTuckHoldTodo" | "autoTuckHoldAgent" | "autoTuckHoldMusic" | "autoTuckHoldMessages" | "todoEnabled" | "agentStatusEnabled" | "musicEnabled">;
+type HoldSettings = Pick<IslandSettings, "autoTuckHoldMusic" | "autoTuckHoldMessages" | "musicEnabled">;
 
 export type UnreadSources = {
   qq: { enabled: boolean; count: number };
@@ -47,8 +45,6 @@ export function hasUnreadMessages({ qq, wechat, mail }: UnreadSources): boolean 
 }
 
 export function holdsTuck(settings: HoldSettings, state: TuckHoldState): boolean {
-  return (settings.autoTuckHoldTodo && settings.todoEnabled && state.todoInProgress)
-    || (settings.autoTuckHoldAgent && settings.agentStatusEnabled && state.agentWaiting)
-    || (settings.autoTuckHoldMusic && settings.musicEnabled && state.musicPlaying)
+  return (settings.autoTuckHoldMusic && settings.musicEnabled && state.musicPlaying)
     || (settings.autoTuckHoldMessages && state.messagesUnread);
 }

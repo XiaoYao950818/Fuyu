@@ -1,6 +1,5 @@
 export type SettingsColorsText = {
   title: string;
-  taskText: string;
   pulse: string;
   islandBackground: string;
   pulseBrightness: string;
@@ -37,7 +36,6 @@ export type SettingsColorsText = {
 
 export const zhCN: SettingsColorsText = {
   title: "颜色",
-  taskText: "任务/待办字样",
   pulse: "亮点颜色",
   islandBackground: "岛屿背景",
   pulseBrightness: "亮点亮度",
@@ -67,14 +65,13 @@ export const zhCN: SettingsColorsText = {
   builtinNames: { greyWhite: "灰白", frostedClear: "透白磨砂", frostedWarm: "暖白磨砂" },
   builtinHints: { greyWhite: "不透明的浅灰", frostedClear: "86% 的冷白", frostedWarm: "90% 的米白，暖色文字" },
   stayDark: "保持深色",
-  stayDarkHint: "配色是浅色时，选中的部分仍然用深色那一套。独立窗口指翻译和剪贴板窗口，设置窗口跟随配色。",
+  stayDarkHint: "配色是浅色时，选中的部分仍然用深色那一套。独立窗口指剪贴板窗口，设置窗口跟随配色。",
   stayDarkNow: "现在是深色，换成浅色后才看得出区别。",
   stayDarkSurfaces: { collapsed: "岛屿", panel: "面板", windows: "独立窗口" },
 };
 
 export const en: SettingsColorsText = {
   title: "Colors",
-  taskText: "Task text",
   pulse: "Accent",
   islandBackground: "Island background",
   pulseBrightness: "Accent brightness",
@@ -104,7 +101,7 @@ export const en: SettingsColorsText = {
   builtinNames: { greyWhite: "Grey white", frostedClear: "Frosted clear", frostedWarm: "Frosted warm" },
   builtinHints: { greyWhite: "Solid light grey", frostedClear: "Cool white at 86%", frostedWarm: "Cream at 90%, warm text" },
   stayDark: "Keep dark",
-  stayDarkHint: "With light colors, the selected parts still use the dark set. Other windows are the translation and clipboard windows; the settings window follows the colors.",
+  stayDarkHint: "With light colors, the selected parts still use the dark set. Other windows are the clipboard window; the settings window follows the colors.",
   stayDarkNow: "Colors are dark now; this shows once they turn light.",
   stayDarkSurfaces: { collapsed: "Island", panel: "Panel", windows: "Other windows" },
 };

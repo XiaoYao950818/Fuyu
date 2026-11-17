@@ -22,8 +22,7 @@ for (const key of Object.keys(localStorage).filter((key) => key.startsWith("fuyu
 localStorage.setItem(LOCALE_STORAGE_KEY, "zh-CN");
 localStorage.setItem("fuyu-save-directory", "");
 localStorage.setItem("fuyu-qq-notification-access-requested", "true");
-localStorage.setItem("fuyu-voice-input", JSON.stringify({ enabled: true }));
-const FLAGS = ["todoEnabled", "calendarEnabled", "musicEnabled", "translationEnabled", "shelfEnabled", "screenshotEnabled", "agentStatusEnabled"] as const;
+const FLAGS = ["musicEnabled", "shelfEnabled", "screenshotEnabled"] as const;
 localStorage.setItem("fuyu-settings", JSON.stringify({ ...DEFAULT_SETTINGS, ...Object.fromEntries(FLAGS.map((flag) => [flag, true])) }));
 
 const root = createRoot(document.getElementById("root")!);
@@ -70,49 +69,40 @@ try {
     }
   }
   check(withSwitch.length === 0, `No feature page has an on/off switch in its header${withSwitch.length ? ` (${withSwitch.join(", ")})` : ""}`);
-  for (const page of ["todos", "calendar", "music", "translation", "clipboard", "shelf", "screenshot", "voiceInput", "agents"] as const) {
+  for (const page of ["music", "clipboard", "shelf", "screenshot"] as const) {
     await openPage(page);
     check(document.querySelector(".feature-header") && !document.querySelector(".feature-header--off"), `The ${page} page starts with its feature header`);
   }
 
   await openPage("overview");
-  await click(overviewSwitch("todos"));
-  check(stored().todoEnabled === false && !listed().includes("todos"), "Turning todos off in the overview leaves it out of the sidebar");
+  await click(overviewSwitch("music"));
+  check(stored().musicEnabled === false && !listed().includes("music"), "Turning music off in the overview leaves it out of the sidebar");
 
   await act(async () => {
-    requestSettingsFocus("savePath");
+    requestSettingsFocus("music");
     window.dispatchEvent(new StorageEvent("storage", { key: SETTINGS_FOCUS_STORAGE_KEY, newValue: localStorage.getItem(SETTINGS_FOCUS_STORAGE_KEY) }));
   });
   await wait(40);
-  check(active() === "todos" && offPage("todos") && document.querySelector(".feature-header--off"), "A link from the island to a feature that is off opens its page as the off page");
+  check(active() === "music" && offPage("music") && document.querySelector(".feature-header--off"), "A link from the island to a feature that is off opens its page as the off page");
   check(!document.querySelector(".editor-panel .settings-group__card"), "The off page shows none of the feature's settings");
   check(element(".feature-off").textContent!.includes("在概览里打开"), "The off page says the feature is turned on in the overview");
   await click(".feature-off__note button");
-  check(active() === "overview" && document.querySelector(overviewSwitch("todos")), "Go to overview opens the overview");
+  check(active() === "overview" && document.querySelector(overviewSwitch("music")), "Go to overview opens the overview");
 
-  await click(overviewSwitch("agents"));
-  check(stored().agentStatusEnabled === false && !listed().includes("agents"), "Turning AI Agent off leaves it out of the sidebar");
-  await type("音效");
-  await click(".settings-sidebar__hit--tab[data-tab='sounds']");
+  await type("歌词 推后");
+  await click(".settings-sidebar__hit--tab[data-tab='musicLyrics']");
   await wait(40);
-  check(offPage("agents") && tabs().length === FEATURE_PAGES.agents.length, "Search opens a tab of a feature that is off as the off page, with its tabs still shown");
-  await click(".settings-tabs__tab[data-tab='agentConnect']");
-  check(offPage("agents"), "Every tab of a feature that is off is the off page");
+  check(offPage("music") && tabs().length === FEATURE_PAGES.music.length, "Search opens a tab of a feature that is off as the off page, with its tabs still shown");
+  await click(".settings-tabs__tab[data-tab='musicLyricsStyle']");
+  check(offPage("music"), "Every tab of a feature that is off is the off page");
 
   await type("");
   await openPage("overview");
-  await click(overviewSwitch("voiceInput"));
-  const voice = () => JSON.parse(localStorage.getItem("fuyu-voice-input") ?? "{}") as Record<string, unknown>;
-  check(voice().enabled === false && typeof voice().shortcut === "string" && !listed().includes("voiceInput"), "Voice input keeps its own setting: turning it off in the overview keeps its shortcut and leaves it out of the sidebar");
-  await click(overviewSwitch("voiceInput"));
-  check(voice().enabled === true && listed().includes("voiceInput"), "Turning voice input back on lists it again");
-  await click(overviewSwitch("agents"));
-  await click(overviewSwitch("todos"));
-  check(stored().agentStatusEnabled === true && stored().todoEnabled === true && listed().includes("agents") && listed().includes("todos"), "Turning them back on lists them again");
-  await openPage("sounds");
+  await click(overviewSwitch("music"));
+  check(stored().musicEnabled === true && listed().includes("music"), "Turning music back on lists it again");
+  await openPage("music");
   check(!document.querySelector(".feature-off") && document.querySelector(".editor-panel .settings-group__card"), "A feature turned back on shows its settings again");
-  await openPage("todos");
-  check(!document.querySelector(".feature-off") && document.querySelector(".feature-header") && !document.querySelector(".feature-header input"), "The todos page is back, still without a switch");
+  check(!document.querySelector(".feature-off") && document.querySelector(".feature-header") && !document.querySelector(".feature-header input"), "The music page is back, still without a switch");
 
   document.getElementById("results")!.textContent = `${messages.join("\n")}\nALL PASS`;
   document.documentElement.dataset.testResult = "passed";

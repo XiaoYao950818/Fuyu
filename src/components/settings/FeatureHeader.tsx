@@ -2,7 +2,7 @@ import type { ComponentType, ReactNode } from "react";
 import { useTranslation } from "../../i18n";
 import "./FeatureHeader.css";
 
-export type HeaderFeature = "todos" | "calendar" | "music" | "translation" | "clipboard" | "shelf" | "screenshot" | "voiceInput" | "agents" | "messages";
+export type HeaderFeature = "music" | "clipboard" | "shelf" | "screenshot" | "messages";
 
 export function FeatureHeader({
   feature,

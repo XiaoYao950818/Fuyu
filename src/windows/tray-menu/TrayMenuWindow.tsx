@@ -28,7 +28,7 @@ export function TrayMenuWindow() {
   const ready = useRef(false);
   const { layout, dnd, autostart, reload, toggleDnd, toggleAutostart } = useTrayMenuPrefs();
   const { shortcuts, refresh: refreshShortcuts } = useTrayShortcuts();
-  const { status, refresh, media, join } = useTrayMenuStatus();
+  const { status, refresh, media } = useTrayMenuStatus();
   const statusLayout = layout === "status";
   const plugins = useBuiltinPlugins();
   const off = useMemo(() => new Set(disabledBuiltinIds(plugins)), [plugins]);
@@ -90,14 +90,10 @@ export function TrayMenuWindow() {
     onAutostart: () => void toggleAutostart(),
     onPlayPause: () => void media("media_play_pause"),
     onNext: () => void media("media_next"),
-    onJoin: () => {
-      void join();
-      send("close");
-    },
-  }), [join, media, toggleAutostart, toggleDnd]);
+  }), [media, toggleAutostart, toggleDnd]);
 
   if (!state) return null;
-  const live = statusLayout ? shownStatus(status, off) : { media: null, meeting: null, agents: null, now: status.now };
+  const live = statusLayout ? shownStatus(status, off) : { media: null, now: status.now };
   return (
     <div className="tray-menu-window">
       <TrayMenuCard ref={cardRef} layout={layout} light={light} data={{ state, shortcuts, off, dnd, autostart, ...live }} handlers={handlers} />

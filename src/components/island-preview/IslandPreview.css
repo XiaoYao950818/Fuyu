@@ -88,33 +88,6 @@
   filter: brightness(var(--preview-pulse-brightness));
 }
 
-.island-preview__task {
-  flex: 1;
-  color: var(--preview-text);
-  white-space: nowrap;
-}
-
-.island-preview__provider {
-  width: 14px;
-  height: 14px;
-  flex: none;
-  border-radius: 3px;
-}
-
-.island-preview__ring {
-  width: 20px;
-  height: 20px;
-  flex: none;
-  display: grid;
-  place-items: center;
-  margin-left: auto;
-  border: 2px solid rgba(61, 139, 255, 0.35);
-  border-radius: 50%;
-  color: var(--color-agent-running);
-  font-size: 10px;
-  font-variant-numeric: tabular-nums;
-}
-
 .island-preview--font-pixel .island-preview__island {
   font-family: "Fusion Pixel", "Microsoft YaHei", sans-serif;
   font-weight: 400;

@@ -547,7 +547,6 @@ mod builtin_tests {
     #[test]
     fn only_native_built_in_plugins_do_work_in_this_process() {
         assert_eq!(has_native_work(BUILTINS, SSH_TUNNEL_ID), Ok(true));
-        assert_eq!(has_native_work(BUILTINS, "focusd.center-pattern"), Ok(false));
         assert!(!is_builtin("focusd.local-api"));
         let table = [("focusd.native", "", true), ("focusd.window-only", "", false)];
         assert_eq!(has_native_work(&table, "focusd.window-only"), Ok(false));

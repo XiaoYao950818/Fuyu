@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 
-export const SYNC_CATEGORIES = ["todos", "snippets", "links", "settings", "presets"] as const;
+export const SYNC_CATEGORIES = ["snippets", "links", "settings", "presets"] as const;
 
 export type SyncCategory = (typeof SYNC_CATEGORIES)[number];
 
@@ -12,7 +12,6 @@ export const OPTIONAL_SYNC_GROUPS = [
   "pluginPages",
   "qqMail",
   "screenshotCapture",
-  "translationProvider",
   "updateChannel",
 ] as const;
 

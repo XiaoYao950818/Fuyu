@@ -37,3 +37,26 @@
 .plugin-pages__row .toggle-control {
   flex: 0 0 auto;
 }
+
+.plugin-pages__name strong {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.plugin-pages__default {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  background: var(--color-white-a08);
+}
+
+.plugin-pages__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-md);
+}

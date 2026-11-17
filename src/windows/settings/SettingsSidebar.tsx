@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Blocks, Bot, ChevronRight, Plus, LayoutGrid, Search, Settings2, X, type LucideIcon } from "lucide-react";
+import { Blocks, ChevronRight, Plus, LayoutGrid, Search, Settings2, X, type LucideIcon } from "lucide-react";
 import { LOCALE_CODES, useLocale, useTranslation } from "../../i18n";
 import { isMacOS, useUnsupportedFeatures } from "../../lib/platform";
 import { useSlotEntries } from "../../features/plugin-kernel/useSlotEntries";
@@ -17,7 +17,6 @@ const SEARCH_ENTRIES = searchIndex.entries as SettingsSearchEntry[];
 const GROUP_ICONS: Record<SettingsGroup, LucideIcon> = {
   basics: Settings2,
   features: LayoutGrid,
-  agents: Bot,
   extensions: Blocks,
 };
 

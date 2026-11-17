@@ -1,4 +1,4 @@
-type ShortcutAction = "region" | "copy" | "text" | "translate" | "long" | "record" | "fullscreen" | "pins";
+type ShortcutAction = "region" | "copy" | "text" | "long" | "record" | "fullscreen" | "pins";
 
 export type SettingsScreenshotText = {
   whileCapturingTitle: string;
@@ -54,7 +54,6 @@ export const zhCN: SettingsScreenshotText = {
     region: "截图",
     copy: "截图并复制",
     text: "截图并识别文字",
-    translate: "截图并翻译",
     long: "长截图",
     record: "录屏",
     fullscreen: "截取整个屏幕",
@@ -63,8 +62,7 @@ export const zhCN: SettingsScreenshotText = {
   actionHints: {
     region: "屏幕定格后，单击选中鼠标下的窗口或控件（滚轮切换到外层或内层），或拖动选择区域；工具栏里可以画矩形、箭头、文字、马赛克等标注（Ctrl+Z 撤销）；Enter 复制，Ctrl+S 保存，T 贴到屏幕上，Esc 取消；放大镜下按 C 复制颜色。",
     copy: "单击选中窗口或控件，或拖动选择区域，松开鼠标就复制，不出工具栏。",
-    text: "选好区域就用 Windows 自带的文字识别读出文字并复制，浮屿上显示识别结果，点它在翻译里打开。",
-    translate: "选好区域就识别文字，交给快捷翻译，浮屿上显示译文。需要打开翻译功能。",
+    text: "选好区域就用 Windows 自带的文字识别读出文字并复制，浮屿上显示识别结果。",
     long: "选好要滚动的区域（网页、聊天记录、文档），浮屿在区域中间往下滚，逐屏拼成一张长图并复制；滚到底、高度到 2 万像素或按 Esc 时结束。固定在顶部和底部的栏只留一份。",
     record: "选好区域、窗口或整个屏幕（按 F），3 秒后开始录成 MP4，带系统声音；浮屿上显示时长，可以暂停，再按一次快捷键停止。录好的视频在「视频」下的「浮屿录屏」文件夹，浮屿自己不会被录进去。",
     fullscreen: "选中鼠标所在的显示器，按 Enter 复制。",
@@ -73,7 +71,7 @@ export const zhCN: SettingsScreenshotText = {
   shortcutsHint: "点按钮后按下新的组合键；Esc 放弃。Ctrl+Shift+数字时，右侧小键盘的数字也可以（要开着 NumLock）。",
   shortcutsHintMac: "点按钮后按下新的组合键；Esc 放弃。",
   shortcutOff: "未设置",
-  textHintMac: "选好区域就用 macOS 自带的文字识别读出文字并复制，浮屿上显示识别结果，点它在翻译里打开。",
+  textHintMac: "选好区域就用 macOS 自带的文字识别读出文字并复制，浮屿上显示识别结果。",
   regionHintMac: "屏幕定格后，单击选中鼠标下的窗口或控件（滚轮切换到外层或内层），或拖动选择区域；工具栏里可以画矩形、箭头、文字、马赛克等标注（⌘Z 撤销）；↩ 复制，⌘S 保存，T 贴到屏幕上，Esc 取消；放大镜下按 C 复制颜色。",
   shortcutInvalidMac: "这个组合键用不了：要带 ⌃、⌥、⇧ 或 ⌘，再加一个字母、数字或功能键。",
   setShortcut: "设置",
@@ -91,7 +89,7 @@ export const zhCN: SettingsScreenshotText = {
   saveFolderHintMac: "⌘S 和贴图的「保存」放到这里，文件名带时间。要写完整路径，例如 /Users/你的用户名/Desktop/截图；留空就是「图片 › 浮屿截图」。",
   saveFolderPlaceholder: "图片 › 浮屿截图",
   cardSeconds: "岛上的截图卡片",
-  cardSecondsHint: "复制或保存后，浮屿顶部显示缩略图：可以拖到别的应用、放进文件中转、发给 Agent。鼠标停在上面时不会收起。",
+  cardSecondsHint: "复制或保存后，浮屿顶部显示缩略图：可以拖到别的应用、放进文件中转。鼠标停在上面时不会收起。",
   cardSecondsOption: (seconds) => (seconds === 0 ? "不显示" : `显示 ${seconds} 秒`),
   historyDays: "截图历史保留",
   historyDaysHint: "复制、保存、贴图过的截图留在浮屿的「截图」页，可以再复制、贴到屏幕上或拖出去；最多 100 张，超过天数的自动删掉。",
@@ -121,7 +119,6 @@ export const en: SettingsScreenshotText = {
     region: "Screenshot",
     copy: "Screenshot and copy",
     text: "Screenshot and read text",
-    translate: "Screenshot and translate",
     long: "Long screenshot",
     record: "Screen recording",
     fullscreen: "Whole screen",
@@ -130,8 +127,7 @@ export const en: SettingsScreenshotText = {
   actionHints: {
     region: "The screen freezes; click the window or control under the pointer (scroll to step out or in) or drag a region. The toolbar draws rectangles, arrows, text, mosaic and more (Ctrl+Z undoes). Enter copies, Ctrl+S saves, T pins it to the screen, Esc cancels; under the magnifier, C copies the colour.",
     copy: "Click a window or control or drag a region; it is copied as soon as you let go, without the toolbar.",
-    text: "Once a region is chosen, Windows' own text recognition reads it and the text is copied; the island shows it, and a click opens it in the translator.",
-    translate: "Once a region is chosen its text is read and handed to quick translation; the island shows the translation. Needs translation turned on.",
+    text: "Once a region is chosen, Windows' own text recognition reads it and the text is copied; the island shows it.",
     long: "Choose the area that scrolls (a web page, a chat, a document); Fuyu scrolls it from the middle and stitches one tall picture, then copies it. It stops at the end, at 20,000 px or on Esc. Bars fixed to the top and bottom appear once.",
     record: "Choose an area, a window or the whole screen (press F); recording to MP4 with system sound starts after 3 seconds. The island shows the time and can pause; press the shortcut again to stop. Videos go to the Fuyu Recordings folder under Videos, and Fuyu itself is left out of them.",
     fullscreen: "Selects the monitor under the pointer; Enter copies it.",
@@ -140,7 +136,7 @@ export const en: SettingsScreenshotText = {
   shortcutsHint: "Click a button, then press the new keys; Esc gives up. With Ctrl+Shift+digit, the numpad digit works too (with NumLock on).",
   shortcutsHintMac: "Click a button, then press the new keys; Esc gives up.",
   shortcutOff: "Not set",
-  textHintMac: "Once a region is chosen, macOS's own text recognition reads it and the text is copied; the island shows it, and a click opens it in the translator.",
+  textHintMac: "Once a region is chosen, macOS's own text recognition reads it and the text is copied; the island shows it.",
   regionHintMac: "The screen freezes; click the window or control under the pointer (scroll to step out or in) or drag a region. The toolbar draws rectangles, arrows, text, mosaic and more (⌘Z undoes). Return copies, ⌘S saves, T pins it to the screen, Esc cancels; under the magnifier, C copies the colour.",
   shortcutInvalidMac: "These keys can't be used: add ⌃, ⌥, ⇧ or ⌘ to a letter, digit or function key.",
   setShortcut: "Set",
@@ -158,7 +154,7 @@ export const en: SettingsScreenshotText = {
   saveFolderHintMac: "Where ⌘S and a pin's Save put files, named by the time. Use a full path such as /Users/your-name/Desktop/Screenshots; empty means Pictures › Fuyu Screenshots.",
   saveFolderPlaceholder: "Pictures › Fuyu Screenshots",
   cardSeconds: "Screenshot card on the island",
-  cardSecondsHint: "After a copy or save, the island shows a thumbnail you can drag into another app, put on the file shelf or send to an agent. It stays while the pointer is on it.",
+  cardSecondsHint: "After a copy or save, the island shows a thumbnail you can drag into another app or put on the file shelf. It stays while the pointer is on it.",
   cardSecondsOption: (seconds) => (seconds === 0 ? "Don't show" : `Show for ${seconds} s`),
   historyDays: "Keep screenshot history for",
   historyDaysHint: "Screenshots you copied, saved or pinned stay on the island's Screenshots page to copy, pin or drag out again; up to 100, older ones are deleted.",

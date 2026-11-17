@@ -45,7 +45,7 @@ function MediaRunner({ mode, isTucked, page, barText, settings, features, demo, 
   useIslandAction("media.play-pause", () => void runMediaCommand("media_play_pause"));
   useIslandAction("media.next", () => void runMediaCommand("media_next"));
   const list: IslandContribution[] = [];
-  const line = lyricLineContribution(lyricLine, settings.lyricsIslandPriority === "lyrics", t);
+  const line = lyricLineContribution(lyricLine, t);
   if (line) list.push(line);
   if (settings.autoTuckHoldMusic && settings.musicEnabled && playing) list.push({ kind: "hold", reason: "media.playing" });
   if (features.music && (mediaState.available || mediaState.audioActive)) {

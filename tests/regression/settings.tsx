@@ -8,7 +8,7 @@ import { DEFAULT_SETTINGS } from "../../src/lib/settings/settings";
 import { entryOf, settingsCategoryFor, sidebarItemOf, type SettingsCategory } from "../../src/windows/settings/categories";
 import { I18nProvider, LOCALE_STORAGE_KEY } from "../../src/i18n";
 import { checkGlassLooks } from "./settings-glass-looks";
-import { commands, keybindingCalls, mailCalls, marketInstalls, openedUrls, REPLY_MARKER, replyMarkerCalls, revokedPermissions } from "./settingsMocks";
+import { commands, keybindingCalls, mailCalls, marketInstalls, openedUrls, revokedPermissions } from "./settingsMocks";
 
 const query = new URLSearchParams(location.search);
 const automated = query.has("test");
@@ -23,7 +23,7 @@ const restore = () => {
 window.addEventListener("beforeunload", restore);
 
 localStorage.setItem(LOCALE_STORAGE_KEY, query.get("locale") === "en" ? "en" : "zh-CN");
-if (automated) localStorage.setItem("fuyu-settings", JSON.stringify({ opacity: 60, carryOverIncompleteTodos: false }));
+if (automated) localStorage.setItem("fuyu-settings", JSON.stringify({ opacity: 60 }));
 else localStorage.removeItem("fuyu-settings");
 localStorage.setItem("fuyu-save-directory", "");
 localStorage.setItem("fuyu-qq-notification-access-requested", "true");
@@ -78,7 +78,7 @@ if (!automated) {
     await act(async () => { mount(); });
     check(categories().length > 0, "The sidebar lists the settings pages");
 
-    const pages = [...categories(), "theme", "themeMarket", "agentSessions", "agentAlerts", "sounds", "agentApprovals", "agentConnect", "agentRemote"];
+    const pages = [...categories(), "theme", "themeMarket"];
     for (const category of pages) {
       await openPage(category as SettingsCategory);
       const item = element(`.settings-sidebar__item[data-category='${sidebarItemOf(category as SettingsCategory)}']`);
@@ -217,7 +217,7 @@ if (!automated) {
     const localApi = [...document.querySelectorAll<HTMLElement>(".settings-group")].find((group) => group.textContent?.startsWith("本机接口")); await act(async () => { [...(localApi?.querySelectorAll<HTMLButtonElement>(".settings-row") ?? [])].find((row) => row.textContent?.startsWith("访问令牌"))?.querySelector("button")?.click(); });
     check(Boolean(localApi?.textContent?.includes("http://127.0.0.1:39271/v1")) && commands.includes("copy_local_api_token") && !/[0-9a-f]{64}/.test(localApi?.textContent ?? ""), "The local API group shows the address, copies the token through Rust and never shows it");
 
-    const storedSettings = () => JSON.parse(localStorage.getItem("fuyu-settings") ?? "{}") as { opacity?: number; carryOverIncompleteTodos?: boolean; autoTuckHoldMusic?: boolean; autoTuckHoldMessages?: boolean };
+    const storedSettings = () => JSON.parse(localStorage.getItem("fuyu-settings") ?? "{}") as { opacity?: number; autoTuckHoldMusic?: boolean; autoTuckHoldMessages?: boolean };
     check(!document.querySelector(".appearance-reset"), "Reset appearance is not offered outside the theme page");
     await openPage("appearance");
     check(document.querySelector(".collapsed-items") && !document.querySelector(".preset-name-input"),
@@ -236,7 +236,6 @@ if (!automated) {
     await click(".appearance-reset");
     await click(".appearance-reset--danger");
     check(storedSettings().opacity === DEFAULT_SETTINGS.opacity, "Confirming resets the appearance");
-    check(storedSettings().carryOverIncompleteTodos === false, "Resetting the appearance keeps todo settings");
     await checkGlassLooks(check);
     await openPage("appearance");
     const zoneRows = (name: string) => [...(document.querySelector(`.collapsed-items__zone[aria-label="${name}"]`)?.querySelectorAll(".plugin-pages__name") ?? [])].map((row) => row.textContent);
@@ -332,42 +331,6 @@ if (!automated) {
     check(saved.accounts?.some((account) => account.email === "new@example.edu.cn" && account.host === "imap.example.edu.cn"),
       "The typed server is saved with the mailbox");
 
-    await openPage("agentConnect");
-    check(texts(".settings-tabs__tab") === "岛上显示|会话列表|提醒|声音|审批|连接|SSH 远程" && texts(".settings-page__title") === "AI Agent"
-      && element(".settings-sidebar__item--active").dataset.category === "agents",
-      "AI Agent is one sidebar item whose page has tabs for on the island, session list, alerts, sounds, approvals, connection and SSH remote");
-    await act(async () => { await new Promise(resolve => setTimeout(resolve, 50)); });
-    const connectGroups = [...document.querySelectorAll<HTMLElement>(".settings-group")];
-    const markerGroup = connectGroups.find((group) => group.textContent?.includes("回复状态标记"));
-    check(markerGroup && connectGroups.indexOf(markerGroup) === 0 && markerGroup.textContent!.includes("推荐打开") && !connectGroups.some((group) => group.textContent?.includes("安装/修复")), "The connection page opens with the reply status marker, marked as recommended, and no longer has the hooks card");
-    const markerSwitch = markerGroup?.querySelector<HTMLInputElement>("[role='switch']");
-    check(markerSwitch && !markerSwitch.checked && markerGroup!.textContent!.includes(REPLY_MARKER.path) && markerGroup!.querySelector("pre")?.textContent === REPLY_MARKER.content && markerGroup!.textContent!.includes(`软链，写在 ${REPLY_MARKER.target}`) && markerGroup!.querySelector(".agent-reply-marker__file--error")?.textContent?.includes(REPLY_MARKER.dangling),
-      "The reply status marker is off by default and shows each agent's prompt file (a link names its target, a dangling one its error) and the text it would write");
-    await act(async () => { markerSwitch!.click(); });
-    await act(async () => { await new Promise(resolve => setTimeout(resolve, 20)); });
-    check(replyMarkerCalls.join() === "true" && markerSwitch!.checked, "Switching the reply status marker on writes it");
-
-    await openPage("agentRemote"); await act(async () => { await new Promise(resolve => setTimeout(resolve, 50)); });
-    check(/devbox.*nas/s.test(element(".editor-panel").textContent ?? ""), "The remote computers page lists the SSH hosts to read sessions from");
-    await openPage("agents"); await act(async () => { await new Promise(resolve => setTimeout(resolve, 50)); });
-    check(agentPolls() > pollsAway, "The on-the-island page reads the agents' state");
-    const agentGroups = [...document.querySelectorAll<HTMLElement>(".editor-panel .settings-group")], hooksGroup = agentGroups.find((group) => group.textContent?.includes("AI Agent 状态灯"));
-    const hooksLink = [...(hooksGroup?.querySelectorAll<HTMLButtonElement>(".settings-link-button") ?? [])].find((button) => button.textContent === "安装/修复");
-    check(hooksLink && agentGroups.indexOf(hooksGroup!) <= 1 && hooksGroup!.querySelector(".agent-hooks-message--attention"), "The on-the-island page opens with the status light card, which says the hooks are missing and has Install/repair");
-    await act(async () => { hooksLink!.click(); await new Promise(resolve => setTimeout(resolve, 20)); });
-    check(commands.includes("install_agent_status_hooks") && element(".settings-tabs__tab--active").dataset.tab === "agents", "Install/repair on the on-the-island page installs the hooks there");
-    localStorage.removeItem("fuyu-agent-session-filters");
-    await openPage("agentSessions");
-    const filterGroup = () => [...document.querySelectorAll<HTMLElement>(".settings-group")].find((group) => group.textContent?.includes("隐藏会话"))!;
-    const filterInput = filterGroup().querySelector<HTMLInputElement>(".session-filter__form input")!;
-    await type(filterInput, "E:\\Projects\\scratch");
-    await act(async () => { filterGroup().querySelector<HTMLFormElement>(".session-filter__form")!.requestSubmit(); });
-    const savedFilters = JSON.parse(localStorage.getItem("fuyu-agent-session-filters") ?? "[]") as { kind: string; value: string }[];
-    check(savedFilters.length === 1 && savedFilters[0].kind === "folder" && savedFilters[0].value === "E:\\Projects\\scratch" && filterInput.value === ""
-      && filterGroup().querySelector(".session-filter__value")?.textContent === "E:\\Projects\\scratch", "Adding a hide-sessions rule saves and lists it");
-    await act(async () => { filterGroup().querySelector<HTMLButtonElement>(".session-filter__remove")!.click(); });
-    check(localStorage.getItem("fuyu-agent-session-filters") === "[]" && !filterGroup().querySelector(".session-filter__value"), "Removing the rule clears it");
-
     await openPage("about");
     const hero = element(".about-hero");
     check(hero.querySelector(".about-hero__name")?.textContent === "浮屿" && hero.getBoundingClientRect().height >= hero.scrollHeight - 1,
@@ -378,11 +341,9 @@ if (!automated) {
       [...document.querySelectorAll<HTMLButtonElement>(".settings-link-button")].find((button) => button.textContent === label);
     await act(async () => { aboutLink("重置")!.click(); });
     check(aboutLink("确认重置") && aboutLink("取消"), "Reset all settings asks first");
-    check(storedSettings().carryOverIncompleteTodos === false, "Asking changes nothing yet");
     await act(async () => { aboutLink("确认重置")!.click(); });
     await act(async () => { await new Promise(resolve => setTimeout(resolve, 20)); });
-    check(storedSettings().carryOverIncompleteTodos === DEFAULT_SETTINGS.carryOverIncompleteTodos && !aboutLink("确认重置"),
-      "Confirming resets every setting, not just the appearance");
+    check(!aboutLink("确认重置"), "Confirming resets every setting, not just the appearance");
     await act(async () => { aboutLink("退出")!.click(); });
     check(commands.includes("quit_island"), "Quit asks the island to exit");
 

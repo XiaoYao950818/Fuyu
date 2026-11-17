@@ -27,24 +27,6 @@
         "shadow": false
       },
       {
-        "label": "translation",
-        "create": false,
-        "title": "浮屿 翻译",
-        "url": "index.html?window=translation",
-        "width": 480,
-        "height": 640,
-        "minWidth": 480,
-        "minHeight": 380,
-        "acceptFirstMouse": true,
-        "decorations": false,
-        "transparent": true,
-        "resizable": true,
-        "alwaysOnTop": true,
-        "skipTaskbar": true,
-        "visible": false,
-        "shadow": false
-      },
-      {
         "label": "clipboard",
         "create": false,
         "title": "浮屿 - 剪贴板",
@@ -144,6 +126,42 @@
         "focus": false,
         "focusable": false,
         "visible": false
+      },
+      {
+        "label": "dock",
+        "create": false,
+        "title": "Fuyu",
+        "url": "index.html?window=dock",
+        "width": 760,
+        "height": 76,
+        "decorations": false,
+        "transparent": true,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "acceptFirstMouse": true,
+        "visible": false,
+        "shadow": false
+      },
+      {
+        "label": "music-island",
+        "create": false,
+        "title": "Fuyu",
+        "url": "index.html?window=music-island",
+        "width": 560,
+        "height": 132,
+        "decorations": false,
+        "transparent": true,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "acceptFirstMouse": true,
+        "visible": false,
+        "shadow": false
       }
     ],
     "security": {

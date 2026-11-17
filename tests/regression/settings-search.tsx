@@ -29,7 +29,6 @@ if (query.get("state") === "on") {
   const allOn = Object.fromEntries(Object.entries(DEFAULT_SETTINGS).map(([key, value]) => [key, typeof value === "boolean" ? true : value]));
   localStorage.setItem("fuyu-settings", JSON.stringify({ ...allOn, appearanceMode: "liquidGlass", glassColorSource: "custom" }));
   localStorage.setItem("fuyu-agent-push", JSON.stringify({ enabled: true }));
-  localStorage.setItem("fuyu-voice-input", JSON.stringify({ enabled: true }));
   localStorage.setItem("fuyu-agent-approval", JSON.stringify({ onIsland: true, whenInFront: true }));
   localStorage.setItem("fuyu-agent-sounds", JSON.stringify({ enabled: true, quietHours: { enabled: true, start: "22:00", end: "08:00" } }));
 }
@@ -109,25 +108,25 @@ try {
     check(missing.length === 0, `Every row the pages show is in searchIndex.json${missing.length ? ` (missing: ${missing.join("; ")}; run pnpm settings:index)` : ""}`);
 
     await openPage("general");
-    await type("会话来源");
-    check(hits("agentSessions").includes("会话来源"), "A setting's title finds the setting under its page");
+    await type("本地歌词文件夹");
+    check(hits("musicLyrics").includes("本地歌词文件夹"), "A setting's title finds the setting under its page");
     await pressEnter();
     await wait(120);
-    check(current() === "agentSessions", "Enter on a title hit opens its page");
+    check(current() === "musicLyrics", "Enter on a title hit opens its page");
     const found = document.querySelector(".editor-panel .settings-row--found");
-    check(text(found?.querySelector(".settings-row__title")) === "会话来源", "…and marks the row it found");
+    check(text(found?.querySelector(".settings-row__title")) === "本地歌词文件夹", "…and marks the row it found");
 
-    await type("弹出提醒");
-    check(document.querySelector(".settings-sidebar__hit--tab[data-tab='agentAlerts']") && categories().includes("agents"),
-      "Words written together find a page whose keywords have them apart, shown as a tab under its sidebar item");
-    await type("隐藏已退出的会话");
-    check(hits("agentSessions").includes("隐藏已退出的会话"), "A switch's title finds it");
-    await type("进程");
-    check(hits("agentSessions").includes("隐藏已退出的会话"), "A word of a setting's description finds it");
+    await type("歌词 推后");
+    check(document.querySelector(".settings-sidebar__hit--tab[data-tab='musicLyrics']") && categories().includes("music"),
+      "Words apart in a row still find its tab under its sidebar item");
+    await type("记录图片");
+    check(hits("clipboardHistory").includes("记录图片"), "A switch's title finds it");
+    await type("文字识别");
+    check(hits("clipboardHistory").includes("识别图片里的文字"), "A word of a setting's description finds it");
     await type("zzqxjv");
     check(document.querySelector(".settings-sidebar__empty"), "Nothing found says so");
-    await type("hide sessions");
-    check(hits("agentSessions").includes("隐藏已退出的会话"), "English words find a setting in the Chinese interface, shown in Chinese");
+    await type("record images");
+    check(hits("clipboardHistory").includes("记录图片"), "English words find a setting in the Chinese interface, shown in Chinese");
     await type("外观");
     check(categories().includes("appearance"), "A page's name still finds the page");
     for (let spent = 0; document.querySelector(".settings-row--found") && spent < 4000; spent += 50) await wait(50);

@@ -1,7 +1,5 @@
 import type { CSSProperties } from "react";
-import claudeCodeIcon from "../../assets/brands/claude-code.png";
 import { useTranslation } from "../../i18n";
-import { AgentPagePreview } from "./AgentPagePreview";
 import { glassPalette, glassPaused, glassVariables } from "../../lib/theme/glassPalette";
 import { hexToRgba } from "../../lib/settings/settings";
 import { islandInkRgb, surfaceThemeColors } from "../../lib/theme/themeMode";
@@ -42,16 +40,12 @@ export function IslandPreview({ settings, compact = false }: {
         <div className={`${islandClass} island-preview__island--collapsed`} style={collapsedStyle}>
           {glass && <GlassLayers rim={settings.glassRim} />}
           <span className="island-preview__pulse" />
-          <img className="island-preview__provider" src={claudeCodeIcon} alt="" draggable={false} />
-          {settings.showCollapsedText && <span className="island-preview__task">{text.sessions.needs.title}</span>}
-          <span className="island-preview__ring">1</span>
         </div>
         {compact ? null : <figcaption className="island-preview__caption">{text.collapsed}</figcaption>}
       </div>
       {compact ? null : <div className="island-preview__desktop">
         <div className={`${islandClass} island-preview__island--expanded`} style={expandedStyle}>
           {glass && <GlassLayers rim={settings.glassRim} />}
-          <AgentPagePreview />
         </div>
         <figcaption className="island-preview__caption">{text.expanded}</figcaption>
       </div>}

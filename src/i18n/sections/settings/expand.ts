@@ -10,10 +10,6 @@ export type SettingsExpandText = {
   hoverSwitchDelay: string;
   tuckTitle: string;
   revealTitle: string;
-  holdTodo: string;
-  holdTodoHint: string;
-  holdAgent: string;
-  holdAgentHint: string;
   holdMusic: string;
   holdMusicHint: string;
   holdMusicElsewhere: string;
@@ -54,10 +50,6 @@ export const zhCN: SettingsExpandText = {
   hoverSwitchDelay: "悬停多久后切换",
   tuckTitle: "贴边隐藏",
   revealTitle: "露出",
-  holdTodo: "有正在进行的待办时不收起",
-  holdTodoHint: "点了「开始」、岛上正显示这件事时，一直留在屏幕上。",
-  holdAgent: "Agent 在等你时不收起",
-  holdAgentHint: "有会话在等你审批或回答时，一直留在屏幕上。",
   holdMusic: "音乐播放中不收起",
   holdMusicHint: "播放音乐时一直留在屏幕上。暂停或停止后，重新从头计时。",
   holdMusicElsewhere: "播放音乐时岛一直留在屏幕上。和「行为 → 贴边隐藏」里的是同一个开关，打开了自动收起才起作用。",
@@ -98,10 +90,6 @@ export const en: SettingsExpandText = {
   hoverSwitchDelay: "Hover time before switching",
   tuckTitle: "Tuck to edge",
   revealTitle: "Sliding out",
-  holdTodo: "Stay out while a todo is in progress",
-  holdTodoHint: "While a todo you started shows on the island, it stays on screen.",
-  holdAgent: "Stay out while an agent waits for you",
-  holdAgentHint: "While a session waits for your approval or answer, the island stays on screen.",
   holdMusic: "Stay out while music plays",
   holdMusicHint: "While music plays, the island stays on screen. Paused or stopped, the idle time starts again.",
   holdMusicElsewhere: "While music plays, the island stays on screen. It is the same switch as in Behavior → Tuck to edge, and works only when auto tuck is on.",

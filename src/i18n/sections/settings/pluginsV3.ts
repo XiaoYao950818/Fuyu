@@ -5,22 +5,21 @@ export type PluginV3Connection = "connecting" | "open" | "reconnecting" | "faile
 export type HostMemoryMeasureText = "private-working-set" | "phys-footprint" | "rss";
 
 export type BuiltinPluginName =
-  | "todos"
-  | "calendar"
   | "music"
   | "clipboard"
   | "screenshot"
   | "file-shelf"
-  | "translation"
-  | "voice-input"
   | "timer"
-  | "agents"
-  | "session-ring"
-  | "claude-usage"
-  | "cc-connect"
+  | "device-battery"
+  | "quick-launch"
+  | "quick-commands"
+  | "file-search"
+  | "net-speed"
+  | "volume"
+  | "dock"
+  | "music-island"
   | "ssh-tunnel"
   | "local-api"
-  | "center-pattern"
   | "messages"
   | "device-events"
   | "system-levels"
@@ -85,22 +84,21 @@ export const zhCN: SettingsPluginsV3Text = {
   builtinsNote: "开关存在数据目录的 plugins-v3/plugins.yml，宿主没开也生效。关掉的插件撤掉它的界面、停掉它的后台；功能迁成插件之前，关掉还看不出变化。",
   builtinsLoading: "正在读取内置插件。",
   builtinNames: {
-    todos: "待办",
-    calendar: "日历",
     music: "音乐和歌词",
     clipboard: "剪贴板",
     screenshot: "截图和录屏",
     "file-shelf": "文件中转",
-    translation: "快捷翻译",
-    "voice-input": "语音输入",
     timer: "计时器",
-    agents: "AI 代理",
-    "session-ring": "会话环",
-    "claude-usage": "Claude 用量",
-    "cc-connect": "cc-connect 手机连接",
+    "device-battery": "设备电量",
+    "quick-launch": "快捷启动",
+    "quick-commands": "快捷命令",
+    "file-search": "文件快速搜索",
+    "net-speed": "常驻网速",
+    volume: "常驻音量",
+    dock: "Dock 栏",
+    "music-island": "音乐副岛",
     "ssh-tunnel": "SSH 代理隧道",
     "local-api": "本机接口",
-    "center-pattern": "中心图案",
     messages: "消息",
     "device-events": "设备提示",
     "system-levels": "音量和亮度提示",
@@ -108,7 +106,7 @@ export const zhCN: SettingsPluginsV3Text = {
     "theme-market": "主题市场",
     updater: "自动更新",
   },
-  builtinNotes: { messages: "关掉后，第 2 版插件在岛上的通知也不显示", "cc-connect": "设置在 AI Agent → 提醒；关掉后手机推送的 cc-connect 通道也停用", "session-ring": "设置在 AI Agent → 会话环；读 AI Agent 插件的会话列表", "local-api": "设置在 通用 → 本机接口；转给待办、AI Agent、剪贴板的请求，那个插件关着时回 503" },
+  builtinNotes: { messages: "关掉后，第 2 版插件在岛上的通知也不显示", "local-api": "设置在 通用 → 本机接口；转给剪贴板的请求，那个插件关着时回 503" },
   essentialNote: "浮屿必需，不能关",
   hostOff: "宿主没开",
   hostOffNote: "测试版和开发版默认启动宿主，设 FUYU_PLUGINS_V3=0 就关掉；正式版设了 FUYU_PLUGINS_V3=1 才启动。内置插件的开关照样生效。",
@@ -183,22 +181,21 @@ export const en: SettingsPluginsV3Text = {
   builtinsNote: "Switches are saved in plugins-v3/plugins.yml in the data folder and work without the host. A plugin switched off loses its UI and its background work; until a feature becomes a plugin, switching it off changes nothing yet.",
   builtinsLoading: "Reading the built-in plugins.",
   builtinNames: {
-    todos: "To-dos",
-    calendar: "Calendar",
     music: "Music and lyrics",
     clipboard: "Clipboard",
     screenshot: "Screenshots and recording",
     "file-shelf": "File shelf",
-    translation: "Quick translation",
-    "voice-input": "Voice input",
     timer: "Timer",
-    agents: "AI agents",
-    "session-ring": "Session ring",
-    "claude-usage": "Claude usage",
-    "cc-connect": "cc-connect phone link",
+    "device-battery": "Device battery",
+    "quick-launch": "Quick launch",
+    "quick-commands": "Quick commands",
+    "file-search": "File search",
+    "net-speed": "Network speed",
+    volume: "Volume",
+    dock: "Dock",
+    "music-island": "Music island",
     "ssh-tunnel": "SSH proxy tunnel",
     "local-api": "Local API",
-    "center-pattern": "Center pattern",
     messages: "Messages",
     "device-events": "Device alerts",
     "system-levels": "Volume and brightness",
@@ -206,7 +203,7 @@ export const en: SettingsPluginsV3Text = {
     "theme-market": "Theme market",
     updater: "Updates",
   },
-  builtinNotes: { messages: "Off also hides version 2 plugins' island notices", "cc-connect": "Settings are under AI Agent → Alerts; off also stops the phone push's cc-connect channel", "session-ring": "Settings are under AI Agent → Session ring; reads the AI Agent plugin's session list", "local-api": "Settings are under General → Local API; requests for todos, AI Agent or the clipboard answer 503 while that plugin is off" },
+  builtinNotes: { messages: "Off also hides version 2 plugins' island notices", "local-api": "Settings are under General → Local API; requests for the clipboard answer 503 while that plugin is off" },
   essentialNote: "Fuyu needs it; always on",
   hostOff: "Host not running",
   hostOffNote: "Beta and dev builds start the host unless FUYU_PLUGINS_V3=0; stable releases start it only with FUYU_PLUGINS_V3=1. Built-in plugin switches work either way.",

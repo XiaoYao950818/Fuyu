@@ -8,6 +8,7 @@ type MessageSwitch = "qq" | "wechat" | "qqMail";
 
 export type IslandFeatures = Record<BuiltinPage | MessageSwitch, boolean> & {
   clipboardScreenshots?: boolean;
+  dock?: boolean;
   pluginPages?: readonly PluginPageId[];
 };
 
@@ -20,7 +21,6 @@ export function withoutUnsupported(features: IslandFeatures, unsupported: Readon
     screenshots: (features.screenshots ?? false) && !unsupported.has("screenshot"),
     qq: features.qq && !unsupported.has("qq"),
     wechat: features.wechat && !unsupported.has("wechat"),
-    translation: features.translation && !unsupported.has("translation"),
   };
 }
 
@@ -44,6 +44,12 @@ export function headerDotPages<Item extends PageSwitch & { headerDot?: boolean; 
   return byShortcut(items.filter((item) => item.headerDot === true && itemEnabled(item, features)));
 }
 
+export function defaultTabOrder(): IslandPage[] {
+  return byShortcut(pageSlot.items())
+    .filter((item) => item.headerDot === true)
+    .map((item) => item.id as IslandPage);
+}
+
 const pageItem = (page: IslandPage) => pageSlot.items().find((item) => item.id === page);
 
 function pageOrder(features: IslandFeatures): IslandPage[] {
@@ -51,10 +57,11 @@ function pageOrder(features: IslandFeatures): IslandPage[] {
 }
 
 function shortcutOrder(features: IslandFeatures): IslandPage[] {
-  const items = byShortcut(pageSlot.items());
-  const afterDots = items.reduce((end, item, index) => (item.headerDot ? index + 1 : end), 0);
-  const pages = items.map((item) => item.id as IslandPage);
-  return [...pages.slice(0, afterDots), ...(features.pluginPages ?? []), ...pages.slice(afterDots)];
+  const shown = byShortcut(pageSlot.items()).filter((item) => itemEnabled(item, features));
+  const dots = shown.filter((item) => item.headerDot);
+  const rest = shown.filter((item) => !item.headerDot);
+  const idOf = (item: (typeof shown)[number]) => item.id as IslandPage;
+  return [...dots.map(idOf), ...(features.pluginPages ?? []), ...rest.map(idOf)];
 }
 
 export function isPageEnabled(page: IslandPage, features: IslandFeatures): boolean {
@@ -63,10 +70,14 @@ export function isPageEnabled(page: IslandPage, features: IslandFeatures): boole
   return item !== undefined && itemEnabled(item, features);
 }
 
-export function resolveIslandPage(page: IslandPage, features: IslandFeatures): IslandPage | null {
+export function resolveIslandPage(page: IslandPage, features: IslandFeatures, tabOrder?: readonly IslandPage[]): IslandPage | null {
   if (isPageEnabled(page, features)) return page;
   const fallback = pageItem(page)?.fallback?.(features);
   if (fallback) return fallback;
+  if (tabOrder) {
+    const ordered = tabOrder.find((candidate) => isPageEnabled(candidate, features));
+    if (ordered) return ordered;
+  }
   return pageOrder(features).find((candidate) => isPageEnabled(candidate, features)) ?? null;
 }
 

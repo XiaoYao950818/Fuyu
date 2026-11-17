@@ -20,6 +20,6 @@ export function useIslandLyrics(settings: IslandSettings, mediaState: MediaState
   const current = useCurrentLyric(lyrics.lines, mediaState, lyrics.offsetMs, onIsland && barShown, karaoke);
   if (current.text) return { lyrics, lyricLine: current };
   if (current.intro) return { lyrics, lyricLine: introLine(mediaState, settings.lyricsIntro, current.longest) ?? { ...current, text: null } };
-  const song = onIsland && barShown && settings.lyricsIslandPriority === "lyrics" ? songLine(mediaState, lyrics.notFound) : null;
+  const song = onIsland && barShown ? songLine(mediaState, lyrics.notFound) : null;
   return { lyrics, lyricLine: song };
 }

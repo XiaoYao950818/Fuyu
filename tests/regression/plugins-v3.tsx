@@ -103,7 +103,7 @@ try {
   check(document.querySelector(".settings-sidebar__item[data-category='pluginsV3']"), "With the v3 switch on, the sidebar lists the Plugins (v3) page");
   const builtinRow = (id: string) => page.querySelector<HTMLElement>(`.plugins-v3__builtin[data-builtin='${id}']`);
   const builtinSwitch = (id: string) => builtinRow(id)?.querySelector<HTMLInputElement>("input");
-  check(page.querySelectorAll(".plugins-v3__builtin").length === 22 && catalog.plugins.every(({ id }) => builtinRow(id)?.textContent?.includes(text.builtinNames[id as keyof typeof text.builtinNames])), "The page lists all 22 built-in plugins by name, before the host has answered");
+  check(page.querySelectorAll(".plugins-v3__builtin").length === 19 && catalog.plugins.every(({ id }) => builtinRow(id)?.textContent?.includes(text.builtinNames[id as keyof typeof text.builtinNames])), "The page lists all 19 built-in plugins by name, before the host has answered");
   check(builtinRow("clipboard")?.dataset.enabled === "false" && builtinSwitch("clipboard")?.checked === false && builtinSwitch("timer")?.checked === true, "Each switch shows what plugins.yml says");
   check(builtinSwitch("updater")?.disabled && builtinRow("updater")!.textContent!.includes(text.essentialNote), "The updater is essential: its switch cannot be turned off");
   check(windowSlots("settings").disabledOwners().join() === "clipboard" && windowSlots("island").disabledOwners().join() === "clipboard", "Both windows hide the slot items of a switched-off plugin");

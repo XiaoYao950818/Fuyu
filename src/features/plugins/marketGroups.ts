@@ -1,7 +1,7 @@
 import type { MarketPlugin } from "./api.ts";
 import { isNewerVersion } from "./version.ts";
 
-const TONES = ["productivity", "todos", "developer", "media", "messages", "information", "utilities", "sounds"] as const;
+const TONES = ["productivity", "developer", "media", "messages", "information", "utilities", "sounds"] as const;
 export type MarketIconTone = (typeof TONES)[number];
 
 export const hasUpdate = (plugin: Pick<MarketPlugin, "installedVersion" | "version">) =>

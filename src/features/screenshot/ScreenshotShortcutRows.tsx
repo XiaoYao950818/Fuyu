@@ -82,7 +82,7 @@ export function ScreenshotShortcutRows({ settings, onSettingsChange, takenBy }: 
               onKeyDown={record}
               onBlur={() => setRecording((current) => (current === action ? null : current))}
             >
-              <ShortcutKeys prompt={recording === action ? t.translator.pressShortcut : value ? null : text.setShortcut} label={shortcutLabel(value)} />
+              <ShortcutKeys prompt={recording === action ? t.settings.clipboard.pressKeys : value ? null : text.setShortcut} label={shortcutLabel(value)} />
             </button>
           </div>
         </div>

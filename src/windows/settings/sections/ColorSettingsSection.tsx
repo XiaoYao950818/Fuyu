@@ -11,7 +11,7 @@ import type { ThemeTone } from "../../../lib/theme/themeMode";
 import type { IslandSettings } from "../../../lib/settings/types";
 import "./ColorSettingsSection.css";
 
-type ColorKey = "islandBackgroundColor" | "taskTextColor" | "pulseColor";
+type ColorKey = "islandBackgroundColor" | "pulseColor";
 
 export function ColorSettingsSection({
   settings,
@@ -30,7 +30,6 @@ export function ColorSettingsSection({
   const text = t.settings.colors;
   const colors: readonly [ColorKey, string][] = [
     ["islandBackgroundColor", text.islandBackground],
-    ["taskTextColor", text.taskText],
     ["pulseColor", text.pulse],
   ];
 

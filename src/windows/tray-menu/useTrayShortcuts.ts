@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { getClipboardHistory } from "../../features/clipboard/api";
 import { loadScreenshotSettings } from "../../features/screenshot/storage";
-import { loadSettings as loadTranslationSettings } from "../../features/translation/storage";
 import type { TrayMenuShortcuts } from "./types";
 
 const CLIPBOARD_RECHECK_MS = 5 * 60 * 1000;
@@ -9,7 +8,6 @@ const CLIPBOARD_RECHECK_MS = 5 * 60 * 1000;
 function localShortcuts(clipboard: string | null): TrayMenuShortcuts {
   return {
     screenshot: loadScreenshotSettings().shortcuts.region || null,
-    translate: loadTranslationSettings().shortcut || null,
     clipboard,
   };
 }

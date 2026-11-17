@@ -1,6 +1,5 @@
 export const SNAPSHOT_EXCLUDED_KEYS = [
   "fuyu-settings-focus",
-  "fuyu-translation-handoff",
   "fuyu-position-reset",
   "fuyu-panel-preview",
   "fuyu-onboarding-demo",

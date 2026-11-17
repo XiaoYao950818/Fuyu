@@ -11,7 +11,7 @@ import "./SettingsBackupSection.css";
 
 type Status = { kind: "moved"; path: string } | { kind: "error"; message: string };
 
-export function DataHomeSection({ onMoved, onNote }: { onMoved: (from: string, to: string) => void; onNote: (note: ReactNode) => void }) {
+export function DataHomeSection({ onNote }: { onNote: (note: ReactNode) => void }) {
   const t = useTranslation();
   const errorText = useErrorText();
   const text = t.settings.dataHome;
@@ -42,7 +42,6 @@ export function DataHomeSection({ onMoved, onNote }: { onMoved: (from: string, t
     if (!target || target === home.home || !window.confirm(text.confirm(shortenHome(target, userHome)))) return;
     void setDataHome(typed)
       .then((moved) => {
-        onMoved(home.home, moved);
         setStatus({ kind: "moved", path: shortenHome(moved, userHome) });
       })
       .catch((error: unknown) => setStatus({ kind: "error", message: errorText(error) }));

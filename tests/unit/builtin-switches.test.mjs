@@ -27,9 +27,9 @@ async function until(check, ms = 5000) {
   return check();
 }
 
-test("the built-in list names all 22 plugins, each with a host entry, and only the updater is essential", () => {
-  assert.equal(ids.length, 22);
-  assert.equal(new Set(ids).size, 22);
+test("the built-in list names all 21 plugins, each with a host entry, and only the updater is essential", () => {
+  assert.equal(ids.length, 21);
+  assert.equal(new Set(ids).size, 21);
   for (const plugin of catalog.plugins) {
     assert.ok(existsSync(join(BUILTINS, plugin.root, plugin.host)), `${plugin.id} has no host entry at ${plugin.root}/${plugin.host}`);
     if (plugin.background !== undefined) assert.ok(Array.isArray(plugin.background) && plugin.background.every((name) => typeof name === "string"), plugin.id);
@@ -72,12 +72,12 @@ test("the host switches built-in plugins off and on from the plugins.yml Rust wr
   await host.settle();
   const state = (id) => host.status().find((plugin) => plugin.id === id)?.state;
   assert.deepEqual(ids.filter((id) => state(id) === undefined || state(id) === "disabled"), []);
-  for (const id of ["timer", "translation", "clipboard"]) assert.equal(state(id), "running", id);
-  writeFileSync(join(dir, "plugins.yml"), RUST_WRITES(["timer", "translation"]));
-  assert.ok(await until(() => state("timer") === "disabled" && state("translation") === "disabled"), `timer ${state("timer")}, translation ${state("translation")}`);
+  for (const id of ["timer", "music", "clipboard"]) assert.equal(state(id), "running", id);
+  writeFileSync(join(dir, "plugins.yml"), RUST_WRITES(["timer", "music"]));
+  assert.ok(await until(() => state("timer") === "disabled" && state("music") === "disabled"), `timer ${state("timer")}, music ${state("music")}`);
   const timer = host.status().find((plugin) => plugin.id === "timer");
   assert.equal(timer.usage?.timers ?? 0, 0);
   assert.equal(state("clipboard"), "running");
   writeFileSync(join(dir, "plugins.yml"), RUST_WRITES([]));
-  assert.ok(await until(() => state("timer") === "running" && state("translation") === "running"), `timer ${state("timer")}, translation ${state("translation")}`);
+  assert.ok(await until(() => state("timer") === "running" && state("music") === "running"), `timer ${state("timer")}, music ${state("music")}`);
 });

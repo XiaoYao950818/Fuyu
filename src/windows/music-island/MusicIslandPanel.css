@@ -1,0 +1,201 @@
+.music-island {
+  --music-island-spring: cubic-bezier(0.34, 1.36, 0.5, 1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 560px;
+  min-height: 112px;
+  padding: var(--space-sm) var(--space-md);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(145deg, rgba(var(--overlay-rgb, 255, 255, 255), 0.14), transparent 42%),
+    linear-gradient(165deg, transparent 40%, rgba(var(--overlay-rgb, 0, 0, 0), 0.08)),
+    rgba(var(--overlay-rgb, 255, 255, 255), 0.08);
+  border: 1px solid rgba(var(--overlay-rgb, 255, 255, 255), 0.18);
+  border-radius: var(--radius-pill);
+  box-shadow:
+    0 12px 32px rgba(var(--overlay-rgb, 0, 0, 0), 0.28),
+    inset 0 1px 0 rgba(var(--overlay-rgb, 255, 255, 255), 0.22),
+    inset 0 -1px 0 rgba(var(--overlay-rgb, 0, 0, 0), 0.1);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  animation: musicIslandPopIn var(--motion-slow) var(--music-island-spring) backwards;
+  transform-origin: top center;
+}
+
+.music-island--leaving {
+  animation: musicIslandPopOut var(--motion-medium) var(--music-island-spring) backwards;
+}
+
+@keyframes musicIslandPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.82, 0.72) translateY(-6px);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.025, 1.02) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1) translateY(0);
+  }
+}
+
+@keyframes musicIslandPopOut {
+  0% {
+    opacity: 1;
+    transform: scale(1, 1) translateY(0);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.02, 1.02) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.86, 0.78) translateY(-4px);
+  }
+}
+
+.music-island__cover {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  color: var(--text-2);
+  background: rgba(var(--overlay-rgb, 255, 255, 255), 0.1);
+  border-radius: var(--radius-pill);
+}
+
+.music-island__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.music-island__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.music-island__meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.music-island__track {
+  overflow: hidden;
+  color: var(--text-1);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-island__artist {
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-island__lyrics {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.music-island__lyric {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-island__lyric--current {
+  color: var(--text-1);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.music-island__lyric--dim {
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.music-island__error {
+  margin: 0;
+  color: var(--error-text, rgba(255, 170, 170, 0.85));
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.music-island__controls {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.music-island__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-1);
+  background: rgba(var(--overlay-rgb, 255, 255, 255), 0.1);
+  border: 1px solid rgba(var(--overlay-rgb, 255, 255, 255), 0.14);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.music-island__button:hover:not(:disabled) {
+  background: rgba(var(--overlay-rgb, 255, 255, 255), 0.18);
+}
+
+.music-island__button:disabled {
+  color: var(--text-3);
+  cursor: default;
+  opacity: 0.55;
+}
+
+.music-island__button:focus-visible {
+  outline: 2px solid var(--text-1);
+  outline-offset: 2px;
+}
+
+.music-island__button--primary {
+  width: 38px;
+  height: 38px;
+  background: rgba(var(--overlay-rgb, 255, 255, 255), 0.2);
+}
+
+.music-island__button--close {
+  width: 24px;
+  height: 24px;
+  margin-left: var(--space-xs);
+  background: transparent;
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-island,
+  .music-island--leaving {
+    animation: none;
+  }
+}

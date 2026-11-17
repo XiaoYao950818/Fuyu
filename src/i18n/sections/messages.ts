@@ -18,7 +18,6 @@ export type MessagesText = {
     qqMail: string;
     plugin: string;
   };
-  collapsedTask: (title: string) => string;
   expand: (label: string) => string;
   openPreview: (text: string, source: string) => string;
   badge: (count: number, wechat: boolean) => string;
@@ -57,7 +56,6 @@ export const zhCN: MessagesText = {
     qqMail: "邮箱",
     plugin: "插件",
   },
-  collapsedTask: (title) => `待办：${title}`,
   expand: (label) => `${label}，点击展开`,
   openPreview: (text, source) => `${text}，点击打开${source}`,
   badge: (count, wechat) => `QQ ${count} 条通知${wechat ? "，微信有新提醒" : ""}`,
@@ -96,7 +94,6 @@ export const en: MessagesText = {
     qqMail: "Mail",
     plugin: "Plugin",
   },
-  collapsedTask: (title) => `Task: ${title}`,
   expand: (label) => `${label}, click to expand`,
   openPreview: (text, source) => `${text}, click to open ${source}`,
   badge: (count, wechat) => `${count} QQ notification${count === 1 ? "" : "s"}${wechat ? ", new WeChat reminder" : ""}`,

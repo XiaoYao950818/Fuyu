@@ -70,7 +70,7 @@ export function TimerShortcutRow({ shortcut, onChange, takenBy }: {
             onKeyDown={record}
             onBlur={() => setRecording(false)}
           >
-            <ShortcutKeys prompt={recording ? t.translator.pressShortcut : shortcut ? null : text.setShortcut} label={shortcutLabel(shortcut)} />
+            <ShortcutKeys prompt={recording ? t.settings.clipboard.pressKeys : shortcut ? null : text.setShortcut} label={shortcutLabel(shortcut)} />
           </button>
         </div>
       </div>

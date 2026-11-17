@@ -26,7 +26,6 @@ pub(crate) use pin::{forget as forget_pin, WINDOW_PREFIX as PIN_PREFIX};
 pub(crate) use session::WINDOW_PREFIX;
 pub(crate) const PLUGIN_ID: &str = "screenshot";
 const TEXT_EVENT: &str = "screenshot-text";
-const TRANSLATE_EVENT: &str = "screenshot-translate";
 const TAKEN_EVENT: &str = "screenshot-taken";
 const HISTORY_EVENT: &str = "screenshot-history-changed";
 
@@ -134,7 +133,6 @@ pub(crate) enum Action {
     Save,
     Pin,
     Text,
-    Translate,
     Long,
     Record,
 }
@@ -146,7 +144,6 @@ impl Action {
             "save" => Some(Self::Save),
             "pin" => Some(Self::Pin),
             "text" => Some(Self::Text),
-            "translate" => Some(Self::Translate),
             "long" => Some(Self::Long),
             "record" => Some(Self::Record),
             _ => None,
@@ -228,17 +225,13 @@ pub async fn screenshot_finish(app: AppHandle, window: WebviewWindow, request: t
             pin::open(&app, picture, at, scale, session::id());
             Ok(None)
         }
-        Action::Text | Action::Translate => {
+        Action::Text => {
             session::end(&app);
             let text = read_text(picture).await;
-            if action == Action::Translate {
-                let _ = app.emit_to(crate::island::WINDOW_LABEL, TRANSLATE_EVENT, text);
-            } else {
-                if !text.is_empty() {
-                    clipboard::copy_text(&text)?;
-                }
-                let _ = app.emit(TEXT_EVENT, text);
+            if !text.is_empty() {
+                clipboard::copy_text(&text)?;
             }
+            let _ = app.emit(TEXT_EVENT, text);
             Ok(None)
         }
     }

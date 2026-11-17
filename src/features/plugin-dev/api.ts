@@ -8,9 +8,7 @@ export type PluginDevState = { enabled: boolean; plugins: PluginDevPlugin[]; rec
 export type PluginTraceEntry = { at: number; outgoing: boolean; text: string };
 
 export const PLUGIN_EVENT_NAMES = [
-  "todos.changed",
   "note.changed",
-  "agentStatus.changed",
   "island.expanded",
   "island.collapsed",
   "app.locale.changed",

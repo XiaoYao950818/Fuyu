@@ -7,7 +7,7 @@ import { compareSnapshot, lineDiff, settledSnapshot, snapshotFile } from "../../
 
 test("snapshot files are named after the page, light ones get a suffix", () => {
   assert.equal(snapshotFile("/r", "collapsed-slots.html?test=1", "dark"), path.join("/r", "tests/regression/snapshots/collapsed-slots.html"));
-  assert.equal(snapshotFile("/r", "calendar.html", "light"), path.join("/r", "tests/regression/snapshots/calendar.light.html"));
+  assert.equal(snapshotFile("/r", "timer.html", "light"), path.join("/r", "tests/regression/snapshots/timer.light.html"));
 });
 
 test("lineDiff shows the changed line with context", () => {

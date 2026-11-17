@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 
-export type PlatformFeature = "clipboard" | "screenshot" | "translation" | "music" | "qq" | "wechat" | "agentConnect" | "agentRemote";
+export type PlatformFeature = "clipboard" | "screenshot" | "music" | "qq" | "wechat" | "agentConnect" | "agentRemote";
 
 export type PlatformSupport = { os: "windows" | "macos"; unsupported: PlatformFeature[]; devBuild?: boolean };
 

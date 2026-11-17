@@ -90,7 +90,7 @@ export function IslandCollapsedBar({
   const openPeek = () => {
     if (peekLine?.action) runIslandAction(peekLine.action);
   };
-  const lineContext: CollapsedLineContext = { showTitle, center: slots.center ?? null, agentIcon: slots.agentIcon ?? null };
+  const lineContext: CollapsedLineContext = { showTitle, center: slots.center ?? null };
   const lineView = (id: string) => <SlotView key={id} slot={lineSlot} props={lineContext} select={(items) => items.filter((item) => item.id === id)} />;
   const showCenter = Boolean(slots.center) && !preview && !peekLine && !notice
     && !(showCollapsedText && (showTitle || lines.some((candidate) => candidate.reserve !== true && candidate.measure !== undefined)));
@@ -158,18 +158,16 @@ export function IslandCollapsedBar({
   const right = (
     <>
         {renderZone(zone("right"))}
-        {!contributed.hints.has("agents.count") && (
-          <button
-            className="island__quiet-button"
-            type="button"
-            aria-label={t.island.collapseIsland}
-            data-tooltip=""
-            onClick={(event) => {
-              event.stopPropagation();
-              onTuck();
-            }}
-          />
-        )}
+        <button
+          className="island__quiet-button"
+          type="button"
+          aria-label={t.island.collapseIsland}
+          data-tooltip=""
+          onClick={(event) => {
+            event.stopPropagation();
+            onTuck();
+          }}
+        />
     </>
   );
   const alerted = notch !== null && activeAlert !== null;

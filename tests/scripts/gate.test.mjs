@@ -19,24 +19,24 @@ const edit = (file, tool = "Edit") => ({ tool_name: tool, tool_input: { file_pat
 const shell = (command) => ({ tool_name: "Bash", tool_input: { command } });
 
 test("edits to the per-agent lists and new agent modules count as wiring; other files do not", () => {
-  assert.equal(touchesWiring(edit(join(ROOT, "src", "features", "agent-status", "status.ts")), ROOT), "src/features/agent-status/status.ts");
+  assert.equal(touchesWiring(edit(join(ROOT, "src-tauri", "src", "agent_status", "mod.rs")), ROOT), "src-tauri/src/agent_status/mod.rs");
   assert.equal(touchesWiring(edit("src-tauri/src/agent_status/hooks/fuyu-agent-running.cmd"), ROOT), "src-tauri/src/agent_status/hooks/fuyu-agent-running.cmd");
   assert.equal(touchesWiring(edit("src-tauri/src/agent_status/kimi.rs", "Write"), ROOT, () => false), "src-tauri/src/agent_status/kimi.rs");
   assert.equal(touchesWiring(edit("src-tauri/src/agent_status/title.rs", "Write"), ROOT, () => true), null);
   assert.equal(touchesWiring(edit("src/features/todo/TodoList.tsx"), ROOT), null);
-  assert.equal(touchesWiring(edit(resolve("/", "elsewhere", "src", "features", "agent-status", "status.ts")), ROOT), null);
+  assert.equal(touchesWiring(edit(resolve("/", "elsewhere", "src-tauri", "src", "agent_status", "mod.rs")), ROOT), null);
 });
 
 test("shell commands count only when they write to a wiring file", () => {
   assert.equal(touchesWiring(shell("sed -i 's/a/b/' src-tauri/src/agent_status/session_scan.rs"), ROOT), "src-tauri/src/agent_status/session_scan.rs");
   assert.equal(touchesWiring(shell("grep -n codex src-tauri/src/agent_status/session_scan.rs"), ROOT), null);
-  assert.equal(touchesWiring({ tool_name: "Read", tool_input: { file_path: "src/features/agent-status/status.ts" } }, ROOT), null);
+  assert.equal(touchesWiring({ tool_name: "Read", tool_input: { file_path: "src-tauri/src/agent_status/mod.rs" } }, ROOT), null);
 });
 
 test("the gate blocks once per session and lets through once the skill is loaded", () => {
   let marked = false;
   const options = (transcript) => ({ root: ROOT, readTranscript: () => transcript, marked: () => marked, mark: () => { marked = true; } });
-  const input = edit("src/features/agent-status/status.ts");
+  const input = edit("src-tauri/src/agent_status/mod.rs");
   assert.equal(gate(input, options(`{"name":"Skill","input":{"skill":"${SKILL}"}}`)), null);
   assert.equal(gate(input, options(`<command-name>/${SKILL}</command-name>`)), null);
   assert.equal(marked, false);
@@ -94,8 +94,8 @@ test("the harness row sees inline writes to a wiring file and ignores commands t
   assert.equal(touchesWiring(shell(python), ROOT), "src-tauri/src/agent_status/mod.rs");
   assert.equal(touchesWiring(shell("cat > src-tauri/src/agent_status/hooks/fuyu-agent-status.sh <<'EOF'\nx\nEOF"), ROOT), "src-tauri/src/agent_status/hooks/fuyu-agent-status.sh");
   assert.equal(touchesWiring(shell("pnpm task:claim B46 --as x --scope src-tauri/src/agent_status/session_scan.rs 2>&1 | tail -5"), ROOT), null);
-  assert.equal(touchesWiring(shell("ls src/features/agent-status/status.ts 2>&1; git log --oneline -3 -- src/features/agent-status/status.ts > /tmp/log.txt"), ROOT), null);
-  assert.equal(touchesWiring(shell("cp src/features/agent-status/status.ts /tmp/status.ts"), ROOT), null);
+  assert.equal(touchesWiring(shell("ls src-tauri/src/agent_status/mod.rs 2>&1; git log --oneline -3 -- src-tauri/src/agent_status/mod.rs > /tmp/log.txt"), ROOT), null);
+  assert.equal(touchesWiring(shell("cp src-tauri/src/agent_status/mod.rs /tmp/status.ts"), ROOT), null);
 });
 
 test("shell writes are found by where they write: redirects, heredocs, tee, sed -i, perl -i, mv and cp", () => {
@@ -201,11 +201,11 @@ test("a subagent is judged on its own transcript and blocked separately from its
 test("one operation that meets several rules gets one message and each rule is blocked once", () => {
   const space = workspace(["fuyu-agent-harness"]);
   try {
-    const both = space.input(edit(join(space.root, "src", "features", "agent-status", "status.ts")));
+    const both = space.input(edit(join(space.root, "src-tauri", "src", "agent_status", "mod.rs")));
     const message = run(both, { root: space.root, temp: space.temp, env: {} });
     assert.match(message, /碰到 2 条规则/);
     assert.match(message, /fuyu-agent-harness/);
-    assert.match(message, /src\/AGENTS\.md/);
+    assert.match(message, /src-tauri\/AGENTS\.md/);
     assert.equal(message.split("\n").length, 3);
     assert.equal(run(both, { root: space.root, temp: space.temp, env: {} }), null);
     const crossing = space.input(shell("sed -i '' 's/a/b/' src/x.ts src-tauri/src/lib.rs"), { session_id: "s2" });

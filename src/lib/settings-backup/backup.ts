@@ -4,7 +4,6 @@ export const BACKUP_KEYS = [
   "fuyu-settings",
   "fuyu-setting-presets",
   "fuyu-locale",
-  "fuyu-translation-settings",
   "fuyu-music-sources",
   "fuyu-qq-notifications-enabled",
   "fuyu-wechat-reminders-enabled",
@@ -20,10 +19,6 @@ export const BACKUP_KEYS = [
   "fuyu-save-directory",
   "fuyu-update-channel",
   "fuyu-update-preferences",
-  "fuyu-agent-sounds",
-  "fuyu-agent-session-filters",
-  "fuyu-agent-approval",
-  "fuyu-agent-push",
   "fuyu-lyrics-offsets",
   "fuyu-tray-menu-layout",
 ] as const;

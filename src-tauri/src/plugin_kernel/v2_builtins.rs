@@ -38,31 +38,6 @@ fn timer_config(grant: &Grant) -> Vec<(&'static str, Value)> {
     config
 }
 
-const CLAUDE_USAGE_SWITCHES: [&str; 5] = ["claudeCode", "codex", "glm", "kimi", "askAnthropic"];
-const CLAUDE_USAGE_TEXTS: [&str; 2] = ["show", "proxy"];
-
-fn claude_usage_config(grant: &Grant) -> Vec<(&'static str, Value)> {
-    let settings = &grant.settings;
-    let switches = CLAUDE_USAGE_SWITCHES.into_iter().filter_map(|key| settings.get(key).filter(|value| value.is_boolean()).map(|value| (key, value.clone())));
-    let texts = CLAUDE_USAGE_TEXTS.into_iter().filter_map(|key| settings.get(key).filter(|value| value.is_string()).map(|value| (key, value.clone())));
-    let interval = settings.get("intervalMinutes").filter(|value| value.is_number()).map(|value| ("intervalMinutes", value.clone()));
-    switches.chain(texts).chain(interval).collect()
-}
-
-fn cc_connect_config(grant: &Grant) -> Vec<(&'static str, Value)> {
-    let settings = &grant.settings;
-    let path = settings.get("path").filter(|value| value.as_str().is_some_and(|path| !path.trim().is_empty())).map(|value| ("path", value.clone()));
-    let run = settings.get("run").filter(|value| value.is_boolean()).map(|value| ("run", value.clone()));
-    path.into_iter().chain(run).collect()
-}
-
-fn session_ring_config(grant: &Grant) -> Vec<(&'static str, Value)> {
-    let settings = &grant.settings;
-    let style = settings.get("style").filter(|value| value.is_string()).map(|value| ("style", value.clone()));
-    let count = settings.get("showCount").filter(|value| value.is_boolean()).map(|value| ("showCount", value.clone()));
-    style.into_iter().chain(count).collect()
-}
-
 fn local_api_config(grant: &Grant) -> Vec<(&'static str, Value)> {
     grant.settings.get("allowWrite").filter(|value| value.is_boolean()).map(|value| ("allowWrite", value.clone())).into_iter().collect()
 }
@@ -85,9 +60,6 @@ pub(crate) fn with_old_local_api(mut grants: Map<String, Value>, local_api: Opti
 
 pub(crate) const MIGRATIONS: &[Migration] = &[
     Migration { v2: "focusd.timer", v3: "timer", config: timer_config, off_without_grant: false },
-    Migration { v2: "focusd.claude-usage", v3: "claude-usage", config: claude_usage_config, off_without_grant: true },
-    Migration { v2: "focusd.cc-connect", v3: "cc-connect", config: cc_connect_config, off_without_grant: true },
-    Migration { v2: "focusd.session-ring", v3: "session-ring", config: session_ring_config, off_without_grant: true },
     Migration { v2: LOCAL_API_V2, v3: "local-api", config: local_api_config, off_without_grant: true },
 ];
 

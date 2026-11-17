@@ -11,10 +11,10 @@ export type PopupAction = {
   note?: string;
   icon: ActionIcon;
   run?: () => void;
-  next?: "transforms" | "note" | "ai" | "pinKey";
+  next?: "transforms" | "note" | "pinKey";
 };
 
-export type ActionIcon = "paste" | "plain" | "enter" | "edit" | "wand" | "file" | "image" | "qr" | "star" | "tag" | "snippet" | "trash" | "pause" | "play" | "skip" | "ai" | "key" | "eraser";
+export type ActionIcon = "paste" | "plain" | "enter" | "edit" | "wand" | "file" | "image" | "qr" | "star" | "tag" | "snippet" | "trash" | "pause" | "play" | "skip" | "key" | "eraser";
 
 export type PopupActionHandlers = {
   paste: (id: string, options?: { plain?: boolean; enter?: boolean; copyAs?: ClipboardCopyAs }) => void;
@@ -40,7 +40,6 @@ export function popupActions(item: ClipboardHistoryItem | undefined, capture: Cl
     if (isText) {
       add({ id: "edit", group: "paste", label: text.edit, keys: `${PRIMARY_KEY} E`, icon: "edit", run: handlers.edit });
       add({ id: "transform", group: "paste", label: text.transform, keys: `${PRIMARY_KEY} T`, icon: "wand", next: "transforms" });
-      if (!item.masked) add({ id: "ai", group: "paste", label: text.ai, keys: `${PRIMARY_KEY} I`, icon: "ai", next: "ai" });
       const kind = contentKind(item);
       if (kind?.kind === "color") {
         const formats = colorFormats(kind.color);

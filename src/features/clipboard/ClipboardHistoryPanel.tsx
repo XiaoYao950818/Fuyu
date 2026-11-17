@@ -16,7 +16,7 @@ import "./ClipboardPopupPanels.css";
 import "./ClipboardHistoryPanel.css";
 import { openShortcutLabel } from "./shortcut";
 
-type Tools = { id: string; page: "transforms" | "ai" };
+type Tools = { id: string; page: "transforms" };
 
 const CLOCK_MS = 30_000;
 
@@ -157,9 +157,8 @@ export function ClipboardHistoryPanel({
             item={toolsItem}
             actions={[]}
             page={tools.page}
-            aiPrompts={snapshot.settings.aiPrompts}
             copy
-            onPage={(page) => setTools(page === "transforms" || page === "ai" ? { id: tools.id, page } : null)}
+            onPage={(page) => setTools(page === "transforms" ? { id: tools.id, page } : null)}
             onClose={() => setTools(null)}
             onPasteText={(value) => copyResult(tools.id, value)}
             onSaveNote={() => {}}

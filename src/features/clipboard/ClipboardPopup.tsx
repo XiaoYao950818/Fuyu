@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import { type ClipboardAiPrompt, type ClipboardCaptureStatus, type ClipboardCopyAs, type ClipboardHistoryItem, type ClipboardPeek, type ClipboardSnippet } from "./api";
+import { type ClipboardCaptureStatus, type ClipboardCopyAs, type ClipboardHistoryItem, type ClipboardPeek, type ClipboardSnippet } from "./api";
 import { ClipboardActionPanel, type PanelPage } from "./ClipboardActionPanel";
 import { ClipboardEditor } from "./ClipboardEditor";
 import { ClipboardPauseBar, ClipboardPopupFooter, pausedNow, type MergeSeparator } from "./ClipboardPopupFooter";
@@ -28,7 +28,7 @@ const CLOCK_MS = 30_000;
 
 type Mode = "list" | "panel" | "look" | "edit";
 
-export function ClipboardPopup({ items, snippets, openCount, wide, ownsWindow = false, capture, linkPreview = false, pinFavorites = false, aiPrompts, onPaste, onPasteSnippet, onPasteSequence, onClose, onToggleFavorite, onPeek }: {
+export function ClipboardPopup({ items, snippets, openCount, wide, ownsWindow = false, capture, linkPreview = false, pinFavorites = false, onPaste, onPasteSnippet, onPasteSequence, onClose, onToggleFavorite, onPeek }: {
   items: readonly ClipboardHistoryItem[];
   snippets: readonly ClipboardSnippet[];
   openCount: number;
@@ -37,7 +37,6 @@ export function ClipboardPopup({ items, snippets, openCount, wide, ownsWindow = 
   capture?: ClipboardCaptureStatus;
   linkPreview?: boolean;
   pinFavorites?: boolean;
-  aiPrompts?: readonly ClipboardAiPrompt[];
   onPaste: (id: string, plain: boolean, options?: { enter?: boolean; copyAs?: ClipboardCopyAs }) => void;
   onPasteSnippet: (id: string) => void;
   onPasteSequence: (ids: string[]) => void;
@@ -208,9 +207,6 @@ export function ClipboardPopup({ items, snippets, openCount, wide, ownsWindow = 
     } else if (ctrl && key.toLowerCase() === "t" && isText) {
       handled();
       openPanel("transforms");
-    } else if (ctrl && key.toLowerCase() === "i" && isText && !item.masked) {
-      handled();
-      openPanel("ai");
     } else if (ctrl && key.toLowerCase() === "m" && item) {
       handled();
       openPanel("note");
@@ -364,7 +360,6 @@ export function ClipboardPopup({ items, snippets, openCount, wide, ownsWindow = 
             onSaveNote={saveNote}
             items={visible}
             onSetPinKey={setPinKey}
-            aiPrompts={aiPrompts}
           />
         )}
       </div>

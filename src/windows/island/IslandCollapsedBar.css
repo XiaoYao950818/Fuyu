@@ -64,24 +64,6 @@
   line-height: 1.2;
 }
 
-.island__todo-count {
-  min-width: 0;
-  flex: 1;
-  overflow: hidden;
-  color: var(--task-text-color);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.2;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.island__todo-center {
-  display: inline-flex;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-
 .island__active-task {
   min-width: 0;
   flex: 1;

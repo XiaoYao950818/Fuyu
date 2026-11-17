@@ -3,14 +3,6 @@ export const RULES = [
     id: "fuyu-agent-harness",
     when: {
       paths: [
-        "src/features/agent-status/status.ts",
-        "src/features/agent-status/api.ts",
-        "src/features/agent-status/agents.ts",
-        "src/features/agent-status/effortLabels.ts",
-        "src/features/agent-status/AgentProviderIcon.tsx",
-        "src/features/agent-status/remoteSessions.ts",
-        "src/features/agent-status/approvals/api.ts",
-        "src/features/cc-connect/api.ts",
         "src-tauri/src/agent_status/mod.rs",
         "src-tauri/src/agent_status/harness.rs",
         "src-tauri/src/agent_status/session_scan.rs",

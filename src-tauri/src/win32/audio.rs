@@ -4,9 +4,9 @@ use windows::{
         Media::Audio::{
             eCommunications, eConsole, eMultimedia, eRender, ERole,
             Endpoints::{IAudioEndpointVolume, IAudioMeterInformation},
-            IMMDevice, IMMDeviceEnumerator, MMDeviceEnumerator,
+            IAudioSessionManager2, IMMDevice, IMMDeviceEnumerator, MMDeviceEnumerator,
         },
-        System::Com::{CoCreateInstance, CLSCTX_ALL},
+        System::Com::{CoCreateInstance, CoTaskMemFree, CLSCTX_ALL},
     },
 };
 
@@ -42,8 +42,21 @@ impl AudioDevices {
 pub(crate) struct AudioOutput(IMMDevice);
 
 impl AudioOutput {
+    pub(crate) fn id(&self) -> Result<String> {
+        unsafe {
+            let raw = self.0.GetId()?;
+            let id = raw.to_string();
+            CoTaskMemFree(Some(raw.0 as *const _));
+            id.map_err(|_| windows::core::Error::empty())
+        }
+    }
+
     pub(crate) fn volume(&self) -> Result<OutputVolume> {
         unsafe { self.0.Activate::<IAudioEndpointVolume>(CLSCTX_ALL, None) }.map(OutputVolume)
+    }
+
+    pub(crate) fn session_manager(&self) -> Result<IAudioSessionManager2> {
+        unsafe { self.0.Activate::<IAudioSessionManager2>(CLSCTX_ALL, None) }
     }
 
     pub(crate) fn peak_meter(&self) -> Result<PeakMeter> {
@@ -64,6 +77,10 @@ impl OutputVolume {
 
     pub(crate) fn set_level(&self, level: f32) -> Result<()> {
         unsafe { self.0.SetMasterVolumeLevelScalar(level, std::ptr::null()) }
+    }
+
+    pub(crate) fn set_mute(&self, muted: bool) -> Result<()> {
+        unsafe { self.0.SetMute(muted.into(), std::ptr::null()) }
     }
 }
 

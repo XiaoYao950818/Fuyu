@@ -1,26 +1,21 @@
-import { Bot, MessageCircle, X } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import type { IslandPage } from "./types";
 
-export function NotchPopupBand({ page, agentVisualState, onCollapse }: {
-  page: IslandPage;
-  agentVisualState: string;
+export function NotchPopupBand({ onCollapse }: {
   onCollapse: () => void;
 }) {
   const t = useTranslation();
-  const agents = page === "agents";
-  const Icon = agents ? Bot : MessageCircle;
   return (
     <div className="island__notch-band">
       <span className="island__notch-band-start">
-        <Icon
-          className={agents ? `island__agent-status-icon island__agent-status-icon--${agentVisualState}` : "island__notch-band-icon"}
+        <MessageCircle
+          className="island__notch-band-icon"
           size={16}
           strokeWidth={1.8}
           absoluteStrokeWidth
           aria-hidden="true"
         />
-        <span className="island__notch-band-label">{agents ? "AI Agent" : t.messages.title}</span>
+        <span className="island__notch-band-label">{t.messages.title}</span>
       </span>
       <span className="island__notch-band-gap" aria-hidden="true" />
       <button

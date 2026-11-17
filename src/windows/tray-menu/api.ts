@@ -14,12 +14,11 @@ export type TrayMenuState = {
   platform: "windows" | "macos";
 };
 
-export type TrayMenuPage = "todo" | "notes" | "calendar" | "file-shelf" | "agent";
+export type TrayMenuPage = "file-shelf";
 
 export type TrayMenuAction =
   | "toggle_island"
   | "screenshot"
-  | "translate"
   | "clipboard"
   | "toggle_clipboard_pause"
   | "open_page"

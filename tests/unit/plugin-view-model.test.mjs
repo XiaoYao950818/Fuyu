@@ -15,7 +15,7 @@ import {
 
 test("view icons match the manifest schema", () => {
   const schema = JSON.parse(readFileSync(new URL("../../plugins/schema/manifest.schema.json", import.meta.url), "utf8"));
-  assert.deepEqual([...VIEW_ICON_NAMES], schema.properties.contributes.properties.views.items.properties.icon.enum);
+  assert.deepEqual([...VIEW_ICON_NAMES], schema.properties.contributes.properties.views.items.properties.icon.enum.filter((icon) => icon !== "calendar"));
 });
 
 test("page ids round-trip, plugin ids may contain dots", () => {

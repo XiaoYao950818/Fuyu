@@ -10,7 +10,6 @@ const transpile = (path) => ts.transpileModule(
 ).outputText;
 const sources = {
   automation: transpile("../../src/windows/island/useIslandAutomation.ts"),
-  rotation: transpile("../../src/features/todos/useTodoRotation.ts"),
 };
 
 function mount(name, initialArgs) {
@@ -56,7 +55,7 @@ function mount(name, initialArgs) {
     },
   };
   const api = { listenIslandRevealRequested: () => Promise.resolve(() => {}) };
-  runInNewContext(name === "useTodoRotation" ? sources.rotation : sources.automation, { exports, require: (path) => (path === "./api" ? api : react), window: browserWindow, document });
+  runInNewContext(sources.automation, { exports, require: (path) => (path === "./api" ? api : react), window: browserWindow, document });
   function render(nextArgs = args) {
     args = nextArgs;
     do {
@@ -90,47 +89,6 @@ function mount(name, initialArgs) {
     unmount() { slots.forEach(slot => slot?.cleanup?.()); },
   };
 }
-
-test("task rotation is opt-in, wraps pending tasks, and restores the selected task when disabled", () => {
-  const ids = ["a", "b", "c"];
-  const app = mount("useTodoRotation", [ids, "b", false, 5, false]);
-  assert.equal(app.value, "b");
-  assert.equal(app.timerCount, 0);
-  app.render([ids, "b", true, 5, false]);
-  app.tick(4_999);
-  assert.equal(app.value, "b");
-  app.tick(1);
-  assert.equal(app.value, "c");
-  app.tick(5_000);
-  assert.equal(app.value, "a");
-  app.render([ids, "b", false, 5, false]);
-  assert.equal(app.value, "b");
-  assert.equal(app.timerCount, 0);
-});
-
-test("rotation pauses while hidden by panels or previews and handles selection, removal and empty lists", () => {
-  const ids = ["a", "b", "c"];
-  const app = mount("useTodoRotation", [ids, null, true, 2, false]);
-  assert.equal(app.value, "a");
-  app.tick(2_000);
-  assert.equal(app.value, "b");
-  app.render([ids, null, true, 2, true]);
-  app.tick(20_000);
-  assert.equal(app.value, "b");
-  app.render([ids, null, true, 3, false]);
-  app.tick(2_999);
-  assert.equal(app.value, "b");
-  app.tick(1);
-  assert.equal(app.value, "c");
-  app.render([ids, "a", true, 3, false]);
-  assert.equal(app.value, "a");
-  app.render([["c"], "a", true, 3, false]);
-  assert.equal(app.value, "c");
-  assert.equal(app.timerCount, 0);
-  app.render([[], null, true, 3, false]);
-  assert.equal(app.value, null);
-  app.unmount();
-});
 
 test("idle tucking is opt-in and activity, page changes and duration edits restart the countdown", () => {
   let tucks = 0;

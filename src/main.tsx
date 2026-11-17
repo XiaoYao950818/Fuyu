@@ -44,10 +44,6 @@ window.addEventListener(
 
 async function loadWindow(): Promise<ReactNode> {
   switch (windowKind) {
-    case "translation": {
-      const { TranslationWindow } = await import("./windows/translation/TranslationWindow");
-      return <TranslationWindow />;
-    }
     case "settings": {
       const { SettingsWindow } = await import("./windows/settings/SettingsWindow");
       return <SettingsWindow />;
@@ -72,6 +68,14 @@ async function loadWindow(): Promise<ReactNode> {
       const { TrayMenuWindow } = await import("./windows/tray-menu/TrayMenuWindow");
       return <TrayMenuWindow />;
     }
+    case "dock": {
+      const { DockWindow } = await import("./windows/dock/DockWindow");
+      return <DockWindow />;
+    }
+    case "music-island": {
+      const { MusicIslandWindow } = await import("./windows/music-island/MusicIslandWindow");
+      return <MusicIslandWindow />;
+    }
     case "drag-grid": {
       const { DragGridWindow } = await import("./windows/drag-grid/DragGridWindow");
       return <DragGridWindow />;
@@ -81,15 +85,8 @@ async function loadWindow(): Promise<ReactNode> {
       return <OnboardingWindow />;
     }
     default: {
-      const [{ TodosGate }, { IslandApp }] = await Promise.all([
-        import("./features/todos/TodosGate"),
-        import("./windows/island/IslandApp"),
-      ]);
-      return (
-        <TodosGate>
-          <IslandApp />
-        </TodosGate>
-      );
+      const { IslandApp } = await import("./windows/island/IslandApp");
+      return <IslandApp />;
     }
   }
 }

@@ -1,5 +1,4 @@
 import type { Translations } from "../../i18n";
-import { createTodoId } from "../../features/todos/index.ts";
 import { DEFAULT_SETTINGS, getDefaultSettingPresets, mergeWithDefaultSettingPresets, normalizeSettings } from "./settings.ts";
 import { ISLAND_SETTINGS_KEY } from "./installState.ts";
 import { readString } from "../storage.ts";
@@ -9,6 +8,14 @@ export const STORAGE_KEY = ISLAND_SETTINGS_KEY;
 export const COLLAPSED_TEXT_DEFAULT_MIGRATION_KEY =
   "fuyu-collapsed-text-default-v1";
 export const SETTINGS_PRESETS_STORAGE_KEY = "fuyu-setting-presets";
+
+export function createPresetId() {
+  if ("crypto" in window && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 export function loadSettings(): IslandSettings {
   const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -58,7 +65,7 @@ export function loadSettingPresets(t: Translations): IslandPreset[] {
         id:
           typeof preset.id === "string" && preset.id
             ? preset.id
-            : createTodoId(),
+            : createPresetId(),
         name:
           typeof preset.name === "string" && preset.name.trim()
             ? preset.name.trim()

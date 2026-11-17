@@ -5,7 +5,6 @@ import "../../src/styles/tokens.css";
 import "../../src/styles/fonts.css";
 import { I18nProvider, LOCALE_STORAGE_KEY } from "../../src/i18n";
 import { ClipboardPopup } from "../../src/features/clipboard/ClipboardPopup";
-import "../../src/features/translation/plugin/services";
 import type { ClipboardHistoryItem, ClipboardSnippet } from "../../src/features/clipboard/api";
 import { checkSecondRound } from "./clipboard-popup-actions";
 import { checkManager, renderManageFrames } from "./clipboard-popup-manage";
@@ -19,15 +18,6 @@ const calls: string[] = [];
 mockIPC((command, args) => {
   calls.push(`ipc:${command}:${JSON.stringify(args ?? {})}`);
   if (command === "read_clipboard_image_qr") return "https://qr.example";
-  if (command === "rewrite_text") {
-    const { task, onChunk } = args as { task: string; onChunk: { id: number } };
-    const internals = (window as unknown as { __TAURI_INTERNALS__: { runCallback: (id: number, data: unknown) => void } }).__TAURI_INTERNALS__;
-    internals.runCallback(onChunk.id, { index: 0, message: "AI:" });
-    return new Promise((resolve) => setTimeout(() => {
-      internals.runCallback(onChunk.id, { index: 1, message: task });
-      resolve(`AI:${task}`);
-    }, 20));
-  }
   return null;
 });
 
@@ -76,7 +66,6 @@ for (const frame of FRAMES) {
         openCount={0}
         wide={frame.wide}
         ownsWindow={frame.id === "light"}
-        aiPrompts={[{ id: "p1", title: "正式邮件", prompt: "改成正式的邮件语气" }]}
         capture={frame.id === "paused" ? { paused: true, pausedUntil: now + 14 * minute, ignoreNext: false } : undefined}
         onPaste={(id, plain, options) => calls.push(`paste:${id}${plain ? ":plain" : ""}${options?.enter ? ":enter" : ""}${options?.copyAs ? `:${options.copyAs}` : ""}`)}
         onPasteSnippet={(id) => calls.push(`snippet:${id}`)}

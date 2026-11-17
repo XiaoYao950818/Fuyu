@@ -51,8 +51,8 @@ function builtinList(off: ReadonlySet<string>) {
   return ["todos", "calendar", "music", "clipboard", "screenshot", "file-shelf", "translation", "agents"].map((id) => ({ id, kind: "builtin", enabled: !off.has(id), background: [], config: {} }));
 }
 
-const noop: TrayCardHandlers = { onAction: () => {}, onDnd: () => {}, onAutostart: () => {}, onPlayPause: () => {}, onNext: () => {}, onJoin: () => {} };
-const galleryData: TrayCardData = { state: fx.state, shortcuts: fx.shortcuts, off: new Set(), dnd: false, autostart: true, media: fx.media, meeting: fx.meeting, agents: fx.agents, now: fx.now };
+const noop: TrayCardHandlers = { onAction: () => {}, onDnd: () => {}, onAutostart: () => {}, onPlayPause: () => {}, onNext: () => {} };
+const galleryData: TrayCardData = { state: fx.state, shortcuts: fx.shortcuts, off: new Set(), dnd: false, autostart: true, media: fx.media, now: fx.now };
 
 function Gallery() {
   return (

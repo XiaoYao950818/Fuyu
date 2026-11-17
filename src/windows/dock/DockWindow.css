@@ -1,0 +1,8 @@
+.dock-window {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  font-family: var(--font-ui);
+}

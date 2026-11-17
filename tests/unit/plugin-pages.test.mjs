@@ -12,31 +12,33 @@ import {
 } from "../../src/windows/island/features.ts";
 import { maxExpandedIslandWidth, panelIslandWidth } from "../../src/windows/island/layout.ts";
 
-const all = { agents: true, todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: false, qqMail: false, translation: false };
+const all = { music: true, clipboard: true, shelf: true, qq: true, wechat: false, qqMail: false };
 const board = "plugin:dev.example.board/board";
 const timer = "plugin:dev.example.pomodoro/timer";
 
 test("without plugin pages the page order is what it was", () => {
   const withEmpty = { ...all, pluginPages: [] };
   assert.deepEqual(pageShortcutOrder(withEmpty), pageShortcutOrder(all));
-  assert.deepEqual(pageShortcutOrder(all), ["agents", "todo", "music", "clipboard", "shelf", "qq"]);
+  assert.deepEqual(pageShortcutOrder(all), ["music", "clipboard", "shelf", "qq"]);
   assert.equal(pageForAltDigit(withEmpty, 7), null);
 });
 
 test("plugin pages come after the header's page icons and before the bell, in the order given", () => {
   const features = { ...all, pluginPages: [timer, board] };
-  assert.equal(pageForAltDigit(features, 6), timer);
-  assert.equal(pageForAltDigit(features, 7), board);
-  assert.equal(pageForAltDigit(features, 8), "qq");
-  assert.equal(pageShortcutLabel(features, board, "Alt"), "Alt+7");
+  assert.equal(pageForAltDigit(features, 4), timer);
+  assert.equal(pageForAltDigit(features, 5), board);
+  assert.equal(pageForAltDigit(features, 6), "qq");
+  assert.equal(pageShortcutLabel(features, board, "Alt"), "Alt+5");
   assert.equal(cycleShortcutPage(features, "shelf", 1), timer);
   assert.equal(cycleShortcutPage(features, board, 1), "qq");
-  assert.equal(cycleShortcutPage(features, "qq", 1), "agents");
-  assert.equal(cycleShortcutPage(features, "agents", -1), "qq");
-  const many = { ...features, pluginPages: [timer, board, "plugin:c/1", "plugin:d/1", "plugin:e/1"] };
-  assert.equal(pageShortcutLabel(many, "plugin:d/1", "Alt"), "Alt+9");
-  assert.equal(pageShortcutLabel(many, "plugin:e/1", "Alt"), null);
-  assert.equal(pageForAltDigit({ ...features, agents: false, music: false }, 4), timer);
+  assert.equal(cycleShortcutPage(features, "qq", 1), "music");
+  assert.equal(cycleShortcutPage(features, "music", -1), "qq");
+  const many = { ...features, pluginPages: [timer, board, "plugin:c/1", "plugin:d/1", "plugin:e/1", "plugin:f/1"] };
+  assert.equal(pageShortcutLabel(many, "plugin:d/1", "Alt"), "Alt+7");
+  assert.equal(pageShortcutLabel(many, "plugin:e/1", "Alt"), "Alt+8");
+  assert.equal(pageShortcutLabel(many, "plugin:f/1", "Alt"), "Alt+9");
+  assert.equal(pageShortcutLabel(many, "qq", "Alt"), null);
+  assert.equal(pageForAltDigit({ ...features, music: false }, 3), timer);
 });
 
 test("a plugin page is on while its plugin lists it; otherwise the island falls back", () => {
@@ -45,9 +47,9 @@ test("a plugin page is on while its plugin lists it; otherwise the island falls 
   assert.equal(isPluginPage("todo"), false);
   assert.equal(isPageEnabled(board, features), true);
   assert.equal(isPageEnabled(timer, features), false);
-  assert.equal(resolveIslandPage(timer, features), "todo");
-  const onlyPlugin = { todo: false, music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false, agents: false, translation: false, pluginPages: [board] };
-  assert.equal(resolveIslandPage("todo", onlyPlugin), board);
+  assert.equal(resolveIslandPage(timer, features), "music");
+  const onlyPlugin = { music: false, clipboard: false, shelf: false, qq: false, wechat: false, qqMail: false, pluginPages: [board] };
+  assert.equal(resolveIslandPage("music", onlyPlugin), board);
 });
 
 test("the collapsed bar shows each status text, highest priority first, first plugin on ties", async () => {
@@ -67,7 +69,8 @@ test("plugin page preferences order and hide pages, and bad stored data means de
   const ids = (list) => list.map((item) => `${item.pluginId}/${item.viewId}`);
 
   assert.deepEqual(normalizePluginPagePrefs("junk"), { order: [], hidden: [] });
-  assert.deepEqual(normalizePluginPagePrefs({ order: ["plugin:a/x", "todo", 5, "plugin:a/x"], hidden: "no" }), { order: ["plugin:a/x"], hidden: [] });
+  assert.deepEqual(normalizePluginPagePrefs({ order: ["plugin:a/x", "bad id", 5, "plugin:a/x"], hidden: "no" }), { order: ["plugin:a/x"], hidden: [] });
+  assert.deepEqual(normalizePluginPagePrefs({ order: ["music", "plugin:a/x"], hidden: ["music", "plugin:a/x"] }), { order: ["music", "plugin:a/x"], hidden: ["plugin:a/x"] });
 
   let prefs = normalizePluginPagePrefs(undefined);
   assert.deepEqual(ids(orderPluginViews(views, prefs)), ["a.one/x", "b.two/y", "c.three/z"]);
@@ -91,4 +94,11 @@ test("the widest expanded island leaves room for the top fillets on both sides (
   for (const scale of [0.91, 1, 1.15, 1.4]) {
     assert.ok((820 - maxExpandedIslandWidth(scale) * scale) / 2 >= 12 * scale, `scale ${scale}`);
   }
+});
+
+test("the tray tab shows only while the Dock is on", () => {
+  assert.equal(isPageEnabled("dock-tray", { ...all, dock: true }), true);
+  assert.equal(isPageEnabled("dock-tray", { ...all, dock: false }), false);
+  assert.equal(isPageEnabled("dock-tray", all), false);
+  assert.equal(resolveIslandPage("dock-tray", { ...all, dock: false }), "music");
 });

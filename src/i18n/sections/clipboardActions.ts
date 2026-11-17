@@ -16,16 +16,6 @@ export type ClipboardActionsText = {
   edit: string;
   transform: string;
   transformTitle: string;
-  ai: string;
-  aiTitle: string;
-  aiTasks: Record<"summarize" | "polish" | "grammar" | "translate", string>;
-  aiHint: string;
-  aiService: string;
-  aiLoading: string;
-  aiOff: string;
-  aiPasteAgain: string;
-  aiOwn: string;
-  aiOwnHint: string;
   pasteAs: (format: string) => string;
   pasteTextFile: string;
   pastePath: string;
@@ -76,7 +66,7 @@ export type ClipboardActionsText = {
   linkOffline: string;
   colorPick: string;
   failed: string;
-  copy: Pick<ClipboardActionsText, "transform" | "transformTitle" | "ai" | "aiHint" | "aiPasteAgain" | "result" | "resultNative" | "resultNativeMac">;
+  copy: Pick<ClipboardActionsText, "transform" | "transformTitle" | "result" | "resultNative" | "resultNativeMac">;
 };
 
 export const zhCN: ClipboardActionsText = {
@@ -95,16 +85,6 @@ export const zhCN: ClipboardActionsText = {
   edit: "编辑后粘贴",
   transform: "转换后粘贴…",
   transformTitle: "转换后粘贴",
-  ai: "AI 改写后粘贴…",
-  aiTitle: "AI 改写",
-  aiTasks: { summarize: "总结", polish: "润色", grammar: "修正错字和语法", translate: "中英互译" },
-  aiHint: "按 Enter 把这条发给快捷翻译设置的服务（用它的 Key 和模型），结果出来后再按 Enter 粘贴。",
-  aiService: "用快捷翻译的服务",
-  aiLoading: "正在请求…",
-  aiOff: "快捷翻译已关闭，打开后才能用 AI 改写。",
-  aiPasteAgain: "再按 Enter 粘贴",
-  aiOwn: "自己的提示词",
-  aiOwnHint: "在 设置 → 剪贴板 → AI 提示词 里添加自己的",
   pasteAs: (format) => `粘贴为 ${format}`,
   pasteTextFile: "粘贴为 .txt 文件",
   pastePath: "粘贴图片路径",
@@ -177,9 +157,6 @@ export const zhCN: ClipboardActionsText = {
   copy: {
     transform: "转换后复制…",
     transformTitle: "转换后复制",
-    ai: "AI 改写后复制…",
-    aiHint: "按 Enter 把这条发给快捷翻译设置的服务（用它的 Key 和模型），结果出来后再按 Enter 复制。",
-    aiPasteAgain: "再按 Enter 复制",
     result: "复制的会是",
     resultNative: "复制时由 Windows 转换",
     resultNativeMac: "复制时由 macOS 转换",
@@ -202,16 +179,6 @@ export const en: ClipboardActionsText = {
   edit: "Edit, then paste",
   transform: "Paste transformed…",
   transformTitle: "Paste transformed",
-  ai: "Rewrite with AI, then paste…",
-  aiTitle: "Rewrite with AI",
-  aiTasks: { summarize: "Summarize", polish: "Polish", grammar: "Fix spelling and grammar", translate: "Chinese ⇄ English" },
-  aiHint: "Enter sends this entry to the service set up for quick translation (its key and model); Enter again pastes the answer.",
-  aiService: "Uses the quick translation's service",
-  aiLoading: "Asking…",
-  aiOff: "Quick translation is off. Turn it on to rewrite with AI.",
-  aiPasteAgain: "Enter again pastes",
-  aiOwn: "Your prompts",
-  aiOwnHint: "Add your own in Settings → Clipboard → AI prompts",
   pasteAs: (format) => `Paste as ${format}`,
   pasteTextFile: "Paste as a .txt file",
   pastePath: "Paste the image's path",
@@ -284,9 +251,6 @@ export const en: ClipboardActionsText = {
   copy: {
     transform: "Copy transformed…",
     transformTitle: "Copy transformed",
-    ai: "Rewrite with AI, then copy…",
-    aiHint: "Enter sends this entry to the service set up for quick translation (its key and model); Enter again copies the answer.",
-    aiPasteAgain: "Enter again copies",
     result: "This will copy",
     resultNative: "Windows converts it on copy",
     resultNativeMac: "macOS converts it on copy",

@@ -12,7 +12,6 @@ export type IslandHeaderContext = {
   features: IslandFeatures;
   isDetached: boolean;
   onOpenSettings: (section?: "updates") => void;
-  onOpenTranslator: (() => void) | null;
   hints: ReadonlySet<string>;
   onResetPosition: () => void;
   minimizesToTray: boolean;

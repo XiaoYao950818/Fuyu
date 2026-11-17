@@ -48,11 +48,6 @@ export type SettingsAppearanceText = {
     label: string;
     collapsed: string;
     expanded: string;
-    sessions: {
-      needs: { project: string; title: string };
-      yourTurn: { project: string; title: string };
-      done: { project: string; title: string };
-    };
   };
 };
 
@@ -106,11 +101,6 @@ export const zhCN: SettingsAppearanceText = {
     label: "按当前设置画出的岛屿",
     collapsed: "折叠",
     expanded: "展开",
-    sessions: {
-      needs: { project: "Fuyu", title: "设置页切换动画" },
-      yourTurn: { project: "notes", title: "整理周报大纲" },
-      done: { project: "api-server", title: "修复登录超时" },
-    },
   },
 };
 
@@ -164,10 +154,5 @@ export const en: SettingsAppearanceText = {
     label: "The island with the current settings",
     collapsed: "Collapsed",
     expanded: "Expanded",
-    sessions: {
-      needs: { project: "Fuyu", title: "Settings page transition" },
-      yourTurn: { project: "notes", title: "Weekly report outline" },
-      done: { project: "api-server", title: "Fix the login timeout" },
-    },
   },
 };

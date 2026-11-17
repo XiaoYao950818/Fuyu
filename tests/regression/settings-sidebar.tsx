@@ -92,23 +92,16 @@ try {
   check(listed().length === 18, "Unfolding shows the pages again");
   check(!host.querySelector(".settings-sidebar__more"), "With every feature on there is no link to turn more on");
 
-  const off = new Set<SettingsCategory>([...FEATURE_PAGES.music, ...FEATURE_PAGES.agents]);
+  const off = new Set<SettingsCategory>([...FEATURE_PAGES.music]);
   await mount("general", off);
-  check(!listed().includes("music") && !listed().some((page) => FEATURE_PAGES.agents.includes(page as SettingsCategory)) && listed().includes("todos"),
+  check(!listed().includes("music") && listed().includes("todos"),
     "Pages of features that are off are left out");
-  check(!listed().includes("agents"), "AI Agent is left out when agents are off");
   await act(async () => { element<HTMLButtonElement>(".settings-sidebar__more").click(); });
   check(opened[opened.length - 1] === "overview", "The link under Features opens the overview, where features are turned on");
   await mount("music", off);
   check(listed().includes("music") && element(".settings-sidebar__item--active").dataset.category === "music", "The open page stays listed even when its feature is off");
   await type("岛上显示");
-  check(listed().join() === "music,agents", "Search still finds the pages of features that are off");
-  await mount("sounds");
-  check(element(".settings-sidebar__item--active").dataset.category === "agents", "A tab marks the sidebar item it belongs to");
-  await type("音效");
-  check(listed().join() === "agents" && host.querySelector(".settings-sidebar__hit--tab[data-tab='sounds']"), "A tab found by search shows under its sidebar item");
-  await act(async () => { element<HTMLButtonElement>(".settings-sidebar__hit--tab[data-tab='sounds']").click(); });
-  check(opened[opened.length - 1] === "sounds", "…and opens that tab");
+  check(listed().join() === "music", "Search still finds the pages of features that are off");
   await press("Escape");
   await act(async () => { element<HTMLButtonElement>(".settings-sidebar__item[data-category='appearance']").click(); });
   check(opened[opened.length - 1] === "theme", "Appearance opens on its first tab, Style");

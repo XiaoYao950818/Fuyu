@@ -26,7 +26,6 @@ import { IconButtonTooltip } from "../../components/IconButtonTooltip";
 import { SlotView } from "../../features/plugin-kernel/SlotView";
 import { categorySlot } from "./slots/categorySlot";
 import { settingsRunners } from "../../features/plugin-kernel/settingsSlots";
-import { focusSection } from "../../lib/settings/sectionFocus";
 import "./SettingsWindow.css";
 
 const SETTINGS_DARK_FILL = "#131417";
@@ -50,10 +49,6 @@ export function SettingsWindow() {
 
   const focusRequestedSection = useCallback(() => {
     const section = takeFocusRequest();
-    if (section === "savePath") {
-      setCategory("todos");
-      focusSection(section);
-    }
     const target = section && settingsCategoryFor(section);
     if (target) setCategory(target);
   }, []);

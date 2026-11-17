@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import { useTranslation } from "../../../i18n";
 import { LINE_PRIORITY, type IslandContribution } from "../../plugin-kernel/islandContributions";
 import { defineSlot } from "../../plugin-kernel/slots";
 import { useIslandAction, useIslandContributions } from "../../plugin-kernel/useIslandContributions";
@@ -35,7 +34,6 @@ function usePinsKey() {
 }
 
 function ScreenshotRunner({ settings, collapseIsland }: RunnerProps) {
-  const t = useTranslation();
   const peek = useScreenshotText();
   const screenshot = useIslandScreenshot(settings.screenshotEnabled, collapseIsland);
   const card = useScreenshotCard(screenshot.settings.cardSeconds);
@@ -47,7 +45,7 @@ function ScreenshotRunner({ settings, collapseIsland }: RunnerProps) {
   const list: IslandContribution[] = [];
   if (screenshot.start) list.push({ kind: "hint", key: "screenshot.start" });
   if (peek !== null) {
-    list.push({ kind: "line", item: "screenshot.text", priority: LINE_PRIORITY.screenshotPeek, always: true, bare: true, drop: true, action: "translation.open-peek", label: t.translator.peekLabel(peek) });
+    list.push({ kind: "line", item: "screenshot.text", priority: LINE_PRIORITY.screenshotPeek, always: true, bare: true, drop: true, label: peek });
     list.push({ kind: "reveal", reveal: "allowed", pauseIdle: true }, { kind: "busy" });
   }
   if (card.current !== null) list.push({ kind: "reveal", reveal: "always" }, { kind: "busy" });

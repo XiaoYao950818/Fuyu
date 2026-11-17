@@ -5,12 +5,10 @@ import { ThemeSettingsPage } from "../ThemeSettingsPage";
 import { GeneralSettingsPage } from "../GeneralSettingsPage";
 import { OverviewSettingsPage } from "../OverviewSettingsPage";
 import { ShortcutsSettingsPage } from "../ShortcutsSettingsPage";
-import { TodosSettingsPage } from "../TodosSettingsPage";
 import { AboutSettingsPage } from "../AboutSettingsPage";
 import { PluginsSettingsPage } from "../PluginsSettingsPage";
 import { PluginsV3SettingsPage } from "../PluginsV3SettingsPage";
 import { PluginMarketSection } from "../../../features/plugins/PluginMarketSection";
-import { OWNER as TODOS } from "../../../features/todos/plugin/owner.ts";
 import { addSettingsCategory, type SettingsCategory, type SettingsPageProps } from "./categorySlot";
 import "./featureSettings";
 
@@ -60,7 +58,6 @@ const PAGES: Partial<Record<SettingsCategory, Page>> = {
   theme: ({ settings, presets, onSettingsChange }) => <ThemeSettingsPage settings={settings} presets={presets} onSettingsChange={onSettingsChange} />,
   shortcuts: shortcuts("shortcuts"),
   shortcutsIsland: shortcuts("shortcutsIsland"),
-  todos: ({ settings, onSettingsChange }) => <TodosSettingsPage settings={settings} onSettingsChange={onSettingsChange} />,
   plugins: plugins("plugins"),
   pluginsPages: plugins("pluginsPages"),
   pluginsUpdates: plugins("pluginsUpdates"),
@@ -72,6 +69,6 @@ const PAGES: Partial<Record<SettingsCategory, Page>> = {
   about: ({ onSettingsChange }) => <AboutSettingsPage onSettingsChange={onSettingsChange} />,
 };
 
-const OWNERS: Partial<Record<SettingsCategory, string>> = { todos: TODOS };
+const OWNERS: Partial<Record<SettingsCategory, string>> = {};
 
 for (const [id, page] of Object.entries(PAGES)) addSettingsCategory(id as SettingsCategory, page, OWNERS[id as SettingsCategory]);

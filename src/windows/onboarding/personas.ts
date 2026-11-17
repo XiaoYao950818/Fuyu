@@ -1,13 +1,10 @@
 import type { IslandSettings } from "../../lib/settings/types";
 
-export const MODULES = ["todo", "music", "agents", "translation", "shelf", "mail", "screenshot", "clipboard"] as const;
+export const MODULES = ["music", "shelf", "mail", "screenshot", "clipboard"] as const;
 export type OnboardingModule = (typeof MODULES)[number];
 
 export const ISLAND_MODULE_KEYS = {
-  todo: "todoEnabled",
   music: "musicEnabled",
-  agents: "agentStatusEnabled",
-  translation: "translationEnabled",
   shelf: "shelfEnabled",
   mail: "mailEnabled",
   screenshot: "screenshotEnabled",
@@ -17,9 +14,9 @@ export const PERSONAS = ["code", "office", "study", "fun"] as const;
 export type Persona = (typeof PERSONAS)[number];
 
 const PERSONA_MODULES: Record<Persona, readonly OnboardingModule[]> = {
-  code: ["agents", "clipboard", "screenshot", "todo", "shelf"],
-  office: ["todo", "mail", "clipboard", "translation", "screenshot", "shelf"],
-  study: ["todo", "translation", "clipboard", "music"],
+  code: ["clipboard", "screenshot", "shelf"],
+  office: ["mail", "clipboard", "screenshot", "shelf"],
+  study: ["clipboard", "music"],
   fun: ["music", "shelf"],
 };
 

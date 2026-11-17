@@ -1,4 +1,3 @@
-import { en as pushEn, zhCN as pushZhCN, type OnboardingPushText } from "./onboarding-push.ts";
 
 export type OnboardingText = {
   windowTitle: string;
@@ -33,11 +32,11 @@ export type OnboardingText = {
     takenOff: (names: string) => string;
     stickers: string;
     stickersHint: string;
-    modules: Record<"todo" | "music" | "agents" | "translation" | "shelf" | "mail" | "screenshot" | "clipboard", string>;
+    modules: Record<"music" | "shelf" | "mail" | "screenshot" | "clipboard", string>;
   };
   play: {
     title: string;
-    lead: (song: boolean, agent: boolean) => string;
+    lead: (song: boolean) => string;
     stars: (done: number, total: number) => string;
     allDone: string;
     hover: string;
@@ -58,19 +57,6 @@ export type OnboardingText = {
     allGranted: string;
     later: string;
   };
-  push: OnboardingPushText;
-  agentCards: {
-    title: string;
-    lead: string;
-    recommended: (label: string) => string;
-  };
-  agentConnect: {
-    title: string;
-    lead: string;
-    remote: string;
-    agents: string;
-    marker: string;
-  };
   release: {
     title: string;
     lead: string;
@@ -78,7 +64,6 @@ export type OnboardingText = {
     launchAtStartupHint: string;
     launchAtStartupHintMac: string;
     later: string;
-    connectAgents: string;
     addMail: string;
     openSettings: string;
     findLater: string;
@@ -90,8 +75,6 @@ export type OnboardingText = {
     song: string;
     artist: string;
     source: string;
-    agentTitle: string;
-    agentPrompt: string;
   };
 };
 
@@ -134,10 +117,7 @@ export const zhCN: OnboardingText = {
     stickers: "功能贴纸",
     stickersHint: "亮着的已经装上，点一下装上或卸下。",
     modules: {
-      todo: "待办",
       music: "音乐",
-      agents: "AI Agent",
-      translation: "翻译",
       shelf: "文件中转",
       mail: "邮箱",
       screenshot: "截图",
@@ -146,11 +126,7 @@ export const zhCN: OnboardingText = {
   },
   play: {
     title: "在真岛上试一下",
-    lead: (song, agent) =>
-      song && agent ? "岛上正放着一首演示歌曲，还有一个演示 Agent 在干活。完成下面的小任务。"
-        : song ? "岛上正放着一首演示歌曲。完成下面的小任务。"
-          : agent ? "岛上有一个演示 Agent 在干活。完成下面的小任务。"
-            : "完成下面的小任务，每完成一个亮一颗星。",
+    lead: (song) => (song ? "岛上正放着一首演示歌曲。完成下面的小任务。" : "完成下面的小任务，每完成一个亮一颗星。"),
     stars: (done, total) => `${done} / ${total}`,
     allDone: "全部完成，你已经会用了。",
     hover: "把鼠标停在岛上，让它展开",
@@ -171,19 +147,6 @@ export const zhCN: OnboardingText = {
     allGranted: "都允许好了，你选的功能都能用。",
     later: "现在不开也行，以后在「设置 → 通用 → 系统权限」里也能开；没开的功能用到时会提醒你。",
   },
-  push: pushZhCN,
-  agentCards: {
-    title: "AI 代理的会话卡片",
-    lead: "Agent 页里每个会话怎么显示。标了「推荐」的是默认选择，以后在设置 → AI Agent → 会话列表里还能改。",
-    recommended: (label) => `${label}（推荐）`,
-  },
-  agentConnect: {
-    title: "连上你的 AI 代理",
-    lead: "三步：有 SSH 远程电脑就先加上（没有可跳过）；打开你在用的 AI 代理，点「安装/修复」装上状态钩子；再打开回复状态标记。以后在设置 → AI Agent 里都能改。",
-    remote: "1. SSH 远程电脑（可跳过）",
-    agents: "2. 选 AI 代理，点「安装/修复」",
-    marker: "3. 回复状态标记（推荐打开）",
-  },
   release: {
     title: "准备好了",
     lead: "演示的内容会在引导结束时消失，岛会留在原地。",
@@ -191,7 +154,6 @@ export const zhCN: OnboardingText = {
     launchAtStartupHint: "登录 Windows 后岛自动出现",
     launchAtStartupHintMac: "登录 Mac 后岛自动出现",
     later: "下面这些要多一步设置。点一下会结束引导并打开设置，以后再弄也行：",
-    connectAgents: "连接 AI 编程工具",
     addMail: "添加邮箱",
     openSettings: "打开设置",
     findLater: "以后想改什么：右键托盘里的浮屿图标，选「设置」。",
@@ -206,8 +168,6 @@ export const zhCN: OnboardingText = {
     song: "海边的风",
     artist: "浮屿演示",
     source: "浮屿",
-    agentTitle: "新手引导演示",
-    agentPrompt: "给待办加上按项目分组",
   },
 };
 
@@ -250,10 +210,7 @@ export const en: OnboardingText = {
     stickers: "Feature stickers",
     stickersHint: "Lit ones are on. Click to add or remove.",
     modules: {
-      todo: "Todos",
       music: "Music",
-      agents: "AI agents",
-      translation: "Translate",
       shelf: "File shelf",
       mail: "Mail",
       screenshot: "Screenshots",
@@ -262,11 +219,7 @@ export const en: OnboardingText = {
   },
   play: {
     title: "Try it on the real island",
-    lead: (song, agent) =>
-      song && agent ? "The island is playing a demo song and a demo agent is at work. Do the little tasks below."
-        : song ? "The island is playing a demo song. Do the little tasks below."
-          : agent ? "A demo agent is at work on the island. Do the little tasks below."
-            : "Do the little tasks below. Each one lights a star.",
+    lead: (song) => (song ? "The island is playing a demo song. Do the little tasks below." : "Do the little tasks below. Each one lights a star."),
     stars: (done, total) => `${done} / ${total}`,
     allDone: "All done. You know how it works.",
     hover: "Rest the pointer on the island to open it",
@@ -287,19 +240,6 @@ export const en: OnboardingText = {
     allGranted: "All set: every feature you picked can work.",
     later: "You can also do this later in Settings > General > System permissions; a feature that needs one tells you when you use it.",
   },
-  push: pushEn,
-  agentCards: {
-    title: "Agent session cards",
-    lead: "How each session shows on the Agent page. The ones marked recommended are the defaults; change them later in Settings → AI Agent → Session list.",
-    recommended: (label) => `${label} (recommended)`,
-  },
-  agentConnect: {
-    title: "Connect your AI agents",
-    lead: "Three steps: add your SSH remote computers if you have any (or skip); switch on the agents you use and click Install/repair to set up the status hooks; then switch on the reply status marker. All of it stays in Settings → AI Agent.",
-    remote: "1. SSH remote computers (optional)",
-    agents: "2. Pick your agents, click Install/repair",
-    marker: "3. Reply status marker (recommended)",
-  },
   release: {
     title: "You're all set",
     lead: "The demo content goes away when the guide ends; the island stays where it is.",
@@ -307,7 +247,6 @@ export const en: OnboardingText = {
     launchAtStartupHint: "The island appears after you sign in",
     launchAtStartupHintMac: "The island appears after you log in to your Mac",
     later: "These take one more step. Clicking one ends the guide and opens Settings; later is fine too:",
-    connectAgents: "Connect AI coding tools",
     addMail: "Add a mail account",
     openSettings: "Open Settings",
     findLater: "To change anything later, right-click the Fuyu icon in the tray and pick Settings.",
@@ -322,7 +261,5 @@ export const en: OnboardingText = {
     song: "Sea Breeze",
     artist: "Fuyu demo",
     source: "Fuyu",
-    agentTitle: "Welcome guide demo",
-    agentPrompt: "Group todos by project",
   },
 };

@@ -18,6 +18,7 @@ export type CollapsedGaugeContext = {
   paused: boolean;
   hints: ReadonlySet<string>;
   listenIslandHover: typeof listenIslandHover;
+  openPage: (page: IslandPage) => void;
 };
 
 export const collapsedBarSlot = defineSlot<CollapsedBarContext, IslandCollapsedMeta<CollapsedBarContext>>("island.collapsed/v1");

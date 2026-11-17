@@ -8,17 +8,16 @@ export type SettingsCategoriesText = {
   expand: (group: string) => string;
   collapse: (group: string) => string;
   keywords: Record<
-    | "overview" | "general" | "pluginsPages" | "pluginsUpdates" | "pluginsDev" | "musicLyrics" | "musicLyricsStyle" | "clipboardHistory" | "clipboardSnippets" | "clipboardData" | "screenshotRecord" | "behavior" | "behaviorTuck" | "behaviorAlerts" | "shortcutsIsland" | "appearance" | "theme" | "themeMarket" | "shortcuts" | "todos" | "calendar" | "music" | "translation" | "clipboard"
-    | "shelf" | "screenshot" | "messages" | "agents" | "agentSessions" | "agentRemote" | "agentAlerts" | "sounds" | "agentApprovals" | "agentConnect" | "voiceInput"
+    | "overview" | "general" | "pluginsPages" | "pluginsUpdates" | "pluginsDev" | "musicLyrics" | "musicLyricsStyle" | "clipboardHistory" | "clipboardSnippets" | "clipboardData" | "screenshotRecord" | "behavior" | "behaviorTuck" | "behaviorAlerts" | "shortcutsIsland" | "appearance" | "theme" | "themeMarket" | "shortcuts" | "music" | "clipboard"
+    | "shelf" | "screenshot" | "messages"
     | "plugins" | "pluginsV3" | "market" | "about",
     string
   >;
-  entries: { behavior: string; appearance: string; shortcuts: string; music: string; clipboard: string; screenshot: string; plugins: string; agents: string };
-  tabs: Record<"plugins" | "pluginsPages" | "pluginsUpdates" | "pluginsDev" | "music" | "clipboard" | "screenshot" | "musicLyrics" | "musicLyricsStyle" | "clipboardHistory" | "clipboardSnippets" | "clipboardData" | "screenshotRecord" | "behavior" | "behaviorTuck" | "behaviorAlerts" | "shortcuts" | "shortcutsIsland" | "theme" | "appearance" | "themeMarket" | "agents" | "agentSessions" | "agentAlerts" | "sounds" | "agentApprovals" | "agentConnect" | "agentRemote", string>;
+  entries: { behavior: string; appearance: string; shortcuts: string; music: string; clipboard: string; screenshot: string; plugins: string };
+  tabs: Record<"plugins" | "pluginsPages" | "pluginsUpdates" | "pluginsDev" | "music" | "clipboard" | "screenshot" | "musicLyrics" | "musicLyricsStyle" | "clipboardHistory" | "clipboardSnippets" | "clipboardData" | "screenshotRecord" | "behavior" | "behaviorTuck" | "behaviorAlerts" | "shortcuts" | "shortcutsIsland" | "theme" | "appearance" | "themeMarket", string>;
   groups: {
     basics: string;
     features: string;
-    agents: string;
     extensions: string;
   };
   overview: string;
@@ -42,21 +41,10 @@ export type SettingsCategoriesText = {
   shortcuts: string;
   messages: string;
   mail: string;
-  todos: string;
   music: string;
   clipboard: string;
-  translation: string;
   shelf: string;
   screenshot: string;
-  voiceInput: string;
-  calendar: string;
-  agents: string;
-  agentSessions: string;
-  agentRemote: string;
-  agentAlerts: string;
-  sounds: string;
-  agentApprovals: string;
-  agentConnect: string;
   plugins: string;
   pluginsV3: string;
   market: string;
@@ -92,28 +80,17 @@ export const zhCN: SettingsCategoriesText = {
     theme: "颜色 背景 透明 不透明度 液态玻璃 字体 像素 圆角 预设 样式 导入 导出 亮点",
     themeMarket: "主题 皮肤 配色 下载 应用 分享",
     shortcuts: "按键 组合键 热键 全局",
-    todos: "任务 笔记 归档 保存路径 导出 Markdown",
-    calendar: "日程 会议 CalDAV ICS 订阅 节假日",
     music: "歌词 媒体 播放 波形 酷狗 网易云",
-    translation: "翻译服务 模型 密钥 API 语言",
     clipboard: "复制 粘贴 历史 图片",
     shelf: "文件 拖放 拖拽 清理",
     screenshot: "截屏 截图 快捷键 选区 放大镜 取色 全屏",
-    voiceInput: "语音 说话 听写 麦克风 转文字 识别 模型",
     messages: "QQ 微信 邮箱 邮件 通知 IMAP 授权码",
-    agents: "Claude Code Codex 会话标题 状态灯 收起条 钩子 hook 安装 修复",
-    agentSessions: "会话 卡片 用量 隐藏会话 筛选",
-    agentRemote: "SSH 远程 服务器 主机 其他电脑",
-    agentAlerts: "弹出 提醒 通知 回复状态标记",
-    sounds: "音效 声音包 提示音",
-    agentApprovals: "批准 允许 拒绝 权限 提问 回答",
-    agentConnect: "回复状态标记 编辑器扩展 VS Code Cursor",
     plugins: "扩展 已安装 插件目录 开发者 更新 岛屿页面",
     pluginsV3: "插件 第 3 版 内核 宿主 状态 占用 CPU 出错 停用 安全模式 开发中",
     market: "扩展 插件 下载 安装 搜索",
     about: "版本 更新 检查更新 测试版 通道 重置 退出 反馈 Star",
   },
-  entries: { behavior: "行为", appearance: "外观", shortcuts: "快捷键", music: "音乐", clipboard: "剪贴板", screenshot: "截图", plugins: "插件", agents: "AI Agent" },
+  entries: { behavior: "行为", appearance: "外观", shortcuts: "快捷键", music: "音乐", clipboard: "剪贴板", screenshot: "截图", plugins: "插件" },
   tabs: {
     plugins: "已安装",
     pluginsPages: "页面与快捷键",
@@ -136,18 +113,10 @@ export const zhCN: SettingsCategoriesText = {
     theme: "样式",
     appearance: "尺寸与内容",
     themeMarket: "主题市场",
-    agents: "岛上显示",
-    agentSessions: "会话列表",
-    agentAlerts: "提醒",
-    sounds: "声音",
-    agentApprovals: "审批",
-    agentConnect: "连接",
-    agentRemote: "SSH 远程",
   },
   groups: {
     basics: "基础",
     features: "功能",
-    agents: "AI Agent",
     extensions: "扩展",
   },
   overview: "概览",
@@ -171,21 +140,10 @@ export const zhCN: SettingsCategoriesText = {
   shortcuts: "快捷键",
   messages: "消息",
   mail: "邮箱",
-  todos: "待办",
   music: "音乐",
   clipboard: "剪贴板",
-  translation: "翻译",
   shelf: "文件中转",
   screenshot: "截图",
-  voiceInput: "语音输入",
-  calendar: "日历",
-  agents: "岛上显示",
-  agentSessions: "会话列表",
-  agentRemote: "SSH 远程",
-  agentAlerts: "提醒",
-  sounds: "声音",
-  agentApprovals: "审批",
-  agentConnect: "连接",
   plugins: "插件",
   pluginsV3: "插件（第 3 版）",
   market: "插件市场",
@@ -221,28 +179,17 @@ export const en: SettingsCategoriesText = {
     theme: "colour color background opacity transparency glass font pixel corner preset style import export pulse",
     themeMarket: "themes skins colours colors download apply share",
     shortcuts: "keys hotkey keyboard global",
-    todos: "tasks notes archive save folder export markdown",
-    calendar: "events meeting caldav ics subscription holidays",
     music: "lyrics media playback waveform kugou netease",
-    translation: "service model key api language",
     clipboard: "copy paste history images",
     shelf: "files drag drop cleanup",
     screenshot: "screen capture snip region magnifier colour picker fullscreen",
-    voiceInput: "voice speech dictation microphone speech to text model",
     messages: "qq wechat mail email notifications imap",
-    agents: "claude code codex session title status light collapsed bar hooks install repair",
-    agentSessions: "sessions cards usage hide filter",
-    agentRemote: "ssh remote server host other computers",
-    agentAlerts: "pop-up alerts notifications reply status marker",
-    sounds: "sound pack",
-    agentApprovals: "approve allow deny permission questions answer",
-    agentConnect: "reply status marker editor extension vs code cursor",
     plugins: "extensions installed folder developer updates island pages",
     pluginsV3: "plugins v3 kernel host status usage cpu errors disabled safe mode preview",
     market: "extensions plugins download install browse",
     about: "version updates check beta channel reset quit feedback star",
   },
-  entries: { behavior: "Behavior", appearance: "Appearance", shortcuts: "Shortcuts", music: "Music", clipboard: "Clipboard", screenshot: "Screenshots", plugins: "Plugins", agents: "AI Agent" },
+  entries: { behavior: "Behavior", appearance: "Appearance", shortcuts: "Shortcuts", music: "Music", clipboard: "Clipboard", screenshot: "Screenshots", plugins: "Plugins" },
   tabs: {
     plugins: "Installed",
     pluginsPages: "Pages and shortcuts",
@@ -265,18 +212,10 @@ export const en: SettingsCategoriesText = {
     theme: "Style",
     appearance: "Size and content",
     themeMarket: "Theme market",
-    agents: "On the island",
-    agentSessions: "Session list",
-    agentAlerts: "Alerts",
-    sounds: "Sounds",
-    agentApprovals: "Approvals",
-    agentConnect: "Connection",
-    agentRemote: "SSH remote",
   },
   groups: {
     basics: "Basics",
     features: "Features",
-    agents: "AI Agent",
     extensions: "Extensions",
   },
   overview: "Overview",
@@ -300,21 +239,10 @@ export const en: SettingsCategoriesText = {
   shortcuts: "Shortcuts",
   messages: "Messages",
   mail: "Mail",
-  todos: "Todos",
   music: "Music",
   clipboard: "Clipboard",
-  translation: "Translation",
   shelf: "File shelf",
   screenshot: "Screenshot",
-  voiceInput: "Voice input",
-  calendar: "Calendar",
-  agents: "On the island",
-  agentSessions: "Session list",
-  agentRemote: "SSH remote",
-  agentAlerts: "Alerts",
-  sounds: "Sounds",
-  agentApprovals: "Approvals",
-  agentConnect: "Connection",
   plugins: "Plugins",
   pluginsV3: "Plugins (v3)",
   market: "Plugin market",

@@ -1,0 +1,109 @@
+.tray-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tray-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tray-panel__title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tray-panel__empty {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.tray-panel__note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.tray-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.tray-panel__item {
+  display: flex;
+}
+
+.tray-panel__row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  gap: 8px;
+  padding: 6px 8px;
+  color: var(--text-1);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--motion-base) var(--motion-ease);
+}
+
+.tray-panel__row:hover {
+  background: var(--color-white-a08);
+}
+
+.tray-panel__row:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.tray-panel__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.tray-panel__fallback {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-1);
+  background: var(--color-white-a12);
+  border-radius: var(--radius-md);
+}
+
+.tray-panel__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tray-panel__hint {
+  flex: none;
+  color: var(--text-3);
+}

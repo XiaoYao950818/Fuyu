@@ -34,16 +34,16 @@ function Fixture() {
   const wechat = useWeChatReminders(true);
   const qqMail = useMail(true);
   const width = notchFittedWidth(300, state.notch, 1);
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: null }, agents: 0, status: { state: "idle", label: "AI Agent 空闲或已完成" }, barText: !state.notch, todoTitle: "写周报和整理会议记录" });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: null } });
   return <div className={state.light ? "stage island-light" : "stage"} style={{ "--collapsed-island-width": `${width}px`, "--island-scale": 1, "--island-collapsed-scale": 1, "--island-expanded-scale": 1, "--expanded-island-width": `${state.popup ? notchPanelWidth(400, state.notch, 1, true) : notchPanelWidth(560, state.notch, 1, false)}px`, "--expanded-island-height": "306px" } as CSSProperties}>
     <IslandShell
-      mode={state.expanded ? "expanded" : "collapsed"} page={state.popup ? "agents" : "todo"} popup={state.popup} isTucked={state.tucked} isDetached={islandFormLayout({ islandForm: state.form, marginY: 0, menuBarPlacement: "notch" }).marginY > 0} showTitle={false}
+      mode={state.expanded ? "expanded" : "collapsed"} page="music" popup={state.popup} isTucked={state.tucked} isDetached={islandFormLayout({ islandForm: state.form, marginY: 0, menuBarPlacement: "notch" }).marginY > 0} showTitle={false}
       showCollapsedText={!state.notch} appearanceMode="classic" nativeGlassState="disabled"
       features={{ todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, agents: true, translation: true, calendar: true, screenshots: true } as never}
       onOpenPage={() => {}}
       onPageChange={() => {}} onWindowDragStart={() => {}} onCollapse={() => {}}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
-      <span>待办清单</span>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      <span>音乐</span>
     </IslandShell>
   </div>;
 }
@@ -104,7 +104,7 @@ async function runChecks() {
     check(getComputedStyle(island()).backgroundColor === "rgb(0, 0, 0)" && Math.abs(radius("borderBottomLeftRadius") - 14) < 0.5, "模拟刘海纯黑，下角 14");
     const gap = bar().querySelector<HTMLElement>(".island__notch-gap");
     check(gap && Math.abs(box(gap).width - 72) < 1 && Math.abs(box(gap).left + box(gap).width / 2 - (box(island()).left + box(island()).width / 2)) < 1, "中间空出约 30%（72px），正好在正中");
-    check(bar().querySelector(".island__notch-wing--left .island__pulse"), "Agent 灯在左翼");
+    check(bar().querySelector(".island__notch-wing--left .island__pulse"), "状态灯在左翼");
     check(bar().scrollWidth <= bar().clientWidth + 1, "两翼的内容不撑出刘海");
     check(notchExpandedExtra(SIMULATED, 1, true) === 0 && notchPanelWidth(560, SIMULATED, 1, false) === 560, "模拟刘海展开时不加高、不加宽");
     await set({ light: true });

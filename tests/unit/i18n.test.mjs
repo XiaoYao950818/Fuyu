@@ -56,8 +56,6 @@ test("both dictionaries have complete, nonempty copy including new panels", () =
   for (const [key, value] of [...zh, ...en]) {
     assert.ok(typeof value === "function" || typeof value === "string" && value.trim(), key);
   }
-  assert.equal(TRANSLATIONS.en.island.pendingTodos(1), "1 todo left");
-  assert.equal(TRANSLATIONS.en.island.pendingTodos(2), "2 todos left");
   assert.equal(TRANSLATIONS.en.mail.readMessage("用户内容", true), "Read email: 用户内容, unread");
 });
 

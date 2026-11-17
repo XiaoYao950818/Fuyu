@@ -1,6 +1,4 @@
-import { DEFAULT_AGENT_SETTINGS, LEGACY_AGENT_FALLBACKS } from "../../features/agent-status/agentSettings.ts";
 import { DEFAULT_LYRICS_SETTINGS } from "../../features/media/lyrics/lyricsSettings.ts";
-import { DEFAULT_CALENDAR_SETTINGS } from "../../features/calendar/calendarSettings.ts";
 import { DEFAULT_GLASS_SETTINGS } from "./glassSettings.ts";
 import { DEFAULT_PAGE_DIGIT_MODIFIERS, DEFAULT_PAGE_NEXT_SHORTCUT, DEFAULT_PAGE_PREVIOUS_SHORTCUT } from "./pageShortcuts.ts";
 import {
@@ -30,7 +28,6 @@ export const DEFAULT_SETTINGS: IslandSettings = {
   panelWidth: DEFAULT_PANEL_WIDTH,
   collapsedWidthExtra: 0,
   dragGrid: true,
-  ...DEFAULT_AGENT_SETTINGS,
   taskTextColor: DEFAULT_TASK_TEXT_COLOR,
   pulseColor: "#3ae489",
   pulseBrightness: 160,
@@ -52,16 +49,8 @@ export const DEFAULT_SETTINGS: IslandSettings = {
   inkColor: "",
   showTitle: false,
   showCollapsedText: true,
-  showIdleTodoCount: true,
-  carryOverIncompleteTodos: false,
-  enableTodoReorder: false,
-  todoProjects: [],
-  rotateTodos: false,
-  todoRotationSeconds: 5,
   autoTuck: false,
   autoTuckSeconds: 120,
-  autoTuckHoldTodo: true,
-  autoTuckHoldAgent: true,
   autoTuckHoldMusic: false,
   autoTuckHoldMessages: true,
   autoTuckRetract: true,
@@ -79,15 +68,8 @@ export const DEFAULT_SETTINGS: IslandSettings = {
   pageDigitModifiers: DEFAULT_PAGE_DIGIT_MODIFIERS,
   pageNextShortcut: DEFAULT_PAGE_NEXT_SHORTCUT,
   pagePreviousShortcut: DEFAULT_PAGE_PREVIOUS_SHORTCUT,
-  todoEnabled: true,
   musicEnabled: true,
-  agentStatusEnabled: true,
-  agentTitleEnabled: true,
-  agentTitleMode: "changes",
-  agentLightStyle: "dot",
   shelfEnabled: true,
-  translationEnabled: true,
-  translationTarget: "island",
   screenshotEnabled: false,
   screenshotGuides: true,
   shelfExpandOnDrop: true,
@@ -102,7 +84,6 @@ export const DEFAULT_SETTINGS: IslandSettings = {
   levelPopup: true,
   deviceAlerts: true,
   ...DEFAULT_LYRICS_SETTINGS,
-  ...DEFAULT_CALENDAR_SETTINGS,
   ...DEFAULT_GLASS_SETTINGS,
   mailEnabled: true,
   gameDoNotDisturb: !isMacOS,
@@ -119,8 +100,6 @@ export const LEGACY_FALLBACKS = {
   panelWidth: 560,
   pulseBrightness: 100,
   islandBackgroundColor: "#000000",
-  carryOverIncompleteTodos: true,
   autoTuckSeconds: 30,
   messageNotice: "line",
-  ...LEGACY_AGENT_FALLBACKS,
 } as const satisfies Partial<IslandSettings>;

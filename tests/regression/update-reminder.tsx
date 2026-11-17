@@ -41,15 +41,15 @@ function Island({ mode }: { mode: IslandMode }) {
   const wechat = useWeChatReminders(false);
   const qqMail = useMail(false);
   useUpdateContributions(openUpdates);
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: null }, agents: null, status: { state: "idle", label: "AI Agent 空闲或已完成" }, todoTitle: "剩余3个待办" });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: null } });
   return <div className="stage" style={{ "--collapsed-island-width": "300px", "--expanded-island-height": "220px", "--expanded-island-width": "460px" } as CSSProperties}>
     <IslandShell
-      mode={mode} page="todo" isTucked={false} isDetached={true} showTitle={false}
+      mode={mode} page="music" isTucked={false} isDetached={true} showTitle={false}
       showCollapsedText={true} appearanceMode="classic" nativeGlassState="disabled"
-      features={{ todo: true, music: false, clipboard: true, shelf: true, qq: false, wechat: false, qqMail: false, agents: false, translation: false, calendar: false, screenshots: false, timer: false }}
+      features={{ music: false, clipboard: true, shelf: true, qq: false, wechat: false, qqMail: false, screenshots: false, timer: false, "device-battery": false, "quick-launch": false, "quick-commands": false, "file-search": false, "net-speed": false, volume: false }}
       onOpenPage={() => {}}
       onPageChange={() => {}} onWindowDragStart={() => {}} onCollapse={() => {}}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
       <span>待办清单</span>
     </IslandShell>
   </div>;

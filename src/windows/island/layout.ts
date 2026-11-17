@@ -19,8 +19,6 @@ export function panelIslandWidth(panelWidth: number, scale: number) {
   return Math.min(panelWidth, maxExpandedIslandWidth(scale));
 }
 export const POPUP_HEADER_SAVING = 58;
-export const TODO_ROW_HEIGHT = 34;
-export const TODO_GROW_START_ROWS = 2;
 export function getCollapsedIslandWidth(text: string, extraWidth = 0, widthExtra = 0) {
   const visualUnits = getCollapsedTextUnits(text);
   const widthProgress =
@@ -76,11 +74,4 @@ export function alignCollapsedIslandWidth(
   }
 
   return width;
-}
-
-export function getTodoScrollStartRows(maxPanelHeight: number) {
-  return (
-    TODO_GROW_START_ROWS +
-    Math.max(0, Math.floor((maxPanelHeight - BASE_EXPANDED_ISLAND_HEIGHT) / TODO_ROW_HEIGHT))
-  );
 }

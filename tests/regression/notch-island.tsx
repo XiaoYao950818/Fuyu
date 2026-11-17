@@ -13,6 +13,7 @@ import { useMail } from "../../src/features/messages/mail/MailPanel";
 import type { LevelChange } from "../../src/features/system-levels/api";
 import type { DeviceAlert } from "../../src/features/device-events/api";
 import type { MessagePreview } from "../../src/features/messages/messagePreview";
+import { useTranslation } from "../../src/i18n";
 import { useFixtureLines } from "./islandLines";
 
 Object.assign(globalThis, { isTauri: true, IS_REACT_ACT_ENVIRONMENT: true });
@@ -26,6 +27,7 @@ mockIPC((command) => {
 
 type State = { notch: IslandNotch | null; tucked: boolean; peek: string | null; expanded: boolean; level: LevelChange | null; device: DeviceAlert | null; preview: MessagePreview | null; popup: boolean };
 let change: (next: Partial<State>) => void;
+let popupTitle = "";
 
 function Fixture() {
   const [state, setState] = useState<State>({ notch: NOTCH, tucked: false, peek: null, expanded: false, level: null, device: null, preview: null, popup: false });
@@ -33,17 +35,18 @@ function Fixture() {
   const qq = useQQNotifications(true);
   const wechat = useWeChatReminders(true);
   const qqMail = useMail(true);
+  popupTitle = useTranslation().messages.title;
   const width = notchFittedWidth(300, state.notch, 1, Boolean(state.level || state.device));
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: state.preview }, agents: 0, status: { state: "idle", label: "AI Agent 空闲或已完成" }, barText: !state.notch, todoTitle: "写周报和整理会议记录", translationPeek: state.peek, levelPopup: state.level, deviceAlert: state.device });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: state.preview }, screenshotPeek: state.peek, levelPopup: state.level, deviceAlert: state.device });
   return <div className="stage" style={{ "--collapsed-island-width": `${width}px`, "--island-scale": 1, "--island-collapsed-scale": 1, "--island-expanded-scale": 1, "--expanded-island-width": `${state.popup ? notchPanelWidth(400, state.notch, 1, true) : notchPanelWidth(560, state.notch, 1, false)}px`, "--expanded-island-height": "306px" } as CSSProperties}>
     <IslandShell
-      mode={state.expanded ? "expanded" : "collapsed"} page={state.popup ? "agents" : "todo"} popup={state.popup} isTucked={state.tucked} isDetached={false} showTitle={false}
+      mode={state.expanded ? "expanded" : "collapsed"} page="music" popup={state.popup} isTucked={state.tucked} isDetached={false} showTitle={false}
       showCollapsedText={!state.notch} appearanceMode="classic" nativeGlassState="disabled"
       features={{ todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, agents: true, translation: true, calendar: true, screenshots: true } as never}
       onOpenPage={() => {}}
       onPageChange={() => {}} onWindowDragStart={() => {}} onCollapse={() => {}}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
-      <span>待办清单</span>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      <span>音乐</span>
     </IslandShell>
   </div>;
 }
@@ -77,7 +80,7 @@ async function runChecks() {
     check(Math.abs(hole.width - NOTCH.width) < 1, "空位和刘海一样宽");
     check(Math.abs(shell.height - NOTCH.height) < 1, "岛的高度等于刘海高");
     check(getComputedStyle(island()).backgroundColor === "rgb(0, 0, 0)", "收起的岛是纯黑的");
-    check(!bar().querySelector(".island__active-task, .island__notch-drop"), "平时贴合刘海的岛只放图标，不放待办文字");
+    check(!bar().querySelector(".island__active-task, .island__notch-drop"), "平时贴合刘海的岛只放图标，不放文字");
     check(bar().querySelector(".island__notch-wing--left .island__pulse"), "状态灯在刘海左边");
     check(bar().scrollWidth <= bar().clientWidth + 1, "两翼的内容不撑出收起条");
     check(notchFittedWidth(280, NOTCH, 1) === NOTCH.width + 112 && notchFittedWidth(300, NOTCH, 1) === NOTCH.width + 152 && notchFittedWidth(520, NOTCH, 1) === NOTCH.width + 200,
@@ -100,7 +103,7 @@ async function runChecks() {
     const close = document.querySelector<HTMLElement>(".island__notch-band-close");
     const popupNotchLeft = box(island()).left + (box(island()).width - NOTCH.width) / 2;
     check(band && Math.abs(box(band).top - box(island()).top) < 1 && Math.abs(box(band).height - NOTCH.height) < 1, "弹出卡片：刘海两边有一条标题带，和刘海一样高");
-    check(label?.textContent === "AI Agent" && label.scrollWidth <= label.clientWidth + 1 && box(label).right <= popupNotchLeft + 0.5, "刘海左边写着是哪类弹出，放得下、不压刘海");
+    check(label?.textContent === popupTitle && label.scrollWidth <= label.clientWidth + 1 && box(label).right <= popupNotchLeft + 0.5, "刘海左边写着是哪类弹出，放得下、不压刘海");
     check(close && box(close).left >= popupNotchLeft + NOTCH.width - 0.5 && box(close).right <= box(island()).right, "刘海右边是关闭按钮");
     check(!document.querySelector(".island--popup .island__header") || getComputedStyle(document.querySelector(".island--popup .island__header")!).display === "none", "弹出时不显示页面标签栏");
     await set({ popup: false, expanded: false });

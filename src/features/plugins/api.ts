@@ -4,12 +4,6 @@ import { openUrl } from "@tauri-apps/plugin-opener";
 import type { PluginSensitiveChoice, PromptedPermission } from "./promptedPermissions";
 
 export const PLUGIN_PERMISSIONS = [
-  "todos:read",
-  "todos:write",
-  "notes:read",
-  "notes:write",
-  "agent-status:read",
-  "agent-status:write",
   "island:notify",
   "secrets",
   "clipboard:read",
@@ -128,7 +122,7 @@ export type PluginsSnapshot = {
   brokenStateBackup: string | null;
 };
 
-export const MARKET_CATEGORIES = ["productivity", "todos", "developer", "media", "messages", "information", "utilities", "sounds"] as const;
+export const MARKET_CATEGORIES = ["productivity", "developer", "media", "messages", "information", "utilities", "sounds"] as const;
 export type MarketCategory = (typeof MARKET_CATEGORIES)[number];
 
 export type MarketPlugin = {
@@ -244,9 +238,7 @@ export function runPluginCommand(id: string, command: string) {
 
 const PLUGIN_HOST_EVENT = "plugin-host-event";
 export type PluginHostEventName =
-  | "todos.changed"
   | "note.changed"
-  | "agentStatus.changed"
   | "island.expanded"
   | "island.collapsed"
   | "app.locale.changed";

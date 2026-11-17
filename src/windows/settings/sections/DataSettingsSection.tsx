@@ -7,7 +7,7 @@ import { DataHomeSection } from "./DataHomeSection";
 import { SettingsBackupSection } from "./SettingsBackupSection";
 import { UpdateBackupsSection } from "./UpdateBackupsSection";
 
-export function DataSettingsSection({ onMoved }: { onMoved: (from: string, to: string) => void }) {
+export function DataSettingsSection() {
   const text = useTranslation().settings;
   const [homeNote, setHomeNote] = useState<ReactNode>(null);
   const [backupNote, setBackupNote] = useState<ReactNode>(null);
@@ -25,7 +25,7 @@ export function DataSettingsSection({ onMoved }: { onMoved: (from: string, to: s
           </>
         }
       >
-        <DataHomeSection onMoved={onMoved} onNote={setHomeNote} />
+        <DataHomeSection onNote={setHomeNote} />
         <SettingsBackupSection onNote={setBackupNote} />
       </SettingsGroup>
       <UpdateBackupsSection />

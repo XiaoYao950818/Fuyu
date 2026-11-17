@@ -1,4 +1,4 @@
-import { Bot, Mail, Settings } from "lucide-react";
+import { Mail, Settings } from "lucide-react";
 import { SettingsGroup } from "../../components/settings/SettingsGroup";
 import { SettingsToggleRow } from "../../components/settings/SettingsToggleRow";
 import { useTranslation } from "../../i18n";
@@ -25,12 +25,6 @@ export function ReleaseAct({ modules, launchAtStartup, onLaunchAtStartupChange, 
       </SettingsGroup>
       <p className="onboarding-release__later">{text.later}</p>
       <div className="onboarding-release__links">
-        {modules.has("agents") && (
-          <button className="onboarding-release__link" type="button" onClick={() => onLeaveForSettings("agentConnect")}>
-            <Bot size={16} aria-hidden="true" />
-            {text.connectAgents}
-          </button>
-        )}
         {modules.has("mail") && (
           <button className="onboarding-release__link" type="button" onClick={() => onLeaveForSettings("mail")}>
             <Mail size={16} aria-hidden="true" />

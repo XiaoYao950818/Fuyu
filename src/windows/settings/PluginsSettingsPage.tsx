@@ -25,7 +25,7 @@ export function PluginsSettingsPage({
   if (tab === "pluginsPages") {
     return (
       <>
-        <PluginIslandPagesSection />
+        <PluginIslandPagesSection settings={settings} />
         <PluginShortcutSection takenBy={takenBy} onChanged={refreshPlugins} action={<AllShortcutsLink onOpen={onOpenShortcuts} />} hideWhenEmpty />
       </>
     );

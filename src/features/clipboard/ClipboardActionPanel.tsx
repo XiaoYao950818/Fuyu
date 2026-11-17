@@ -1,11 +1,10 @@
 import { useMemo, useState, type KeyboardEvent } from "react";
 import {
-  ClipboardPaste, CornerDownLeft, Eraser, FileText, ImageIcon, Keyboard, Pause, Pencil, Play, QrCode, Search, SkipForward, Sparkles, Star, Tag, TextQuote, Trash2, Type, WandSparkles,
+  ClipboardPaste, CornerDownLeft, Eraser, FileText, ImageIcon, Keyboard, Pause, Pencil, Play, QrCode, Search, SkipForward, Star, Tag, TextQuote, Trash2, Type, WandSparkles,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import type { ClipboardAiPrompt, ClipboardHistoryItem } from "./api";
-import { ClipboardAiList } from "./ClipboardAiList";
+import type { ClipboardHistoryItem } from "./api";
 import { ClipboardPinKeyPage } from "./ClipboardPinKeyPage";
 import { pinKeyFromCode } from "./pins";
 import { ClipboardTransformList } from "./ClipboardTransformList";
@@ -14,12 +13,12 @@ import { isPrimaryKey } from "../../lib/shortcut/shortcut";
 
 const ICONS: Record<ActionIcon, LucideIcon> = {
   paste: ClipboardPaste, plain: Type, enter: CornerDownLeft, edit: Pencil, wand: WandSparkles, file: FileText, image: ImageIcon,
-  qr: QrCode, ai: Sparkles, star: Star, tag: Tag, snippet: TextQuote, trash: Trash2, pause: Pause, play: Play, skip: SkipForward, key: Keyboard, eraser: Eraser,
+  qr: QrCode, star: Star, tag: Tag, snippet: TextQuote, trash: Trash2, pause: Pause, play: Play, skip: SkipForward, key: Keyboard, eraser: Eraser,
 };
 
-export type PanelPage = "actions" | "transforms" | "note" | "ai" | "pinKey";
+export type PanelPage = "actions" | "transforms" | "note" | "pinKey";
 
-export function ClipboardActionPanel({ item, items = [], actions, page, aiPrompts, copy = false, onPage, onClose, onPasteText, onSaveNote, onSetPinKey }: {
+export function ClipboardActionPanel({ item, items = [], actions, page, copy = false, onPage, onClose, onPasteText, onSaveNote, onSetPinKey }: {
   item?: ClipboardHistoryItem;
   items?: readonly ClipboardHistoryItem[];
   onSetPinKey?: (id: string, key: string | null) => void;
@@ -29,7 +28,6 @@ export function ClipboardActionPanel({ item, items = [], actions, page, aiPrompt
   onClose: () => void;
   onPasteText: (text: string) => void;
   onSaveNote: (id: string, note: string) => void;
-  aiPrompts?: readonly ClipboardAiPrompt[];
   copy?: boolean;
 }) {
   const t = useTranslation();
@@ -96,7 +94,7 @@ export function ClipboardActionPanel({ item, items = [], actions, page, aiPrompt
     onClose();
   };
 
-  const title = page === "pinKey" ? t.clipboardList.pinKeyTitle : page === "ai" ? text.aiTitle : page === "transforms" ? text.transformTitle : page === "note" ? text.note : text.panelTitle;
+  const title = page === "pinKey" ? t.clipboardList.pinKeyTitle : page === "transforms" ? text.transformTitle : page === "note" ? text.note : text.panelTitle;
   const preview = item ? (item.kind === "image" ? t.clipboard.imageLabel(item.image?.width ?? 0, item.image?.height ?? 0) : item.preview) : "";
 
   return (
@@ -135,9 +133,7 @@ export function ClipboardActionPanel({ item, items = [], actions, page, aiPrompt
           )}
           <kbd>Esc</kbd>
         </div>
-        {page === "ai" && item ? (
-          <ClipboardAiList item={item} prompts={aiPrompts} copy={copy} onPaste={(result) => { onClose(); onPasteText(result); }} />
-        ) : page === "transforms" && item ? (
+        {page === "transforms" && item ? (
           <ClipboardTransformList item={item} query={query} copy={copy} onPaste={(result) => { onClose(); onPasteText(result); }} />
         ) : page === "pinKey" && item ? (
           <ClipboardPinKeyPage item={item} items={items} onSet={setPinKey} />

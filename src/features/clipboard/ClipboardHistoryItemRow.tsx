@@ -1,4 +1,4 @@
-import { BookmarkPlus, Braces, Check, Copy, FileImage, ImageIcon, Link2, Pencil, ScanText, Sparkles, SquareTerminal, Star, Trash2, WandSparkles, X } from "lucide-react";
+import { BookmarkPlus, Braces, Check, Copy, FileImage, ImageIcon, Link2, Pencil, ScanText, SquareTerminal, Star, Trash2, WandSparkles, X } from "lucide-react";
 import { RowMenu, type RowMenuItem } from "../../components/list/RowMenu";
 import { formatAgo } from "../../components/list/formatAgo";
 import { useTranslation } from "../../i18n";
@@ -50,7 +50,7 @@ export function ClipboardHistoryItemRow({
   onCancelEditNote: () => void;
   onDelete: (id: string) => void;
   onTag?: (tag: string) => void;
-  onTools?: (page: "transforms" | "ai") => void;
+  onTools?: (page: "transforms") => void;
   bookmarks?: readonly ClipboardLink[];
   onBookmark?: (url: string) => void;
 }) {
@@ -79,7 +79,6 @@ export function ClipboardHistoryItemRow({
     ...(item.kind === "text" && onTools
       ? [
           { key: "transforms", label: copyText.transform, icon: <WandSparkles size={14} strokeWidth={2} />, onSelect: () => onTools("transforms") },
-          ...(item.masked ? [] : [{ key: "ai", label: copyText.ai, icon: <Sparkles size={14} strokeWidth={2} />, onSelect: () => onTools("ai") }]),
         ]
       : []),
     ...(item.kind === "image"

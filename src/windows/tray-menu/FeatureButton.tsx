@@ -1,15 +1,14 @@
-import { Clipboard, Languages, ScanLine } from "lucide-react";
+import { Clipboard, ScanLine } from "lucide-react";
 import { useTranslation } from "../../i18n";
 import { shortcutLabel } from "../../lib/shortcut/shortcut";
 import type { TrayCardProps } from "./types";
 
-export type TrayFeature = "screenshot" | "translate" | "clipboard";
+export type TrayFeature = "screenshot" | "clipboard";
 
-const ICONS = { screenshot: ScanLine, translate: Languages, clipboard: Clipboard } as const;
+const ICONS = { screenshot: ScanLine, clipboard: Clipboard } as const;
 
 function featureOn(feature: TrayFeature, state: TrayCardProps["data"]["state"]) {
   if (feature === "screenshot") return state.screenshotEnabled;
-  if (feature === "translate") return state.translateEnabled;
   return true;
 }
 

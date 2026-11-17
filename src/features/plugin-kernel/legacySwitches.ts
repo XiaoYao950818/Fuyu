@@ -4,13 +4,9 @@ import type { BuiltinPlugin } from "./api.ts";
 export type SwitchTarget = string | { readonly plugin: string; readonly key: string };
 
 export const LEGACY_SWITCHES = {
-  todoEnabled: "todos",
-  translationEnabled: "translation",
-  calendarEnabled: "calendar",
   shelfEnabled: "file-shelf",
   screenshotEnabled: "screenshot",
   musicEnabled: "music",
-  agentStatusEnabled: "agents",
   deviceAlerts: "device-events",
   levelPopup: "system-levels",
   deviceUseIndicator: "device-use",

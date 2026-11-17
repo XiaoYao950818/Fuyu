@@ -18,5 +18,5 @@ export function useTuckHold(settings: IslandSettings, { messagesOpen, notices }:
     wechat: { enabled: wechat.snapshot.enabled, pending: wechat.snapshot.pending },
     mail: { enabled: settings.mailEnabled, newUnread: hasNewUnreadMail(baselines, mail.mailboxes) },
   });
-  return holdsTuck(settings, { todoInProgress: false, agentWaiting: false, musicPlaying: false, messagesUnread });
+  return holdsTuck(settings, { musicPlaying: false, messagesUnread });
 }

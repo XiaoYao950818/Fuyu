@@ -51,8 +51,8 @@ fn register(table: &mut Table, plugin: &str, name: &str, fake: &Arc<Fake>) {
 fn the_shipped_catalog_lists_every_built_in_plugin() {
     let catalog = parse_catalog(CATALOG).unwrap();
     let ids: Vec<&str> = catalog.iter().map(|plugin| plugin.id.as_str()).collect();
-    assert_eq!(ids.len(), 22, "{ids:?}");
-    for id in ["todos", "calendar", "music", "clipboard", "screenshot", "file-shelf", "translation", "voice-input", "timer", "agents", "session-ring", "claude-usage", "cc-connect", "ssh-tunnel", "local-api", "center-pattern", "messages", "device-events", "system-levels", "device-use", "theme-market", "updater"] {
+    assert_eq!(ids.len(), 21, "{ids:?}");
+    for id in ["music", "clipboard", "screenshot", "file-shelf", "timer", "device-battery", "quick-launch", "quick-commands", "file-search", "net-speed", "volume", "dock", "music-island", "ssh-tunnel", "local-api", "messages", "device-events", "system-levels", "device-use", "theme-market", "updater"] {
         assert!(ids.contains(&id), "{id} is missing from builtins.json");
     }
     let essential: Vec<&str> = catalog.iter().filter(|plugin| plugin.kind == Kind::Essential).map(|plugin| plugin.id.as_str()).collect();
@@ -160,9 +160,9 @@ fn switches_are_saved_in_plugins_yml_next_to_other_entries() {
     assert_eq!(std::fs::read_to_string(&file).unwrap(), "- id: timer\n  disabled: true\n");
     assert_eq!(read_disabled(&file), BTreeSet::from(["timer".to_owned()]));
     std::fs::write(&file, "- id: hello\n  name: ./hello.mjs\n- id: timer\n  disabled: true\n").unwrap();
-    write_switch(&file, "translation", false).unwrap();
+    write_switch(&file, "music", false).unwrap();
     write_switch(&file, "timer", true).unwrap();
-    assert_eq!(std::fs::read_to_string(&file).unwrap(), "- id: hello\n  name: ./hello.mjs\n- id: translation\n  disabled: true\n");
+    assert_eq!(std::fs::read_to_string(&file).unwrap(), "- id: hello\n  name: ./hello.mjs\n- id: music\n  disabled: true\n");
     assert_eq!(read_disabled(&dir.join("missing.yml")), BTreeSet::new());
     std::fs::write(&file, "[{ id: x }]\n").unwrap();
     assert_eq!(write_switch(&file, "timer", false).unwrap_err().code(), "pluginsV3.builtinSave");

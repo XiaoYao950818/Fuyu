@@ -1,11 +1,9 @@
 import { Coffee } from "lucide-react";
 import { useTranslation } from "../../i18n";
-import { AgentBlock } from "./AgentBlock";
 import { columns, shownFeatures } from "./builtinEntries";
 import { FeatureButton } from "./FeatureButton";
 import { IslandButton } from "./IslandButton";
 import { MediaBlock } from "./MediaBlock";
-import { MeetingBlock } from "./MeetingBlock";
 import { TrayCardFooter } from "./TrayCardFooter";
 import { TrayCardHeader } from "./TrayCardHeader";
 import { TraySwitch } from "./TraySwitch";
@@ -14,14 +12,12 @@ import type { TrayCardProps } from "./types";
 export function StatusLayout(props: TrayCardProps) {
   const text = useTranslation().trayMenu;
   const { data, handlers } = props;
-  const features = shownFeatures(data.off, ["screenshot", "translate"]);
-  const calm = !data.media && !data.meeting && !data.agents;
+  const features = shownFeatures(data.off, ["screenshot"]);
+  const calm = !data.media;
   return (
     <>
       <TrayCardHeader {...props} />
       {data.media ? <MediaBlock media={data.media} handlers={handlers} /> : null}
-      {data.meeting ? <MeetingBlock meeting={data.meeting} now={data.now} handlers={handlers} /> : null}
-      {data.agents ? <AgentBlock agents={data.agents} handlers={handlers} /> : null}
       {calm ? (
         <div className="tray-card__block">
           <span className="tray-card__block-icon" aria-hidden="true">

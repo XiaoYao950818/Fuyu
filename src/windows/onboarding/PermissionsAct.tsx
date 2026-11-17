@@ -8,7 +8,7 @@ import type { OnboardingModule } from "./personas";
 
 export function neededPermissions(modules: ReadonlySet<OnboardingModule>): SystemPermissionKind[] {
   const kinds: SystemPermissionKind[] = [];
-  if (modules.has("clipboard") || modules.has("translation")) kinds.push("accessibility");
+  if (modules.has("clipboard")) kinds.push("accessibility");
   if (modules.has("screenshot")) kinds.push("screenRecording");
   return kinds;
 }

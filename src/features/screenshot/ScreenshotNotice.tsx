@@ -1,4 +1,4 @@
-import { Bot, Inbox, X } from "lucide-react";
+import { Inbox, X } from "lucide-react";
 import { useTranslation } from "../../i18n";
 import type { ScreenshotNoticeState } from "./useScreenshotNotice";
 import "./ScreenshotNotice.css";
@@ -29,16 +29,6 @@ export function ScreenshotNoticeActions({ notice }: { notice: ScreenshotNoticeSt
     <span className="screenshot-notice__actions" onPointerEnter={card.hold} onPointerLeave={card.release}>
       <button className="screenshot-notice__action" type="button" aria-label={t.card.shelf} title={t.card.shelf} onClick={stop(notice.shelve)}>
         <Inbox size={13} strokeWidth={2} aria-hidden="true" />
-      </button>
-      <button
-        className="screenshot-notice__action"
-        type="button"
-        aria-label={t.card.sendToAgent}
-        title={notice.canSend ? t.card.sendToAgent : t.card.noAgent}
-        disabled={!notice.canSend}
-        onClick={stop(() => void notice.sendToAgent())}
-      >
-        <Bot size={13} strokeWidth={2} aria-hidden="true" />
       </button>
       <button className="screenshot-notice__action" type="button" aria-label={t.card.close} title={t.card.close} onClick={stop(card.dismiss)}>
         <X size={13} strokeWidth={2} aria-hidden="true" />

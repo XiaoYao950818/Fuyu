@@ -1,14 +1,11 @@
-import { Bot, Camera, Check, ClipboardList, FolderInput, Languages, ListTodo, Mail, Music, type LucideIcon } from "lucide-react";
+import { Camera, Check, ClipboardList, FolderInput, Mail, Music, type LucideIcon } from "lucide-react";
 import { useTranslation } from "../../i18n";
 import { ActHeading } from "./ActHeading";
 import { MODULES, PERSONAS, personaModules, takenOff, togglePersona, type OnboardingModule, type Persona, type PersonaAnswer } from "./personas";
 import "./OutfitAct.css";
 
 const MODULE_ICONS: Record<OnboardingModule, LucideIcon> = {
-  todo: ListTodo,
   music: Music,
-  agents: Bot,
-  translation: Languages,
   shelf: FolderInput,
   mail: Mail,
   screenshot: Camera,

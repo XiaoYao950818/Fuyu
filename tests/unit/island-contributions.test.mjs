@@ -29,9 +29,9 @@ test("writing the same contributions again does not notify", () => {
   const store = createIslandContributions();
   let calls = 0;
   store.subscribe(() => (calls += 1));
-  store.set("todos", "bar", [{ kind: "hold", reason: "todo" }]);
+  store.set("media", "bar", [{ kind: "hold", reason: "media.playing" }]);
   const first = store.snapshot();
-  store.set("todos", "bar", [{ kind: "hold", reason: "todo" }]);
+  store.set("media", "bar", [{ kind: "hold", reason: "media.playing" }]);
   assert.equal(calls, 1);
   assert.equal(store.snapshot(), first);
 });
@@ -39,10 +39,10 @@ test("writing the same contributions again does not notify", () => {
 test("contributions of a switched-off owner do not count, and come back when it is on again", () => {
   const store = createIslandContributions();
   store.set("media", "bar", [line("media.lyric", 35), { kind: "hold", reason: "playing" }, { kind: "side", item: "music", height: 32 }]);
-  store.set("todos", "bar", [line("todos.title", 20)]);
+  store.set("messages", "bar", [line("messages.summary", 20)]);
   store.setDisabledOwners(["media"]);
   const off = store.snapshot();
-  assert.deepEqual(off.lines.map((entry) => entry.item), ["todos.title"]);
+  assert.deepEqual(off.lines.map((entry) => entry.item), ["messages.summary"]);
   assert.equal(off.hold, false);
   assert.equal(off.side.size, 0);
   assert.ok(store.byOwner().media, "the raw table still shows what a switched-off owner left, for the builtins-off check");
@@ -58,33 +58,34 @@ test("settle marks the table once", () => {
 });
 
 test("lines are ordered by priority, highest first", () => {
-  const { lines } = aggregateContributions([[line("todos.count", LINE_PRIORITY.todoCount)], [line("calendar.meeting", LINE_PRIORITY.meeting), line("media.lyric", LINE_PRIORITY.lyrics)]], true);
-  assert.deepEqual(lines.map((entry) => entry.item), ["calendar.meeting", "media.lyric", "todos.count"]);
+  const { lines } = aggregateContributions([[line("messages.summary", 10)], [line("screenshot.text", LINE_PRIORITY.screenshotPeek), line("media.lyric", LINE_PRIORITY.lyrics)]], true);
+  assert.deepEqual(lines.map((entry) => entry.item), ["screenshot.text", "media.lyric", "messages.summary"]);
 });
 
 test("line helpers pick what the bar shows, measures, reads out and leads to", () => {
   const lines = [
-    line("translation.peek", 70, { always: true, drop: true, label: "peek" }),
-    line("calendar.meeting", 60, { page: "calendar" }),
+    line("screenshot.peek", 70, { always: true, drop: true, label: "peek" }),
+    line("messages.preview", 60, { page: "qq" }),
     line("media.lyric", 45, { measure: "MMla", page: "music", lead: true, reserve: true }),
-    line("todos.title", 20, { measure: "Write", label: "Task: Write" }),
+    line("messages.summary", 20, { measure: "Summary", label: "Summary: hello" }),
   ];
-  assert.equal(shownLine(lines)?.item, "translation.peek");
+  assert.equal(shownLine(lines)?.item, "screenshot.peek");
   assert.equal(measuredLine(lines)?.item, "media.lyric");
-  assert.equal(labelLine(lines)?.item, "todos.title");
+  assert.equal(labelLine(lines)?.item, "messages.summary");
   assert.equal(leadLine(lines), null);
   assert.equal(leadLine(lines, { reserved: true })?.item, "media.lyric");
   assert.equal(lineBelow(lines, 60)?.item, "media.lyric");
-  assert.deepEqual(visibleLines(lines, false).map((entry) => entry.item), ["translation.peek"]);
+  assert.deepEqual(visibleLines(lines, false).map((entry) => entry.item), ["screenshot.peek"]);
 });
 
 test("the other kinds are folded into one view", () => {
   const view = aggregateContributions([
     [{ kind: "alert", item: "level" }, { kind: "notice", item: "recording" }, { kind: "busy" }],
     [{ kind: "reveal", reveal: "always", pauseHover: true }, { kind: "reveal", reveal: "allowed", pauseIdle: true }],
-    [{ kind: "popup", page: "agents", height: 200, open: true }, { kind: "status", state: "working", label: "Working" }],
+    [{ kind: "popup", page: "music", height: 200, open: true }, { kind: "status", state: "working", label: "Working" }],
     [{ kind: "style", vars: { "--cover": "#fff" }, className: "cover-color", tint: "#fff" }, { kind: "page", page: "qq", enabled: false }],
-    [{ kind: "trail", item: "calendar.join" }, { kind: "preview", item: "messages.preview", hot: "mail" }],
+    [{ kind: "page", page: "dock-tray", enabled: true }],
+    [{ kind: "trail", item: "messages.join" }, { kind: "preview", item: "messages.preview", hot: "mail" }],
     [{ kind: "summary", item: "messages.summary" }, { kind: "summary", item: "later.summary" }],
     [{ kind: "badge", target: "settings", label: "New v2", action: "updater.open" }, { kind: "badge", target: "settings", label: "later" }],
   ], false);
@@ -92,11 +93,11 @@ test("the other kinds are folded into one view", () => {
   assert.deepEqual([...view.notices.keys()], ["recording"]);
   assert.equal(view.busy, true);
   assert.deepEqual(view.reveal, { always: true, allowed: true, pauseIdle: true, pauseHover: true });
-  assert.equal(view.popups.get("agents")?.height, 200);
+  assert.equal(view.popups.get("music")?.height, 200);
   assert.equal(view.status?.state, "working");
   assert.deepEqual(view.style, { vars: { "--cover": "#fff" }, classNames: ["cover-color"], tint: "#fff" });
-  assert.deepEqual(view.pages, { qq: false });
-  assert.deepEqual(view.trails, ["calendar.join"]);
+  assert.deepEqual(view.pages, { qq: false, "dock-tray": true });
+  assert.deepEqual(view.trails, ["messages.join"]);
   assert.equal(view.preview?.hot, "mail");
   assert.equal(view.summary, "messages.summary");
   assert.equal(view.badges.get("settings")?.label, "New v2");

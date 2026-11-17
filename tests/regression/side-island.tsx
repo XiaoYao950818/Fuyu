@@ -58,17 +58,17 @@ function Fixture() {
   const wechat = useWeChatReminders(true);
   const qqMail = useMail(true);
   const gauges = Array.from({ length: state.gauges }, (_, index) => ({ id: `gauge-${index}`, node: <span className="gauge-dot">{index}</span> }));
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: state.preview }, agents: state.full ? 3 : 0, status: { state: state.full ? "running" : "idle", label: "AI Agent" }, todoCount: state.full ? 5 : null, levelPopup: state.level, deviceUse: state.full ? FULL_DEVICES : NO_DEVICES, media: state.full ? PLAYING : MEDIA, sideCover: state.cover, shelfCount: state.full ? 2 : null });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: NO_PLUGIN_NOTIFICATIONS, preview: state.preview }, levelPopup: state.level, deviceUse: state.full ? FULL_DEVICES : NO_DEVICES, media: state.full ? PLAYING : MEDIA, sideCover: state.cover, shelfCount: state.full ? 2 : null });
   return <div className="stage" style={{ "--collapsed-island-width": "340px", "--island-scale": 1, "--island-collapsed-scale": 1, "--island-expanded-scale": 1, "--expanded-island-width": "560px", "--expanded-island-height": "306px", "--island-top-fillet-size": 8 } as CSSProperties}>
     <IslandShell
-      mode={state.expanded ? "expanded" : "collapsed"} page="todo" isTucked={state.tucked} isDetached side={state.side} showTitle={false}
+      mode={state.expanded ? "expanded" : "collapsed"} page="music" isTucked={state.tucked} isDetached side={state.side} showTitle={false}
       showCollapsedText appearanceMode="classic" nativeGlassState="disabled"
       collapsedSlots={{ gauges }}
       features={{ todo: true, music: true, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, agents: true, translation: true, calendar: true, screenshots: true } as never}
       onOpenPage={() => {}}
       onPageChange={() => {}} onWindowDragStart={() => {}} onCollapse={() => {}}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
-      <span>待办清单</span>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      <span>音乐</span>
     </IslandShell>
   </div>;
 }
@@ -95,7 +95,7 @@ async function runChecks() {
     await settleTransitions();
     let shell = island().getBoundingClientRect();
     check(near(shell.left, stageBox().left) && near(shell.top, stageBox().top), "左侧竖向岛贴着舞台左上");
-    check(near(shell.width, 44) && near(shell.height, 48), "只有 Agent 时是 44×48 的竖向岛");
+    check(near(shell.width, 44) && near(shell.height, 48), "没有侧边内容时是 44×48 的竖向岛");
     check(last(reported) === 48, "把竖向岛高度报给原生");
     const style = getComputedStyle(island());
     check(parseFloat(style.borderTopLeftRadius) === 0 && parseFloat(style.borderBottomLeftRadius) === 0, "贴边一侧是直边");
@@ -109,10 +109,9 @@ async function runChecks() {
     await set({ full: true });
     await settleTransitions();
     shell = island().getBoundingClientRect();
-    check(items().join(",") === "agent,music,todo,device-camera,shelf", "图标从上到下按收起条的顺序排");
-    check(near(shell.height, 184) && last(reported) === 184, "高度随内容长到 184");
-    check(document.querySelector(".island-side-ring")!.textContent === "3", "Agent 环里写会话数");
-    check(document.querySelector('[data-side-item="todo"] .island-side-cell__num')!.textContent === "5", "待办写数字");
+    check(items().join(",") === "music,device-camera,shelf", "图标从上到下按收起条的顺序排");
+    check(near(shell.height, 116) && last(reported) === 116, "高度随内容长到 116");
+    check(document.querySelector('[data-side-item="shelf"] .island-side-cell__num')!.textContent === "2", "文件中转写数字");
 
     await set({ cover: true });
     check(document.querySelector('[data-side-item="music"] img'), "开了「音乐显示封面」时音乐那行是封面");

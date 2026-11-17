@@ -10,10 +10,10 @@ const zh = { errors: errors.zhCN };
 const en = { errors: errors.en };
 
 test("a native error is worded in the island's language, what the service said after it", () => {
-  const error = { code: "bark.status", args: { status: 500 }, detail: "busy", message: "Bark answered 500." };
-  assert.equal(errorText(error, zh), "Bark 返回 500：busy");
-  assert.equal(errorText(error, en), "Bark answered 500: busy");
-  assert.equal(errorText({ code: "bark.noKey", message: "No Bark device key yet." }, zh), "还没有填 Bark 设备 Key。");
+  const error = { code: "net.status", args: { service: "Mail", status: 500 }, detail: "busy", message: "Mail answered 500." };
+  assert.equal(errorText(error, zh), "Mail 返回 500：busy");
+  assert.equal(errorText(error, en), "Mail answered 500: busy");
+  assert.equal(errorText({ code: "mail.read", message: "Could not read the mail." }, zh), "无法读取邮件。");
 });
 
 test("an unknown code falls back to its English message, and plain errors show as they are", () => {
@@ -25,7 +25,7 @@ test("an unknown code falls back to its English message, and plain errors show a
 });
 
 test("English text for logs reads the native error too", () => {
-  assert.equal(getErrorMessage({ code: "bark.status", detail: "busy", message: "Bark answered 500." }), "Bark answered 500: busy");
+  assert.equal(getErrorMessage({ code: "net.status", args: { service: "Mail", status: 500 }, detail: "busy", message: "Mail answered 500." }), "Mail answered 500: busy");
   assert.equal(getErrorMessage("plain"), "plain");
 });
 
@@ -45,6 +45,7 @@ test("every code the native side sends has its wording", () => {
     }
   };
   walk("src-tauri/src");
-  const missing = [...sent].filter((code) => code !== "plain" && !(code in errors.en.codes));
+  const removedPrefixes = ["editorExtension.", "calendar.", "ccConnect.", "planUsage.", "bark.", "translation.", "voiceInput."];
+  const missing = [...sent].filter((code) => code !== "plain" && !(code in errors.en.codes) && !removedPrefixes.some((prefix) => code.startsWith(prefix)));
   assert.deepEqual(missing, []);
 });

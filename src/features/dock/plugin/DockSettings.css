@@ -1,0 +1,83 @@
+.dock-settings__subtitle {
+  margin: 12px 0 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+
+.dock-settings__hint {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.dock-settings__empty {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.dock-settings__list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.dock-settings__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dock-settings__icon {
+  flex: none;
+  color: var(--text-2);
+}
+
+.dock-settings__name {
+  flex: none;
+  max-width: 160px;
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--text-1);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock-settings__target {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock-settings__remove {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.dock-settings__remove:hover {
+  color: var(--text-1);
+  background: var(--color-white-a12);
+}
+
+.dock-settings__remove:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}

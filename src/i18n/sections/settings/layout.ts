@@ -2,7 +2,6 @@ export type SettingsLayoutText = {
   collapsedScale: string;
   expandedScale: string;
   showCollapsedText: string;
-  showIdleTodoCount: string;
   title: string;
   sizeTitle: string;
   collapsedSizeTitle: string;
@@ -66,7 +65,6 @@ export const zhCN: SettingsLayoutText = {
   collapsedScale: "折叠岛屿大小",
   expandedScale: "展开面板大小",
   showCollapsedText: "显示折叠岛屿文字",
-  showIdleTodoCount: "空闲时显示剩余待办数",
   title: "尺寸与位置",
   sizeTitle: "尺寸",
   collapsedSizeTitle: "折叠岛屿",
@@ -109,7 +107,7 @@ export const zhCN: SettingsLayoutText = {
   trayCardOffHintMac: "菜单栏图标隐藏时用不到卡片。",
   trayCardLayouts: {
     entry: { label: "入口型", hint: "常用功能一眼都在" },
-    status: { label: "状态型", hint: "看歌、会议和 Agent" },
+    status: { label: "状态型", hint: "看歌" },
     compact: { label: "精简型", hint: "最小最快" },
   },
   showTitle: "显示岛屿名称",
@@ -134,7 +132,6 @@ export const en: SettingsLayoutText = {
   collapsedScale: "Collapsed island scale",
   expandedScale: "Expanded panel scale",
   showCollapsedText: "Show collapsed island text",
-  showIdleTodoCount: "Show todo count when idle",
   title: "Size & position",
   sizeTitle: "Size",
   collapsedSizeTitle: "Collapsed island",
@@ -177,7 +174,7 @@ export const en: SettingsLayoutText = {
   trayCardOffHintMac: "The card isn't available while the menu bar icon is hidden.",
   trayCardLayouts: {
     entry: { label: "Shortcuts", hint: "Everyday features at a glance" },
-    status: { label: "Status", hint: "Music, meetings and agents" },
+    status: { label: "Status", hint: "Music" },
     compact: { label: "Compact", hint: "Smallest and quickest" },
   },
   showTitle: "Show island name",

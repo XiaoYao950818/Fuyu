@@ -1,34 +1,3 @@
-.island__agent-status-icon {
-  flex: 0 0 auto;
-  filter: brightness(var(--island-pulse-brightness));
-  transition:
-    color var(--motion-base) var(--motion-ease),
-    filter var(--motion-base) var(--motion-ease);
-}
-
-.island__agent-status-icon--idle {
-  color: var(--color-agent-idle);
-}
-
-.island__agent-status-icon--running {
-  color: var(--color-agent-running);
-}
-
-.island__agent-status-icon--attention {
-  color: var(--color-warning);
-}
-
-.island__title .island__agent-status-icon--idle {
-  color: var(--color-agent-idle);
-}
-
-.island__title .island__agent-status-icon--running {
-  color: var(--color-agent-running);
-}
-
-.island__title .island__agent-status-icon--attention {
-  color: var(--color-warning);
-}
 
 .island__header {
   display: grid;
@@ -55,14 +24,6 @@
 
 .island__title svg {
   flex: 0 0 auto;
-  color: var(--color-accent);
-}
-
-.island--todo .island__title {
-  color: var(--text-1);
-}
-
-.island--todo .island__title svg {
   color: var(--color-accent);
 }
 
@@ -125,6 +86,26 @@
 .dot-button:focus-visible {
   outline: 2px solid var(--color-focus-ring-soft);
   outline-offset: 1px;
+}
+
+.dot-button[draggable="true"] {
+  cursor: grab;
+}
+
+.dot-button[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.dot-button--dragging {
+  opacity: 0.4;
+}
+
+.dot-button--drop-before {
+  box-shadow: inset 2px 0 0 var(--text-1);
+}
+
+.dot-button--drop-after {
+  box-shadow: inset -2px 0 0 var(--text-1);
 }
 
 

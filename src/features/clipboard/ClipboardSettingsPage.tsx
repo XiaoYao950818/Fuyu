@@ -1,6 +1,5 @@
 import type { IslandSettings } from "../../lib/settings/types";
 import type { ClipboardHistorySettings } from "./api";
-import { ClipboardAiPromptSettings } from "./ClipboardAiPromptSettings";
 import { ClipboardLinkSettings } from "./ClipboardLinkSettings";
 import { ClipboardRecordSettings } from "./ClipboardRecordSettings";
 import { ClipboardSettingsSection } from "./ClipboardSettingsSection";
@@ -51,10 +50,6 @@ function RecordSection({ clipboardSettings, onClipboardSettingsChange: updateCli
   return <ClipboardRecordSettings clipboardSettings={clipboardSettings} onChange={(patch) => updateClipboardSettings({ ...clipboardSettings, ...patch })} />;
 }
 
-function AiPromptSection({ clipboardSettings, onClipboardSettingsChange }: ClipboardSectionProps) {
-  return <ClipboardAiPromptSettings clipboardSettings={clipboardSettings} onChange={onClipboardSettingsChange} />;
-}
-
 type ClipboardTab = "clipboard" | "clipboardHistory" | "clipboardSnippets" | "clipboardData";
 
 const sections = settingsSections<ClipboardSectionProps, ClipboardTab>();
@@ -63,7 +58,6 @@ sections.add({ id: "clipboard.general", category: "clipboard", order: 10, compon
 sections.add({ id: "clipboard.links", category: "clipboard", order: 20, component: LinksSection });
 sections.add({ id: "clipboardHistory.record", category: "clipboardHistory", order: 10, component: RecordSection });
 sections.add({ id: "clipboardSnippets.snippets", category: "clipboardSnippets", order: 10, component: ClipboardSnippetSettings });
-sections.add({ id: "clipboardSnippets.ai-prompts", category: "clipboardSnippets", order: 20, component: AiPromptSection });
 sections.add({ id: "clipboardData.transfer", category: "clipboardData", order: 10, component: ClipboardTransferSettings });
 
 export function ClipboardSettingsPage({ tab, settings, onOpenShortcuts }: {

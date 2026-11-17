@@ -3,7 +3,7 @@ use crate::win32::audio::{AudioDevices, OutputRole};
 
 pub(super) const AUDIO_ACTIVE_THRESHOLD: f32 = 0.000015;
 
-pub(super) fn read_master_volume() -> Option<f32> {
+pub(crate) fn read_master_volume() -> Option<f32> {
     let devices = AudioDevices::open().ok()?;
     let device = devices.default_output(OutputRole::Multimedia).ok()?;
     let endpoint = device.volume().ok()?;
@@ -11,7 +11,7 @@ pub(super) fn read_master_volume() -> Option<f32> {
     Some(level.clamp(0.0, 1.0))
 }
 
-pub(super) fn set_master_volume(level: f32) -> Result<(), String> {
+pub(crate) fn set_master_volume(level: f32) -> Result<(), String> {
     let devices = AudioDevices::open()
         .map_err(|error| media_error("Failed to open the Windows audio device manager", error))?;
     let device = devices

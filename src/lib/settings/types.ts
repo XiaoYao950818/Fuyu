@@ -1,13 +1,5 @@
-import type { AgentSettingValues } from "../../features/agent-status/agentSettings";
-import type { CalendarSettingValues } from "../../features/calendar/calendarSettings";
 import type { GlassSettingValues } from "./glassSettings";
-import type { LyricsIntro, LyricsIslandPriority, LyricsKaraokeColor, LyricsKaraokeFallback, LyricsKaraokeFill } from "../../features/media/lyrics/lyricsSettings";
-import type { TodoProject } from "../../features/todos/types";
-
-export type TranslationTarget = "window" | "island";
-
-export type AgentTitleMode = "changes" | "running";
-export type AgentLightStyle = "mark" | "dot";
+import type { LyricsIntro, LyricsKaraokeColor, LyricsKaraokeFallback, LyricsKaraokeFill } from "../../features/media/lyrics/lyricsSettings";
 
 export type AppearanceMode = "classic" | "liquidGlass";
 export type IslandFont = "system" | "pixel";
@@ -25,7 +17,7 @@ export type MessageNotice = "line" | "banner" | "panel";
 export type IslandMotion = "spring" | "smooth" | "fast" | "bouncy" | "none";
 export type ShelfDoubleClick = "open" | "reveal";
 
-export type IslandSettings = CalendarSettingValues & GlassSettingValues & AgentSettingValues & {
+export type IslandSettings = GlassSettingValues & {
   topEdgeLayoutVersion: 1;
   appearanceMode: AppearanceMode;
   fontFamily: IslandFont;
@@ -66,16 +58,8 @@ export type IslandSettings = CalendarSettingValues & GlassSettingValues & AgentS
   islandBackgroundColor: string;
   showTitle: boolean;
   showCollapsedText: boolean;
-  showIdleTodoCount: boolean;
-  carryOverIncompleteTodos: boolean;
-  enableTodoReorder: boolean;
-  todoProjects: TodoProject[];
-  rotateTodos: boolean;
-  todoRotationSeconds: number;
   autoTuck: boolean;
   autoTuckSeconds: number;
-  autoTuckHoldTodo: boolean;
-  autoTuckHoldAgent: boolean;
   autoTuckHoldMusic: boolean;
   autoTuckHoldMessages: boolean;
   autoTuckRetract: boolean;
@@ -93,12 +77,8 @@ export type IslandSettings = CalendarSettingValues & GlassSettingValues & AgentS
   pageDigitModifiers: string;
   pageNextShortcut: string;
   pagePreviousShortcut: string;
-  todoEnabled: boolean;
   musicEnabled: boolean;
-  agentStatusEnabled: boolean;
   shelfEnabled: boolean;
-  translationEnabled: boolean;
-  translationTarget: TranslationTarget;
   screenshotEnabled: boolean;
   screenshotGuides: boolean;
   shelfExpandOnDrop: boolean;
@@ -117,7 +97,6 @@ export type IslandSettings = CalendarSettingValues & GlassSettingValues & AgentS
   lyricsChinese: boolean;
   lyricsOffsetMs: number;
   lyricsOnIsland: boolean;
-  lyricsIslandPriority: LyricsIslandPriority;
   lyricsIntro: LyricsIntro;
   lyricsKaraoke: boolean;
   lyricsKaraokeFallback: LyricsKaraokeFallback;
@@ -129,9 +108,6 @@ export type IslandSettings = CalendarSettingValues & GlassSettingValues & AgentS
   lyricsKaraokeFollow: boolean;
   lyricsCoverColor: boolean;
   mailEnabled: boolean;
-  agentTitleEnabled: boolean;
-  agentTitleMode: AgentTitleMode;
-  agentLightStyle: AgentLightStyle;
   gameDoNotDisturb: boolean;
   gameAutoTuck: boolean;
   hoverTakesKeyboard: boolean;
@@ -146,8 +122,6 @@ export type IslandPreset = {
 };
 
 export type LegacyIslandSettings = Partial<IslandSettings> & {
-  agentShowClaudeCode?: boolean;
-  agentShowCodex?: boolean;
   margin?: number;
   sizeScale?: number;
   taskTitleColor?: string;

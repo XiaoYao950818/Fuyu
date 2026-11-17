@@ -67,16 +67,16 @@ function Fixture() {
     onOpenMessages: (source) => { openedSource = source; },
     host: islandHost,
   });
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: plugins, preview: banner.barPreview, open: (source) => { openedSource = source; } }, agents: null, status: { state: "idle", label: "AI Agent 空闲或已完成" }, todoTitle: "剩余3个待办" });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: plugins, preview: banner.barPreview, open: (source) => { openedSource = source; } } });
   return <div className="stage" style={{ "--collapsed-island-width": "300px" } as CSSProperties}>
     <IslandShell
-      mode="collapsed" page="todo" isTucked={false} isDetached={true} showTitle={false}
+      mode="collapsed" page="music" isTucked={false} isDetached={true} showTitle={false}
       showCollapsedText={true} appearanceMode="classic" nativeGlassState="disabled"
-      features={{ todo: true, music: false, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, agents: false, translation: false, calendar: false, screenshots: false, timer: false }}
+      features={{ music: false, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, screenshots: false, timer: false, "device-battery": false, "quick-launch": false, "quick-commands": false, "file-search": false, "net-speed": false, volume: false }}
       onOpenPage={() => {}}
       onPageChange={() => {}} onWindowDragStart={() => {}} onCollapse={() => {}}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
-      <span>待办清单</span>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      <span>音乐</span>
     </IslandShell>
     {banner.banner && <MessageBanner banner={banner.banner} bannerRef={banner.bannerRef} onOpen={banner.open} onClose={banner.close} onAction={banner.runAction} />}
   </div>;
@@ -129,7 +129,7 @@ async function runChecks() {
     check(banner()!.querySelector(".message-banner__body")?.textContent?.includes("设计方案"), "横幅写消息摘要");
     check(/^\d\d:\d\d$/.test(banner()!.querySelector(".message-banner__time")?.textContent ?? ""), "横幅写到达时间");
     check(banner()!.querySelector(".message-brand-icon--qq"), "横幅带来源图标");
-    check(!summary().querySelector(".island-message-preview") && summary().textContent?.includes("剩余3个待办"), "收起条保持正常显示，不同时出一行预览");
+    check(!summary().querySelector(".island-message-preview"), "收起条保持正常显示，不同时出一行预览");
     const body = banner()!.querySelector<HTMLElement>(".message-banner__body")!;
     check(body.getBoundingClientRect().height <= 17 * 2 + 1, "摘要最多两行");
     const box = banner()!.getBoundingClientRect();

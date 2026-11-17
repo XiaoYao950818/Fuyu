@@ -48,7 +48,6 @@ test("settings are clamped and legacy fields are migrated", () => {
     taskTitleColor: "#123456",
     appearanceMode: "neon",
     fontFamily: "pixel",
-    todoRotationSeconds: 0.2,
   });
   assert.equal(normalized.opacity, 50);
   assert.equal(normalized.glassIntensity, 100);
@@ -58,7 +57,6 @@ test("settings are clamped and legacy fields are migrated", () => {
   assert.equal(normalized.taskTextColor, "#123456");
   assert.equal(normalized.appearanceMode, "classic");
   assert.equal(normalized.fontFamily, "pixel");
-  assert.equal(normalized.todoRotationSeconds, 1);
   assert.equal(normalized.topEdgeLayoutVersion, 1);
 });
 
@@ -79,14 +77,6 @@ test("the island corner radius is rounded, clamped, and defaults to 30 for older
   assert.equal(normalizeSettings({ islandCornerRadius: 24.4 }).islandCornerRadius, 24);
   assert.equal(normalizeSettings({ islandCornerRadius: 2 }).islandCornerRadius, 16);
   assert.equal(normalizeSettings({ islandCornerRadius: 99 }).islandCornerRadius, 40);
-});
-
-test("session starts alert every turn unless new sessions only or off was chosen", () => {
-  assert.equal(DEFAULT_SETTINGS.agentAlertStarted, "everyTurn");
-  assert.equal(normalizeSettings({}).agentAlertStarted, "everyTurn");
-  assert.equal(normalizeSettings({ agentAlertStarted: "newSession" }).agentAlertStarted, "newSession");
-  assert.equal(normalizeSettings({ agentAlertStarted: "off" }).agentAlertStarted, "off");
-  assert.equal(normalizeSettings({ agentAlertStarted: true }).agentAlertStarted, "everyTurn");
 });
 
 test("the island corner shape is squircle unless round was chosen, older settings included", () => {
@@ -159,7 +149,7 @@ test("expand trigger, hover delays and max panel height default for older settin
   assert.equal(normalizeSettings({ pagePreviousShortcut: "alt+q" }).pagePreviousShortcut, "Alt+Q");
   assert.equal(normalizeSettings({ minimizeAction: "tuck" }).minimizeAction, "tuck");
   assert.equal(normalizeSettings({ minimizeAction: "hide" }).minimizeAction, "tray");
-  for (const key of ["todoEnabled", "musicEnabled", "agentStatusEnabled", "mailEnabled", "shelfEnabled", "shelfExpandOnDrop", "translationEnabled"]) {
+  for (const key of ["musicEnabled", "mailEnabled", "shelfEnabled", "shelfExpandOnDrop"]) {
     assert.equal(older[key], true, key);
     assert.equal(normalizeSettings({ [key]: false })[key], false, key);
     assert.equal(normalizeSettings({ [key]: "no" })[key], true, key);
@@ -191,13 +181,11 @@ test("first launch uses the maintainer's layout, while saved settings missing a 
   assert.equal(DEFAULT_SETTINGS.expandTrigger, "hover");
   assert.equal(DEFAULT_SETTINGS.autoTuck, false);
   assert.equal(DEFAULT_SETTINGS.minimizeAction, "tuck");
-  assert.equal(DEFAULT_SETTINGS.translationTarget, "island");
 
   const older = normalizeSettings({ opacity: 95 });
   assert.equal(older.expandTrigger, "click");
   assert.equal(older.autoTuck, false);
   assert.equal(older.minimizeAction, "tray");
-  assert.equal(older.translationTarget, "window");
   assert.equal(older.shelfShowCount, false);
   assert.equal(older.hoverCollapseDelayMs, 400);
 });
@@ -206,9 +194,8 @@ test("first launch takes the maintainer's settings of 0.3.5-beta.5; saved settin
   const changed = {
     topFilletRadius: [8, 8], islandCornerRadius: [32, 30], maxPanelHeight: [360, 490], panelWidth: [800, 560],
     pulseBrightness: [160, 100], islandBackgroundColor: ["#030303", "#000000"], collapsedDark: [false, false],
-    agentAlertSeconds: [3, 5], agentRemindSeconds: [0, 60], carryOverIncompleteTodos: [false, true],
     autoTuck: [false, false], autoTuckSeconds: [120, 30], messageNotice: ["panel", "line"], hoverSwitchPage: [true, false],
-    agentLightStyle: ["dot", "mark"], lyricsOnline: [true, false], lyricsOnIsland: [true, false],
+    lyricsOnline: [true, false], lyricsOnIsland: [true, false],
   };
   const older = normalizeSettings({ opacity: 95 });
   for (const [key, [first, earlier]] of Object.entries(changed)) {
@@ -346,12 +333,6 @@ test("hovering takes the keyboard only when asked", () => {
   assert.equal(normalizeSettings({}).hoverTakesKeyboard, false);
   assert.equal(normalizeSettings({ hoverTakesKeyboard: true }).hoverTakesKeyboard, true);
   assert.equal(normalizeSettings({ hoverTakesKeyboard: "yes" }).hoverTakesKeyboard, false);
-});
-
-test("translation opens in its window unless the island page was chosen", () => {
-  assert.equal(normalizeSettings({}).translationTarget, "window");
-  assert.equal(normalizeSettings({ translationTarget: "island" }).translationTarget, "island");
-  assert.equal(normalizeSettings({ translationTarget: "page" }).translationTarget, "window");
 });
 
 test("settings saved with the paper todo style read without it: there is one todo page", () => {

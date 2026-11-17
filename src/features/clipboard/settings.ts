@@ -27,7 +27,6 @@ export const DEFAULT_CLIPBOARD_HISTORY: ClipboardHistorySnapshot = {
     linkPreview: false,
     flattenTerminalCommands: false,
     localApiRead: false,
-    aiPrompts: [],
     popupPinned: false,
     copyCardSeconds: 3,
     pinFavorites: true,
@@ -80,6 +79,5 @@ export function normalizeClipboardSettings(
     pinFavorites: settings.pinFavorites !== false,
     ...normalizeClipboardPrivacy(settings),
     copyCardSeconds: (CLIPBOARD_CARD_SECONDS as readonly unknown[]).includes(settings.copyCardSeconds) ? settings.copyCardSeconds : 3,
-    aiPrompts: Array.isArray(settings.aiPrompts) ? settings.aiPrompts.filter((prompt) => prompt && typeof prompt.title === "string" && typeof prompt.prompt === "string") : [],
   };
 }

@@ -3,7 +3,6 @@ import { SlotView } from "../../features/plugin-kernel/SlotView";
 import { defineSlot, type IslandNoticeMeta } from "../../features/plugin-kernel/slots";
 import { useSlotEntries } from "../../features/plugin-kernel/useSlotEntries";
 import { useIslandContributed } from "../../features/plugin-kernel/useIslandContributions";
-import { openSettingsWindow } from "../settings/api";
 import { FirstHintActions, FirstHintNotice } from "./first-hints/FirstHintNotice";
 import type { FirstHintsController } from "./first-hints/useFirstHints";
 import "./slots/builtins";
@@ -21,7 +20,7 @@ function FirstHintContent({ firstHints }: NoticeSources) {
 }
 
 function FirstHintButtons({ firstHints }: NoticeSources) {
-  return <FirstHintActions hints={firstHints} onConnectTools={() => openSettingsWindow("agentConnect")} />;
+  return <FirstHintActions hints={firstHints} />;
 }
 
 noticeSlot.add({ id: "first-hints", order: 70, active: ({ firstHints }) => Boolean(firstHints.current), component: FirstHintContent, actions: FirstHintButtons });

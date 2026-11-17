@@ -14,7 +14,7 @@ export type ScreenshotText = {
   ruler: (length: number, dx: number, dy: number) => string;
   colorCopied: (hex: string) => string;
   selectHint: string;
-  quickHints: Record<"copy" | "text" | "translate" | "long" | "record", string>;
+  quickHints: Record<"copy" | "text" | "long" | "record", string>;
   longShot: string;
   long: {
     title: string;
@@ -34,7 +34,6 @@ export type ScreenshotText = {
   readText: string;
   textCopied: (line: string) => string;
   noText: string;
-  translateOff: string;
   shelfOff: string;
   redact: string;
   redacting: string;
@@ -78,9 +77,6 @@ export type ScreenshotText = {
     dragHint: string;
     shelf: string;
     shelved: string;
-    sendToAgent: string;
-    noAgent: string;
-    agentNotFound: string;
     close: string;
   };
   history: {
@@ -120,14 +116,12 @@ export const zhCN: ScreenshotText = {
   quickHints: {
     copy: "单击选中窗口或控件，或拖动选择区域，选好就复制 · 右键或 Esc 退出",
     text: "单击选中窗口或控件，或拖动选择区域，选好就识别文字并复制 · 右键或 Esc 退出",
-    translate: "单击选中窗口或控件，或拖动选择区域，选好就识别文字并翻译 · 右键或 Esc 退出",
     long: "选好要滚动的区域，浮屿往下滚并拼成长图，旁边的控制条可以暂停、完成或取消 · 右键或 Esc 退出",
     record: "拖动选择要录的区域，或单击选中窗口，按 F 录整个屏幕，按 G 改录 GIF；3 秒后开始，再按 Ctrl+Shift+6 停止 · 右键或 Esc 退出",
   },
   readText: "识别文字",
   textCopied: (line) => `已复制识别的文字：${line}`,
   noText: "截图里没有识别到文字",
-  translateOff: "快捷翻译已关闭，打开后才能翻译截图",
   shelfOff: "文件中转已关闭",
   longShot: "长截图（自动往下滚动拼接，也可以自己滚）",
   long: {
@@ -203,9 +197,6 @@ export const zhCN: ScreenshotText = {
     dragHint: "拖到别处，作为文件放下",
     shelf: "放进文件中转",
     shelved: "已放进文件中转",
-    sendToAgent: "发给 Agent",
-    noAgent: "没有正在运行的 Agent 会话",
-    agentNotFound: "找不到这个会话的窗口",
     close: "关闭",
   },
   history: {
@@ -245,14 +236,12 @@ export const en: ScreenshotText = {
   quickHints: {
     copy: "Click a window or control, or drag a region, and it is copied · Right-click or Esc to exit",
     text: "Click a window or control, or drag a region, and its text is read and copied · Right-click or Esc to exit",
-    translate: "Click a window or control, or drag a region, and its text is read and translated · Right-click or Esc to exit",
     long: "Choose the area that scrolls; Fuyu scrolls and stitches one tall picture, with a control bar to pause, finish or cancel · Right-click or Esc to exit",
     record: "Drag the area to record, click a window, or press F for the whole screen; G records a GIF instead. Recording starts after 3 seconds, Ctrl+Shift+6 again stops it · Right-click or Esc to exit",
   },
   readText: "Read text",
   textCopied: (line) => `Copied the text: ${line}`,
   noText: "No text found in the screenshot",
-  translateOff: "Quick translation is off. Turn it on to translate screenshots.",
   shelfOff: "The file shelf is off",
   longShot: "Long screenshot (scrolls and stitches; you can scroll yourself too)",
   long: {
@@ -328,9 +317,6 @@ export const en: ScreenshotText = {
     dragHint: "Drag it somewhere to drop it as a file",
     shelf: "Put on the file shelf",
     shelved: "On the file shelf",
-    sendToAgent: "Send to an agent",
-    noAgent: "No agent session is running",
-    agentNotFound: "Could not find this session's window",
     close: "Close",
   },
   history: {

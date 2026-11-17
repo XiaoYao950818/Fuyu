@@ -66,14 +66,14 @@ const PLAYER = {
   onPlayPause: () => mediaPresses.push("playPause"),
   onNext: () => mediaPresses.push("next"),
 };
-let state = { mode: "collapsed" as IslandMode, page: "todo" as IslandPage };
+let state = { mode: "collapsed" as IslandMode, page: "music" as IslandPage };
 let openedSource: MessageSource | null = null;
 let setUserMode: (mode: IslandMode) => void;
 let latestPreview: unknown = null;
 
 function Fixture() {
   const [mode, setMode] = useState<IslandMode>("collapsed");
-  const [page, setPage] = useState<IslandPage>("todo");
+  const [page, setPage] = useState<IslandPage>("music");
   const [messagePanelOpen, setMessagePanelOpen] = useState(false);
   state = { mode, page };
   setUserMode = setMode;
@@ -99,15 +99,15 @@ function Fixture() {
     panel: page === "qq" && panel.arrivals ? { height: messageArrivalsPanelHeight(panel.height, 490) } : undefined,
     popup,
   });
-  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: plugins, preview: null, open: (source) => { openedSource = source; openIslandPage("qq"); } }, agents: null, status: { state: "idle", label: "AI Agent 空闲或已完成" }, todoTitle: "剩余3个待办" });
+  useFixtureLines({ messages: { qq: qq, wechat: wechat, mail: qqMail, plugin: plugins, preview: null, open: (source) => { openedSource = source; openIslandPage("qq"); } } });
   return <div className="stage" style={{ "--collapsed-island-width": "300px", "--expanded-island-height": `${height}px`, "--expanded-island-width": `${expandedIslandWidth}px` } as CSSProperties}>
     <IslandShell
       mode={mode} page={page} popup={popup} isTucked={false} isDetached={true} showTitle={false}
       showCollapsedText={true} appearanceMode="classic" nativeGlassState="disabled"
-      features={{ todo: true, music: false, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, agents: false, translation: false, calendar: false, screenshots: false, timer: false }}
+      features={{ music: false, clipboard: true, shelf: true, qq: true, wechat: true, qqMail: true, screenshots: false, timer: false, "device-battery": false, "quick-launch": false, "quick-commands": false, "file-search": false, "net-speed": false, volume: false }}
       onOpenPage={openIslandPage}
       onPageChange={setPage} onWindowDragStart={() => {}} onCollapse={collapseIsland}
-      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onOpenTranslator={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
+      onResetPosition={() => {}} minimizesToTray onMinimize={() => {}} onOpenSettings={() => {}} onTuck={() => {}} onReveal={() => {}} pageDigitModifiers="Alt" hoverSwitchPage={false} hoverSwitchDelayMs={0}>
       {page === "qq" && (
         <div className="message-panel">
           {panel.arrivals
@@ -115,7 +115,7 @@ function Fixture() {
             : <span className="message-panel-full">完整消息页</span>}
         </div>
       )}
-      {page === "todo" && <span>待办清单</span>}
+      {page === "music" && <span>音乐</span>}
     </IslandShell>
   </div>;
 }

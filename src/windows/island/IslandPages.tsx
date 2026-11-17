@@ -8,7 +8,6 @@ import type { useIslandFeatures } from "./useIslandFeatures";
 import type { useIslandNavigation } from "./useIslandNavigation";
 import type { usePluginPages } from "./usePluginPages";
 import { openSettingsWindow } from "../settings/api";
-import { getTodoScrollStartRows } from "./layout";
 import { pageSlot } from "./slots/pageSlot";
 import "./slots/builtins";
 
@@ -22,16 +21,15 @@ export type IslandPagesProps = {
 
 export type IslandPageProps = IslandPagesProps & {
   onOpenSettings: typeof openSettingsWindow;
-  todoScrollStartRows: number;
   extraView?: { label: string; content: ReactNode };
   embedded?: boolean;
 };
 
 export function IslandPages(props: IslandPagesProps): ReactNode {
-  const { page, mode, pluginPages, features, settings } = props;
+  const { page, mode, pluginPages, features } = props;
   const t = useTranslation();
   const entries = useSlotEntries(pageSlot);
-  const pageProps: IslandPageProps = { ...props, onOpenSettings: openSettingsWindow, todoScrollStartRows: getTodoScrollStartRows(settings.maxPanelHeight) };
+  const pageProps: IslandPageProps = { ...props, onOpenSettings: openSettingsWindow };
   const folded = entries.find((entry) => entry.fold?.into === page && entry.fold.when(features));
   if (folded?.fold) {
     const Folded = folded.component;

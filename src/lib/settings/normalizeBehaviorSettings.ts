@@ -1,7 +1,5 @@
 import { clamp } from "../../utils/number.ts";
 import { normalizeLyricsSettings } from "../../features/media/lyrics/lyricsSettings.ts";
-import { normalizeCalendarSettings } from "../../features/calendar/calendarSettings.ts";
-import { normalizeTodoProjects } from "../../features/todos/project.ts";
 import { DEFAULT_PAGE_NEXT_SHORTCUT, DEFAULT_PAGE_PREVIOUS_SHORTCUT, normalizePageCycleShortcut, normalizePageDigitModifiers } from "./pageShortcuts.ts";
 import { DEFAULT_SETTINGS, LEGACY_FALLBACKS } from "./settingsDefaults.ts";
 import {
@@ -13,29 +11,10 @@ import type { IslandSettings, LegacyIslandSettings } from "./types";
 
 export function normalizeBehaviorSettings(settings: LegacyIslandSettings | null | undefined) {
   return {
-    showIdleTodoCount:
-      typeof settings?.showIdleTodoCount === "boolean"
-        ? settings.showIdleTodoCount
-        : DEFAULT_SETTINGS.showIdleTodoCount,
-    carryOverIncompleteTodos:
-      typeof settings?.carryOverIncompleteTodos === "boolean"
-        ? settings.carryOverIncompleteTodos
-        : LEGACY_FALLBACKS.carryOverIncompleteTodos,
-    enableTodoReorder:
-      typeof settings?.enableTodoReorder === "boolean"
-        ? settings.enableTodoReorder
-        : DEFAULT_SETTINGS.enableTodoReorder,
-    todoProjects: normalizeTodoProjects(settings?.todoProjects),
-    rotateTodos: settings?.rotateTodos === true,
-    todoRotationSeconds: typeof settings?.todoRotationSeconds === "number" && Number.isFinite(settings.todoRotationSeconds)
-      ? clamp(Math.round(settings.todoRotationSeconds), 1, 3_600)
-      : DEFAULT_SETTINGS.todoRotationSeconds,
     autoTuck: settings?.autoTuck === true,
     autoTuckSeconds: typeof settings?.autoTuckSeconds === "number" && Number.isFinite(settings.autoTuckSeconds)
       ? clamp(Math.round(settings.autoTuckSeconds), 1, 3_600)
       : LEGACY_FALLBACKS.autoTuckSeconds,
-    autoTuckHoldTodo: settings?.autoTuckHoldTodo !== false,
-    autoTuckHoldAgent: settings?.autoTuckHoldAgent !== false,
     autoTuckHoldMusic: settings?.autoTuckHoldMusic === true,
     autoTuckHoldMessages: settings?.autoTuckHoldMessages !== false,
     autoTuckRetract: settings?.autoTuckRetract !== false,
@@ -61,15 +40,8 @@ export function normalizeBehaviorSettings(settings: LegacyIslandSettings | null 
     pageDigitModifiers: normalizePageDigitModifiers(settings?.pageDigitModifiers),
     pageNextShortcut: normalizePageCycleShortcut(settings?.pageNextShortcut, DEFAULT_PAGE_NEXT_SHORTCUT),
     pagePreviousShortcut: normalizePageCycleShortcut(settings?.pagePreviousShortcut, DEFAULT_PAGE_PREVIOUS_SHORTCUT),
-    todoEnabled: settings?.todoEnabled !== false,
     musicEnabled: settings?.musicEnabled !== false,
-    agentStatusEnabled: settings?.agentStatusEnabled !== false,
-    agentTitleEnabled: settings?.agentTitleEnabled !== false,
-    agentTitleMode: settings?.agentTitleMode === "running" ? "running" : "changes",
-    agentLightStyle: settings?.agentLightStyle === "dot" ? "dot" : "mark",
     shelfEnabled: settings?.shelfEnabled !== false,
-    translationEnabled: settings?.translationEnabled !== false,
-    translationTarget: settings?.translationTarget === "island" ? "island" : "window",
     screenshotEnabled: settings?.screenshotEnabled === true,
     screenshotGuides: settings?.screenshotGuides !== false,
     shelfExpandOnDrop: settings?.shelfExpandOnDrop !== false,
@@ -86,7 +58,6 @@ export function normalizeBehaviorSettings(settings: LegacyIslandSettings | null 
     levelPopup: settings?.levelPopup !== false,
     deviceAlerts: settings?.deviceAlerts !== false,
     ...normalizeLyricsSettings(settings),
-    ...normalizeCalendarSettings(settings),
     mailEnabled: settings?.mailEnabled !== false,
     gameDoNotDisturb: typeof settings?.gameDoNotDisturb === "boolean" ? settings.gameDoNotDisturb : DEFAULT_SETTINGS.gameDoNotDisturb,
     gameAutoTuck: typeof settings?.gameAutoTuck === "boolean" ? settings.gameAutoTuck : DEFAULT_SETTINGS.gameAutoTuck,

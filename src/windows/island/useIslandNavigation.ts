@@ -6,7 +6,7 @@ export function useIslandNavigation() {
   const [isTucked, setIsTucked] = useState(false);
   const [isPeekTuck, setIsPeekTuck] = useState(false);
   const [peekRetractDelayMs, setPeekRetractDelayMs] = useState<number | null>(null);
-  const [page, setPage] = useState<IslandPage>("todo");
+  const [page, setPage] = useState<IslandPage>("music");
   const clipboardShortcutToggleAt = useRef(0);
 
   const setIslandMode = useCallback((nextMode: IslandMode) => {

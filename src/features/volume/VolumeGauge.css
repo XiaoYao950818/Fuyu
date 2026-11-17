@@ -1,0 +1,39 @@
+.volume-gauge {
+  flex: none;
+  max-width: 84px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 2px;
+  overflow: hidden;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.volume-gauge:hover,
+.volume-gauge:focus-visible {
+  color: var(--text-1);
+}
+
+.volume-gauge:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.volume-gauge__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.volume-gauge__loading,
+.volume-gauge__unavailable {
+  overflow: hidden;
+  color: var(--text-3);
+  text-overflow: ellipsis;
+}

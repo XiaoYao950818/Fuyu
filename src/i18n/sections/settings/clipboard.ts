@@ -72,21 +72,6 @@ export type SettingsClipboardText = {
     show: string;
     showMac: string;
   };
-  aiPrompts: {
-    title: string;
-    hintTitle: string;
-    hintTitleMac: string;
-    hint: string;
-    add: string;
-    adding: string;
-    editing: string;
-    edit: (title: string) => string;
-    remove: (title: string) => string;
-    titlePlaceholder: string;
-    promptPlaceholder: string;
-    save: string;
-    cancel: string;
-  };
   snippets: {
     title: string;
     hintTitle: string;
@@ -177,21 +162,6 @@ export const zhCN: SettingsClipboardText = {
     show: "在文件夹中显示",
     showMac: "在访达中显示",
   },
-  aiPrompts: {
-    title: "AI 提示词",
-    hintTitle: "剪贴板窗口里 Ctrl+I 的改写",
-    hintTitleMac: "剪贴板窗口里 ⌘I 的改写",
-    hint: "除了总结、润色、改错字、中英互译，再加自己的，比如「改成正式的邮件语气」「提取里面的待办」。用快捷翻译设置的服务、Key 和模型。",
-    add: "添加提示词",
-    adding: "新提示词",
-    editing: "修改提示词",
-    edit: (title) => `修改「${title}」`,
-    remove: (title) => `删除「${title}」`,
-    titlePlaceholder: "名字，显示在列表里",
-    promptPlaceholder: "要 AI 对这段文字做什么",
-    save: "保存",
-    cancel: "取消",
-  },
   snippets: {
     title: "常用语",
     hintTitle: "在剪贴板窗口按 Tab 切到「常用语」",
@@ -281,21 +251,6 @@ export const en: SettingsClipboardText = {
     failed: "That did not work",
     show: "Show in folder",
     showMac: "Show in Finder",
-  },
-  aiPrompts: {
-    title: "AI prompts",
-    hintTitle: "Ctrl+I rewrites in the clipboard window",
-    hintTitleMac: "⌘I rewrites in the clipboard window",
-    hint: "Besides summarize, polish, fix grammar and translate, add your own, such as \"make it a formal email\" or \"list the to-dos in it\". Uses the quick translation's service, key and model.",
-    add: "Add a prompt",
-    adding: "New prompt",
-    editing: "Edit prompt",
-    edit: (title) => `Edit “${title}”`,
-    remove: (title) => `Delete “${title}”`,
-    titlePlaceholder: "Name, shown in the list",
-    promptPlaceholder: "What the AI should do with the text",
-    save: "Save",
-    cancel: "Cancel",
   },
   snippets: {
     title: "Snippets",

@@ -6,15 +6,13 @@ import type { IslandMode, IslandPage } from "./types";
 type KeybindingContext = {
   mode: IslandMode;
   page: IslandPage;
-  hasActiveTodo: boolean;
 };
 
-export function usePluginKeybindings({ mode, page, hasActiveTodo }: KeybindingContext) {
+export function usePluginKeybindings({ mode, page }: KeybindingContext) {
   const context = useRef<WhenContext>({});
   context.current = {
     "island.expanded": mode === "expanded",
     "island.page": page,
-    "todos.hasActive": hasActiveTodo,
   };
 
   useEffect(() => {

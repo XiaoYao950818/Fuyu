@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useLocale, useTranslation } from "../../i18n";
+import { useLocale } from "../../i18n";
 import {
   ITEM_CONTEXT_MENUS,
   listPluginMenu,
@@ -21,7 +21,6 @@ const MENUS: PluginMenu[] = [TODO_CONTEXT_MENU, ...ITEM_CONTEXT_MENUS];
 type OpenMenu = { x: number; y: number; menu: PluginMenu; itemId: string };
 
 export function PluginContextMenus() {
-  const t = useTranslation();
   const { locale } = useLocale();
   const [entries, setEntries] = useState<Partial<Record<PluginMenu, PluginMenuEntry[]>>>({});
   const [open, setOpen] = useState<OpenMenu | null>(null);
@@ -89,7 +88,6 @@ export function PluginContextMenus() {
     <div
       className="plugin-todo-menu"
       role="menu"
-      aria-label={t.todo.pluginMenu}
       style={{ left: open.x, top: open.y, width: MENU_WIDTH }}
       onPointerDown={(event) => event.stopPropagation()}
       onContextMenu={(event) => event.preventDefault()}

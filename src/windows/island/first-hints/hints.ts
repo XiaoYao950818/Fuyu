@@ -1,6 +1,6 @@
-export type FirstHintId = "agent" | "message" | "tuck";
+export type FirstHintId = "message" | "tuck";
 
-export const FIRST_HINT_IDS: readonly FirstHintId[] = ["agent", "message", "tuck"];
+export const FIRST_HINT_IDS: readonly FirstHintId[] = ["message", "tuck"];
 export const MAX_SHOWINGS = 3;
 
 export type FirstHintsState = {

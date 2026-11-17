@@ -12,7 +12,6 @@ import type { SettingsLocalApiText } from "./localApi";
 import type { SettingsPluginsV3Text } from "./pluginsV3";
 import type { SettingsCategoriesText } from "./categories";
 import type { SettingsBehaviorText } from "./behavior";
-import type { SettingsTranslationText } from "./translation";
 import type { SettingsPositionText } from "./position";
 import type { SettingsExpandText } from "./expand";
 import type { SettingsGameModeText } from "./gameMode";
@@ -21,7 +20,6 @@ import type { SettingsLevelPopupText } from "./levelPopup";
 import type { SettingsDeviceAlertsText } from "./deviceAlerts";
 import type { SettingsLyricsText } from "./lyrics";
 import type { SettingsMusicBarText } from "./musicBar";
-import type { SettingsCalendarText } from "./calendar";
 import type { SettingsBackupText } from "./backup";
 import type { SettingsDataHomeText } from "./dataHome";
 import type { SettingsPermissionsText } from "./permissions";
@@ -31,14 +29,10 @@ import type { SettingsProjectText } from "./project";
 import type { SettingsLanguageText } from "./language";
 import type { SettingsAppearanceText } from "./appearance";
 import type { SettingsLayoutText } from "./layout";
-import type { SettingsTodoText } from "./todo";
-import type { SettingsAgentText } from "./agent";
 import type { SettingsClipboardText } from "./clipboard";
 import type { SettingsColorsText } from "./colors";
 import type { SettingsPresetsText } from "./presets";
-import type { SettingsSaveText } from "./save";
 import type { SettingsPluginsText } from "./plugins";
-import type { SettingsSoundsText } from "./sounds";
 import type { SettingsVersionHistoryText } from "./versionHistory";
 import * as fileShelf from "./fileShelf.ts";
 import * as screenshot from "./screenshot.ts";
@@ -54,7 +48,6 @@ import * as localApi from "./localApi.ts";
 import * as pluginsV3 from "./pluginsV3.ts";
 import * as categories from "./categories.ts";
 import * as behavior from "./behavior.ts";
-import * as translation from "./translation.ts";
 import * as position from "./position.ts";
 import * as expand from "./expand.ts";
 import * as gameMode from "./gameMode.ts";
@@ -63,7 +56,6 @@ import * as levelPopup from "./levelPopup.ts";
 import * as deviceAlerts from "./deviceAlerts.ts";
 import * as lyrics from "./lyrics.ts";
 import * as musicBar from "./musicBar.ts";
-import * as calendar from "./calendar.ts";
 import * as backup from "./backup.ts";
 import * as dataHome from "./dataHome.ts";
 import * as permissions from "./permissions.ts";
@@ -73,14 +65,10 @@ import * as project from "./project.ts";
 import * as language from "./language.ts";
 import * as appearance from "./appearance.ts";
 import * as layout from "./layout.ts";
-import * as todo from "./todo.ts";
-import * as agent from "./agent.ts";
 import * as clipboard from "./clipboard.ts";
 import * as colors from "./colors.ts";
 import * as presets from "./presets.ts";
-import * as save from "./save.ts";
 import * as plugins from "./plugins.ts";
-import * as sounds from "./sounds.ts";
 import * as versionHistory from "./versionHistory.ts";
 
 export type SettingsText = {
@@ -102,8 +90,6 @@ export type SettingsText = {
 
   behavior: SettingsBehaviorText;
 
-  translation: SettingsTranslationText;
-
   position: SettingsPositionText;
 
   expand: SettingsExpandText;
@@ -115,7 +101,6 @@ export type SettingsText = {
   deviceAlerts: SettingsDeviceAlertsText;
   lyrics: SettingsLyricsText;
   musicBar: SettingsMusicBarText;
-  calendar: SettingsCalendarText;
   backup: SettingsBackupText;
   dataHome: SettingsDataHomeText;
   permissions: SettingsPermissionsText;
@@ -132,19 +117,13 @@ export type SettingsText = {
 
   layout: SettingsLayoutText;
 
-  todo: SettingsTodoText;
-
-  agent: SettingsAgentText;
-
   clipboard: SettingsClipboardText;
 
   colors: SettingsColorsText;
 
   presets: SettingsPresetsText;
 
-  save: SettingsSaveText;
   plugins: SettingsPluginsText;
-  sounds: SettingsSoundsText;
   versionHistory: SettingsVersionHistoryText;
 };
 
@@ -167,8 +146,6 @@ export const zhCN: SettingsText = {
 
   behavior: behavior.zhCN,
 
-  translation: translation.zhCN,
-
   position: position.zhCN,
 
   expand: expand.zhCN,
@@ -180,7 +157,6 @@ export const zhCN: SettingsText = {
   deviceAlerts: deviceAlerts.zhCN,
   lyrics: lyrics.zhCN,
   musicBar: musicBar.zhCN,
-  calendar: calendar.zhCN,
   backup: backup.zhCN,
   dataHome: dataHome.zhCN,
   permissions: permissions.zhCN,
@@ -197,19 +173,13 @@ export const zhCN: SettingsText = {
 
   layout: layout.zhCN,
 
-  todo: todo.zhCN,
-
-  agent: agent.zhCN,
-
   clipboard: clipboard.zhCN,
 
   colors: colors.zhCN,
 
   presets: presets.zhCN,
 
-  save: save.zhCN,
   plugins: plugins.zhCN,
-  sounds: sounds.zhCN,
   versionHistory: versionHistory.zhCN,
 };
 
@@ -232,8 +202,6 @@ export const en: SettingsText = {
 
   behavior: behavior.en,
 
-  translation: translation.en,
-
   position: position.en,
 
   expand: expand.en,
@@ -245,7 +213,6 @@ export const en: SettingsText = {
   deviceAlerts: deviceAlerts.en,
   lyrics: lyrics.en,
   musicBar: musicBar.en,
-  calendar: calendar.en,
   backup: backup.en,
   dataHome: dataHome.en,
   permissions: permissions.en,
@@ -262,18 +229,12 @@ export const en: SettingsText = {
 
   layout: layout.en,
 
-  todo: todo.en,
-
-  agent: agent.en,
-
   clipboard: clipboard.en,
 
   colors: colors.en,
 
   presets: presets.en,
 
-  save: save.en,
   plugins: plugins.en,
-  sounds: sounds.en,
   versionHistory: versionHistory.en,
 };

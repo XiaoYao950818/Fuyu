@@ -1,8 +1,5 @@
 export type IslandText = {
   appName: string;
-  focusing: (taskTitle: string) => string;
-  pendingTodos: (count: number) => string;
-  agentSession: (provider: string, title: string) => string;
   lyricLine: (text: string) => string;
   nowPlaying: (text: string) => string;
   openMusic: string;
@@ -15,13 +12,11 @@ export type IslandText = {
   resetPositionLabel: string;
   screenshot: string;
   editor: string;
-  todoList: string;
   music: string;
   clipboardHistory: string;
   shelf: string;
   screenshots: string;
   timer: string;
-  calendar: string;
   shelfCount: (count: number) => string;
   sideMore: (count: number) => string;
   deviceInUse: Record<"camera" | "microphone", (apps: string) => string>;
@@ -37,7 +32,6 @@ export type IslandText = {
   };
   layoutEditor: string;
   firstHint: {
-    agent: string;
     message: string;
     tuck: string;
     connectTools: string;
@@ -47,9 +41,6 @@ export type IslandText = {
 
 export const zhCN: IslandText = {
   appName: "Fuyu",
-  focusing: (taskTitle) => `正在专注：${taskTitle}`,
-  pendingTodos: (count) => `剩余${count}个待办`,
-  agentSession: (provider, title) => `${provider} 正在处理：${title}`,
   lyricLine: (text) => `正在唱：${text}`,
   nowPlaying: (text) => `正在播放：${text}`,
   openMusic: "打开音乐控制",
@@ -62,13 +53,11 @@ export const zhCN: IslandText = {
   resetPositionLabel: "回到主屏顶部居中",
   screenshot: "截图",
   editor: "岛屿编辑",
-  todoList: "任务清单",
   music: "Music",
   clipboardHistory: "剪贴板历史",
   shelf: "文件中转",
   screenshots: "截图历史",
   timer: "计时器",
-  calendar: "日历",
   shelfCount: (count) => `文件中转里有 ${count} 个文件`,
   sideMore: (count) => `还有 ${count} 项，展开查看`,
   deviceInUse: {
@@ -87,7 +76,6 @@ export const zhCN: IslandText = {
   },
   layoutEditor: "布局编辑",
   firstHint: {
-    agent: "Agent 会话显示在这里，点岛看全部",
     message: "新消息来了，点一下岛就能看",
     tuck: "岛藏在顶边，鼠标碰一下就回来",
     connectTools: "连接更多工具",
@@ -97,9 +85,6 @@ export const zhCN: IslandText = {
 
 export const en: IslandText = {
   appName: "Fuyu",
-  focusing: (taskTitle) => `Focusing: ${taskTitle}`,
-  pendingTodos: (count) => (count === 1 ? "1 todo left" : `${count} todos left`),
-  agentSession: (provider, title) => `${provider} is working on: ${title}`,
   lyricLine: (text) => `Now singing: ${text}`,
   nowPlaying: (text) => `Now playing: ${text}`,
   openMusic: "Open music controls",
@@ -112,13 +97,11 @@ export const en: IslandText = {
   resetPositionLabel: "Reset island to the top center of the primary screen",
   screenshot: "Screenshot",
   editor: "Island editor",
-  todoList: "Tasks",
   music: "Music",
   clipboardHistory: "Clipboard history",
   shelf: "File shelf",
   screenshots: "Screenshot history",
   timer: "Timer",
-  calendar: "Calendar",
   shelfCount: (count) => (count === 1 ? "1 file on the shelf" : `${count} files on the shelf`),
   sideMore: (count) => `${count} more, open the island to see them`,
   deviceInUse: {
@@ -137,7 +120,6 @@ export const en: IslandText = {
   },
   layoutEditor: "Layout editor",
   firstHint: {
-    agent: "Agent sessions show here; open to see all",
     message: "When a message comes in, click the island",
     tuck: "Hiding at the top edge; touch it to bring it back",
     connectTools: "Connect more tools",

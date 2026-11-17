@@ -19,7 +19,7 @@ export function songLine(track: Track, notFound: boolean): CurrentLyric | null {
 }
 
 export function introLine(track: Track, intro: LyricsIntro, longest: string): CurrentLyric | null {
-  if (intro === "todo" || track.playbackStatus !== "playing") return null;
+  if (track.playbackStatus !== "playing") return null;
   const text = intro === "note" ? "♪" : titleLine(track);
   if (!text) return null;
   return { text, index: INTRO_INDEX, longest: longest.length > text.length ? longest : text, song: intro === "song" };

@@ -1,6 +1,5 @@
 export type SettingsShortcutsText = {
   globalHint: string;
-  openTranslation: string;
   featureTitle: string;
   allShortcuts: string;
   openFeaturePage: string;
@@ -13,8 +12,6 @@ export type SettingsShortcutsText = {
   finderFree: (shortcut: string) => string;
   finderUsed: (shortcut: string, owner: string, page: string) => string;
   finderOpen: string;
-  approvalTitle: string;
-  approvalHint: string;
   islandTitle: string;
   collapse: string;
   moveIsland: string;
@@ -24,8 +21,6 @@ export type SettingsShortcutsText = {
   holdPanelMac: string;
   altDragEdge: string;
   holdControlMac: string;
-  inputTitle: string;
-  translate: string;
   newLine: string;
   pasteClipboard: string;
   taken: (shortcut: string, owner: string) => string;
@@ -44,7 +39,6 @@ export type SettingsShortcutsText = {
 
 export const zhCN: SettingsShortcutsText = {
   globalHint: "全局快捷键，在任何程序里都能按。点击按钮后按下新的组合键，按 Esc 取消。",
-  openTranslation: "打开快捷翻译",
   featureTitle: "快捷键",
   allShortcuts: "全部快捷键 ›",
   openFeaturePage: "设置页 ›",
@@ -57,8 +51,6 @@ export const zhCN: SettingsShortcutsText = {
   finderFree: (shortcut) => `浮屿没有用到 ${shortcut}，可以拿来设置。`,
   finderUsed: (shortcut, owner, page) => `${shortcut} 已用于「${owner}」（${page}）。`,
   finderOpen: "前往",
-  approvalTitle: "AI Agent 审批卡片",
-  approvalHint: "只在审批卡片显示时占用，卡片关闭就释放，不能修改。",
   islandTitle: "岛上操作",
   collapse: "收起展开的岛",
   moveIsland: "移动岛屿",
@@ -68,8 +60,6 @@ export const zhCN: SettingsShortcutsText = {
   holdPanelMac: "展开的面板不收起",
   altDragEdge: "Alt + 拖动面板边缘",
   holdControlMac: "按住 ⌃ Control",
-  inputTitle: "翻译输入框",
-  translate: "翻译",
   newLine: "换行",
   pasteClipboard: "填入剪贴板（独立窗口）",
   taken: (shortcut, owner) => `${shortcut} 已被「${owner}」使用，请换一个。`,
@@ -88,7 +78,6 @@ export const zhCN: SettingsShortcutsText = {
 
 export const en: SettingsShortcutsText = {
   globalHint: "Global shortcuts work in any program. Click a button, then press a new key combination; Esc cancels.",
-  openTranslation: "Open quick translation",
   featureTitle: "Shortcuts",
   allShortcuts: "All shortcuts ›",
   openFeaturePage: "Settings ›",
@@ -101,8 +90,6 @@ export const en: SettingsShortcutsText = {
   finderFree: (shortcut) => `Fuyu does not use ${shortcut}; it is free to set.`,
   finderUsed: (shortcut, owner, page) => `${shortcut} is used by "${owner}" (${page}).`,
   finderOpen: "Open",
-  approvalTitle: "Agent approval card",
-  approvalHint: "Held only while an approval card shows and released when it closes; they can't be changed.",
   islandTitle: "On the island",
   collapse: "Collapse the expanded island",
   moveIsland: "Move the island",
@@ -112,8 +99,6 @@ export const en: SettingsShortcutsText = {
   holdPanelMac: "Keep the open panel from closing",
   altDragEdge: "Alt + drag the panel's edge",
   holdControlMac: "Hold ⌃ Control",
-  inputTitle: "Translation input",
-  translate: "Translate",
   newLine: "New line",
   pasteClipboard: "Fill from the clipboard (window only)",
   taken: (shortcut, owner) => `${shortcut} is already used by "${owner}". Choose another.`,

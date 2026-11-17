@@ -1,4 +1,4 @@
-import { Bot, CalendarDays, ClipboardX, FolderUp, Gamepad2, ListTodo, NotebookPen, Zap } from "lucide-react";
+import { ClipboardX, FolderUp, Gamepad2, Zap } from "lucide-react";
 import { useTranslation } from "../../i18n";
 import type { TrayMenuPage } from "./api";
 import { columns, entryShown, shownFeatures } from "./builtinEntries";
@@ -9,19 +9,15 @@ import { TrayCardHeader } from "./TrayCardHeader";
 import { TraySwitch } from "./TraySwitch";
 import type { TrayCardProps } from "./types";
 
-const PAGES: readonly [TrayMenuPage, typeof ListTodo][] = [
-  ["todo", ListTodo],
-  ["notes", NotebookPen],
-  ["calendar", CalendarDays],
+const PAGES: readonly [TrayMenuPage, typeof FolderUp][] = [
   ["file-shelf", FolderUp],
-  ["agent", Bot],
 ];
 
 export function EntryLayout(props: TrayCardProps) {
   const text = useTranslation().trayMenu;
   const { data, handlers } = props;
   const mac = data.state.platform === "macos";
-  const features = shownFeatures(data.off, ["screenshot", "translate", "clipboard"]);
+  const features = shownFeatures(data.off, ["screenshot", "clipboard"]);
   const pages = PAGES.filter(([page]) => entryShown(data.off, page));
   return (
     <>

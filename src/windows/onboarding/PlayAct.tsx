@@ -81,7 +81,7 @@ export function PlayAct({ settings, modules, clipboard, islandOpen, onSettingsCh
 
   return (
     <>
-      <ActHeading title={text.title} lead={doneCount === tasks.length ? text.allDone : text.lead(modules.has("music"), modules.has("agents"))} />
+      <ActHeading title={text.title} lead={doneCount === tasks.length ? text.allDone : text.lead(modules.has("music"))} />
       <ol className="play-act__tasks" aria-label={text.stars(doneCount, tasks.length)}>
         {tasks.map((task) => (
           <li key={task} className={done.has(task) ? "play-act__task play-act__task--done" : "play-act__task"}>

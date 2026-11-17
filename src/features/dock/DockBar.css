@@ -1,0 +1,180 @@
+.dock-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--space-lg);
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(145deg, rgba(var(--overlay-rgb, 255, 255, 255), 0.14), transparent 42%),
+    linear-gradient(165deg, transparent 40%, rgba(var(--overlay-rgb, 0, 0, 0), 0.08)),
+    rgba(var(--overlay-rgb, 255, 255, 255), 0.08);
+  border: 1px solid rgba(var(--overlay-rgb, 255, 255, 255), 0.18);
+  border-radius: 20px;
+  box-shadow:
+    0 12px 32px rgba(var(--overlay-rgb, 0, 0, 0), 0.28),
+    inset 0 1px 0 rgba(var(--overlay-rgb, 255, 255, 255), 0.22),
+    inset 0 -1px 0 rgba(var(--overlay-rgb, 0, 0, 0), 0.1);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+}
+
+.dock-bar__glass {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(var(--overlay-rgb, 255, 255, 255), 0.12), transparent 55%);
+  border-radius: inherit;
+}
+
+.dock-bar__items {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  gap: var(--space-sm);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dock-bar__items::-webkit-scrollbar {
+  display: none;
+}
+
+.dock-bar__empty {
+  flex: 1;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock-bar__item {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: var(--text-1);
+  background: var(--color-white-a06);
+  border: 1px solid var(--color-white-a08);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: transform var(--motion-base) var(--motion-ease), background var(--motion-base) var(--motion-ease);
+}
+
+.dock-bar__item:hover {
+  background: var(--color-white-a12);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.dock-bar__item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.dock-bar__item--minimized {
+  opacity: 0.62;
+}
+
+.dock-bar__icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+.dock-bar__fallback {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-1);
+  background: var(--color-white-a12);
+  border-radius: var(--radius-md);
+}
+
+.dock-bar__dot {
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  background: var(--color-accent);
+  border-radius: var(--radius-circle);
+  opacity: 0;
+}
+
+.dock-bar__item--active .dock-bar__dot {
+  opacity: 1;
+}
+
+.dock-bar__clock {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.dock-bar__time {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+.dock-bar__date {
+  overflow: hidden;
+  font-size: 11px;
+  color: var(--text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock-bar__settings {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--motion-base) var(--motion-ease), color var(--motion-base) var(--motion-ease);
+}
+
+.dock-bar__settings:hover {
+  color: var(--text-1);
+  background: var(--color-white-a12);
+}
+
+.dock-bar__settings:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-bar__item,
+  .dock-bar__settings {
+    transition: none;
+  }
+
+  .dock-bar__item:hover {
+    transform: none;
+  }
+}

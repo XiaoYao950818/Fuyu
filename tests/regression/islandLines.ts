@@ -1,10 +1,3 @@
-import type { QuotaAlert } from "../../src/features/agent-status/quotaAlerts";
-import { agentLine, agentShell, quotaAlertState } from "../../src/features/agent-status/plugin/islandState";
-import { agentLineContribution } from "../../src/features/agent-status/plugin/agentLine";
-import type { AgentSession } from "../../src/features/agent-status/session";
-import type { CollapsedMeeting } from "../../src/features/calendar/upcoming";
-import { meetingState } from "../../src/features/calendar/plugin/islandState";
-import { useMeetingContributions } from "../../src/features/calendar/plugin/meetingLines";
 import type { DeviceAlert } from "../../src/features/device-events/api";
 import { useMemo } from "react";
 import type { MediaState } from "../../src/features/media/api";
@@ -18,52 +11,30 @@ import type { DeviceUse } from "../../src/features/device-use/api";
 import { devicesInUse } from "../../src/features/device-use/deviceUse";
 import { deviceUseState } from "../../src/features/device-use/plugin/islandState";
 import type { IslandContribution } from "../../src/features/plugin-kernel/islandContributions";
+import { LINE_PRIORITY } from "../../src/features/plugin-kernel/islandContributions";
 import { useIslandContributions } from "../../src/features/plugin-kernel/useIslandContributions";
 import { useTranslation } from "../../src/i18n";
 import { levelState } from "../../src/features/system-levels/plugin/islandState";
-import { todoLine } from "../../src/features/todos/plugin/islandState";
-import { todoLineContributions } from "../../src/features/todos/plugin/todoLines";
-import { translationPeekState } from "../../src/features/translation/plugin/islandState";
 import { shelfContributions, shelfIsland } from "../../src/features/file-shelf/plugin/islandState";
 import { useFixtureMessages, type FixtureMessages } from "./islandMessages";
 
 type FixtureLines = {
-  barText?: boolean;
-  agentSession?: AgentSession | null;
   lyricLine?: CurrentLyric | null;
-  todoTitle?: string | null;
-  todoCount?: number | null;
-  meeting?: CollapsedMeeting | null;
-  translationPeek?: string | null;
-  agentIconWidth?: number;
+  screenshotPeek?: string | null;
   deviceAlert?: DeviceAlert | null;
-  quotaAlert?: QuotaAlert | null;
   levelPopup?: LevelChange | null;
   deviceUse?: DeviceUse;
   media?: MediaState | null;
   sideCover?: boolean;
-  status?: { state: string; label: string };
-  agents?: number | null;
   messages?: FixtureMessages | null;
   shelfCount?: number | null;
 };
 
 const NO_DEVICES: DeviceUse = { camera: [], microphone: [] };
-const IDLE = { state: "idle", label: "" };
 
-export function useFixtureLines({ barText = true, agentSession = null, lyricLine = null, todoTitle = null, todoCount = null, meeting = null, translationPeek = null, agentIconWidth = 0, deviceAlert = null, quotaAlert = null, levelPopup = null, deviceUse = NO_DEVICES, media = null, sideCover = false, status = IDLE, agents = null, messages = null, shelfCount = null }: FixtureLines) {
+export function useFixtureLines({ lyricLine = null, screenshotPeek = null, deviceAlert = null, levelPopup = null, deviceUse = NO_DEVICES, media = null, sideCover = false, messages = null, shelfCount = null }: FixtureLines) {
   const t = useTranslation();
   useFixtureMessages(messages);
-  quotaAlertState.useProvide(quotaAlert);
-  agentLine.useProvide(agentSession);
-  agentShell.useProvide(useMemo(() => ({ ...agentShell.get(), activeCount: agents ?? 0 }), [agents]));
-  const agentList: IslandContribution[] = [{ kind: "status", state: status.state, label: status.label }, { kind: "side", item: "agent", height: 28 }];
-  const agentLineItem = agentLineContribution(agentSession, false, agentIconWidth, agentSession ? t.island.agentSession(agentSession.label, agentSession.title) : "");
-  if (agentLineItem) agentList.push(agentLineItem);
-  if (agents !== null) agentList.push({ kind: "hint", key: "agents.count" });
-  if (agents !== null && agents > 0) agentList.push({ kind: "hint", key: "agent" });
-  if (quotaAlert) agentList.push({ kind: "alert", item: "quota" });
-  useIslandContributions("builtin", "fixture.agents", agentList);
   deviceAlertState.useProvide(deviceAlert);
   levelState.useProvide(levelPopup);
   const alerts: IslandContribution[] = [];
@@ -72,22 +43,15 @@ export function useFixtureLines({ barText = true, agentSession = null, lyricLine
   for (const device of devicesInUse(deviceUse)) alerts.push({ kind: "side", item: `device-${device}`, height: 28 });
   useIslandContributions("builtin", "fixture.features", alerts);
   deviceUseState.useProvide(deviceUse);
-  translationPeekState.useProvide(translationPeek);
-  useIslandContributions("translation", "fixture.peek", translationPeek === null ? [] : [{ kind: "line", item: "translation.peek", priority: 70, always: true, bare: true, drop: true, action: "translation.open-peek", label: translationPeek }]);
-  const lyric = agentSession ? null : lyricLine;
-  mediaIsland.useProvide(useMemo(() => ({ media: { mediaState: media ?? DEFAULT_MEDIA_STATE } as MediaController, lyricLine: lyric, sideCover }), [media, lyric, sideCover]));
+  useIslandContributions("screenshot", "fixture.peek", screenshotPeek === null ? [] : [{ kind: "line", item: "screenshot.text", priority: LINE_PRIORITY.screenshotPeek, always: true, bare: true, drop: true, label: screenshotPeek }]);
+  mediaIsland.useProvide(useMemo(() => ({ media: { mediaState: media ?? DEFAULT_MEDIA_STATE } as MediaController, lyricLine, sideCover }), [media, lyricLine, sideCover]));
   const mediaList: IslandContribution[] = [];
-  const line = lyricLineContribution(lyric, true, t);
+  const line = lyricLineContribution(lyricLine, t);
   if (line) mediaList.push(line);
   if (media && (media.available || media.audioActive)) mediaList.push({ kind: "side", item: "music", height: sideCover && media.thumbnail ? 40 : 28 });
   if (media?.audioActive) mediaList.push({ kind: "hint", key: "media.audible" });
   if (media?.playbackStatus === "playing") mediaList.push({ kind: "hint", key: "media.playing" });
   useIslandContributions("builtin", "fixture.media", mediaList);
-  const todo = useMemo(() => ({ title: todoTitle, count: todoCount }), [todoTitle, todoCount]);
-  todoLine.useProvide(todo);
-  useIslandContributions("builtin", "fixture.todos", todoLineContributions(todo, t));
-  meetingState.useProvide(meeting);
-  useIslandContributions("calendar", "fixture.meeting", useMeetingContributions(meeting, barText));
   shelfIsland.useProvide(useMemo(() => ({ shelf: null, dropping: false, count: shelfCount }), [shelfCount]));
   useIslandContributions("file-shelf", "fixture.shelf", shelfContributions(shelfCount));
 }

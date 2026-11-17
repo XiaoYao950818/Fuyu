@@ -21,10 +21,8 @@ test("a backup holds the set settings keys and nothing else", () => {
   }
 });
 
-test("a backup carries the AI Agent approval and phone push choices and lyrics offsets", () => {
+test("a backup carries the lyrics offsets and the other kept choices", () => {
   for (const key of [
-    "fuyu-agent-approval",
-    "fuyu-agent-push",
     "fuyu-lyrics-offsets",
     "fuyu-collapsed-items",
     "fuyu-plugin-market-favorites",

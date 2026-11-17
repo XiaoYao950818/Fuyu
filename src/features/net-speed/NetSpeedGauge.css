@@ -1,0 +1,39 @@
+.net-speed-gauge {
+  flex: none;
+  max-width: 140px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px;
+  overflow: hidden;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.net-speed-gauge:hover,
+.net-speed-gauge:focus-visible {
+  color: var(--text-1);
+}
+
+.net-speed-gauge:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.net-speed-gauge__rate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.net-speed-gauge__loading,
+.net-speed-gauge__unavailable {
+  overflow: hidden;
+  color: var(--text-3);
+  text-overflow: ellipsis;
+}

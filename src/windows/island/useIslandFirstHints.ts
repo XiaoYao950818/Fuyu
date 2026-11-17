@@ -15,7 +15,7 @@ export function useIslandFirstHints({
 }) {
   const { busy, hints } = useIslandContributed();
   return useFirstHints(
-    { agent: hints.has("agent"), message: hints.has("message"), tuck: isTucked },
+    { message: hints.has("message"), tuck: isTucked },
     {
       canShow: mode === "collapsed" && !isTucked && !busy,
       paused: quiet || demoActive,

@@ -49,9 +49,9 @@ test("Enter opens a row only when the query is in its title", () => {
 });
 
 test("pages match words written together or apart", () => {
-  const describe = (page) => (page === "agentAlerts" ? "弹出提醒 AI Agent 弹出 提醒 通知" : "");
-  assert.ok(searchCategories("弹出提醒", describe).includes("agentAlerts"));
-  assert.ok(searchCategories("弹出 通知", describe).includes("agentAlerts"));
+  const describe = (page) => (page === "behaviorAlerts" ? "弹出提醒 behaviorAlerts 弹出 提醒 通知" : "");
+  assert.ok(searchCategories("弹出提醒", describe).includes("behaviorAlerts"));
+  assert.ok(searchCategories("弹出 通知", describe).includes("behaviorAlerts"));
 });
 
 test("the index keeps each row once and pairs the languages row by row", () => {
@@ -83,16 +83,16 @@ test("the settings window opens on the overview, and a feature that is off takes
   assert.equal(DEFAULT_SETTINGS_CATEGORY, "overview");
   const allOn = Object.fromEntries(Object.keys(FEATURE_PAGES).map((feature) => [feature, true]));
   assert.equal(pagesOfFeaturesOff(allOn).size, 0);
-  const off = pagesOfFeaturesOff({ ...allOn, agents: false, music: false });
-  assert.deepEqual([...off].sort(), [...FEATURE_PAGES.agents, ...FEATURE_PAGES.music].sort());
+  const off = pagesOfFeaturesOff({ ...allOn, clipboard: false, music: false });
+  assert.deepEqual([...off].sort(), [...FEATURE_PAGES.clipboard, ...FEATURE_PAGES.music].sort());
   assert.ok(!off.has("overview") && !off.has("messages") && !off.has("general"));
   for (const pages of Object.values(FEATURE_PAGES)) for (const page of pages) assert.ok(SETTINGS_CATEGORIES.includes(page), page);
 });
 
-test("Appearance and AI Agent are one sidebar item each, with their pages as tabs, and every page is reachable", () => {
+test("Appearance and Music are one sidebar item each, with their pages as tabs, and every page is reachable", () => {
   assert.deepEqual(entryPages("appearance"), ["theme", "appearance", "themeMarket"]);
-  assert.equal(entryPages("agents").length, 7);
-  assert.equal(sidebarItemOf("sounds"), "agents");
+  assert.equal(entryPages("music").length, 3);
+  assert.equal(sidebarItemOf("musicLyrics"), "music");
   assert.equal(sidebarItemOf("themeMarket"), "appearance");
   assert.equal(sidebarItemOf("music"), "music");
   assert.equal(entryOf("general"), null);

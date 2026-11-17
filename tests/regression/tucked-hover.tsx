@@ -29,7 +29,7 @@ function Harness() {
     delayMs: HOVER_DELAY_MS,
     isPeeking: navigation.isPeeking && navigation.mode === "collapsed",
     onPeek: navigation.peekIsland,
-    onOpen: () => navigation.openIslandPage("todo"),
+    onOpen: () => navigation.openIslandPage("music"),
     retractsAfterPeek: navigation.retractsAfterPeek,
     resumePeek: navigation.resumePeek,
   });

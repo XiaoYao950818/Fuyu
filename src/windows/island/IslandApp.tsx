@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { PluginPermissionPrompt } from "../../features/plugins/PluginPermissionPrompt";
 import { usePluginPermissionPrompts } from "../../features/plugins/usePluginPermissionPrompts";
 import { PluginContextMenus } from "../../features/plugins/PluginContextMenu";
@@ -33,7 +33,9 @@ import { useReducedMotion } from "../../lib/theme/useReducedMotion";
 import { useIslandGlass } from "./useIslandGlass";
 import { useAccentColor } from "../../lib/theme/useAccentColor";
 import { isLightIsland } from "../../utils/color";
-import { PluginPageButtons } from "./PluginPageButtons";
+import { usePageTabDrag } from "./usePageTabDrag";
+import { isPluginPage } from "./features";
+import { applySubsetOrder, reorderPageOrder } from "../../features/plugin-views/pagePrefs";
 import { useCollapsedGauges } from "./useCollapsedGauges";
 import { mergeIslandDecor, useIslandDecor } from "../../features/plugin-kernel/islandDecor";
 import { useTrayLanguage } from "./useTrayLanguage";
@@ -50,15 +52,11 @@ import { hasNotchDrop, notchExpandedExtra, notchFittedWidth, notchLook, notchPan
 import "./IslandApp.css";
 import { PluginSlot } from "../../features/plugin-kernel/PluginSlot";
 import { leadLine } from "../../features/plugin-kernel/islandContributions";
-import { runIslandAction, useIslandContributed, useIslandContributions, useSettleIslandContributions } from "../../features/plugin-kernel/useIslandContributions";
+import { useIslandContributed, useIslandContributions, useSettleIslandContributions } from "../../features/plugin-kernel/useIslandContributions";
 import { useCollapsedWidth } from "./useCollapsedWidth";
 import { overlaySlot } from "./slots/overlay";
 import { SlotView } from "../../features/plugin-kernel/SlotView";
-import type { IslandPage } from "./types";
-
-const openTranslator = () => {
-  runIslandAction("translation.open");
-};
+import type { IslandPage, IslandTab } from "./types";
 
 export function IslandApp() {
   const t = useTranslation();
@@ -75,7 +73,23 @@ export function IslandApp() {
   useFirstRunGuide();
   const demo = useOnboardingDemo();
   const decor = useIslandDecor();
-  const gauges = useCollapsedGauges(mode !== "collapsed" || isTucked || game.quiet);
+  const { features, openEnabledPage, orderedTabs, visibleTabs } = useIslandFeatures({
+    settings,
+    page,
+    setPage,
+    openIslandPage,
+    pluginPages,
+  });
+  const handleTabReorder = useCallback((draggedId: IslandPage, targetId: IslandPage | null) => {
+    const nextVisible = reorderPageOrder(visibleTabs, draggedId, targetId);
+    if (nextVisible === visibleTabs) return;
+    const nextOrder = applySubsetOrder(orderedTabs, visibleTabs, nextVisible);
+    if (nextOrder === orderedTabs) return;
+    pluginPages.setPrefs({ ...pluginPages.prefs, order: [...nextOrder] });
+  }, [visibleTabs, orderedTabs, pluginPages]);
+  const tabs = useMemo<IslandTab[]>(() => visibleTabs.map((id) => ({ id, kind: isPluginPage(id) ? "plugin" : "builtin" })), [visibleTabs]);
+  const tabDrag = usePageTabDrag(visibleTabs, handleTabReorder);
+  const gauges = useCollapsedGauges(mode !== "collapsed" || isTucked || game.quiet, openEnabledPage);
   const collapsedSlots = useMemo(() => mergeIslandDecor([decor, gauges]), [decor, gauges]);
   usePluginHostEvents({ mode });
 
@@ -88,8 +102,8 @@ export function IslandApp() {
   const notch = useIslandNotch();
   const autoForm = useAutoIslandForm();
   const barText = settings.showCollapsedText && !notch;
-  const { lines: contributedLines, alerts, popups, style, settled, hints, preview: contributedPreview } = useIslandContributed();
-  usePluginKeybindings({ mode, page, hasActiveTodo: hints.has("todos.active") });
+  const { lines: contributedLines, alerts, popups, style, settled, preview: contributedPreview } = useIslandContributed();
+  usePluginKeybindings({ mode, page });
   const textWidth = useCollapsedWidth({
     barText,
     noticeText: firstHints.current ? t.island.firstHint[firstHints.current] : null,
@@ -103,13 +117,6 @@ export function IslandApp() {
   useIslandTucking({ settings, navigation });
 
 
-  const { features, openEnabledPage } = useIslandFeatures({
-    settings,
-    page,
-    setPage,
-    openIslandPage,
-    pluginPages: pluginPages.pageIds,
-  });
   const { popup, expandedIslandWidth: popupWidth } = useIslandPopup(
     mode,
     [...popups.values()].some((entry) => entry.open === true),
@@ -202,7 +209,6 @@ export function IslandApp() {
         onResetPosition={resetIslandPosition}
         minimizesToTray={settings.minimizeAction === "tray"}
         onMinimize={settings.minimizeAction === "tray" ? minimizeIsland : minimizeToEdge}
-        onOpenTranslator={settings.translationEnabled && settings.translationTarget === "island" ? openTranslator : null}
         onOpenSettings={openSettingsWindow}
         onTuck={tuckIsland}
         onReveal={hoverTucked}
@@ -215,7 +221,8 @@ export function IslandApp() {
         pluginViews={pluginPages.views}
         onOpenPluginPage={openEnabledPage}
         collapsedSlots={collapsedSlots}
-        pluginPageButtons={<PluginPageButtons views={pluginPages.views} page={page} features={features} modifiers={settings.pageDigitModifiers} hoverSwitchPage={settings.hoverSwitchPage} hoverSwitchDelayMs={settings.hoverSwitchDelayMs} onOpen={setPage} />}
+        tabs={tabs}
+        tabDrag={tabDrag}
       >
         <PluginSlot window="island" name="island.dev/v1" />
         <IslandPages

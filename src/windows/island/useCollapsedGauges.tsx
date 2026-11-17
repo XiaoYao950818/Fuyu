@@ -12,15 +12,15 @@ import { collapsedGaugeSlot, slotWidth, type CollapsedGaugeContext } from "./slo
 
 const EMPTY: CollapsedSlots = {};
 
-export function useCollapsedGauges(paused: boolean): CollapsedSlots {
+export function useCollapsedGauges(paused: boolean, openPage: CollapsedGaugeContext["openPage"]): CollapsedSlots {
   const { hints } = useIslandContributed();
   const { placements } = useCollapsedPlacements();
   const hidden = usePageHidden();
   const still = paused || hidden;
   const entries = useSlotEntries(collapsedGaugeSlot);
   const gaugeContext = useMemo<CollapsedGaugeContext>(
-    () => ({ paused: still, hints, listenIslandHover }),
-    [still, hints],
+    () => ({ paused: still, hints, listenIslandHover, openPage }),
+    [still, hints, openPage],
   );
   const gauges = useMemo(
     () => entries.filter((entry) => entry.group === "gauges" && !(entry.hideable && isCollapsedItemHidden(placements, entry.id)) && (entry.shown?.(gaugeContext) ?? true)),

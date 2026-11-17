@@ -4,18 +4,13 @@
   -webkit-font-smoothing: none;
 }
 
-.stage--font-pixel .todo-island__composer input,
-.stage--font-pixel textarea,
-.stage--font-pixel .todo-island-row__title,
-.stage--font-pixel .todo-island-row__input,
-.stage--font-pixel .todo-island__archive-date {
+.stage--font-pixel textarea {
   font-family: inherit;
 }
 
 .stage--font-pixel .island__brand,
 .stage--font-pixel .island__active-task,
-.stage--font-pixel .island__agent-session,
-.stage--font-pixel .island__todo-count {
+.stage--font-pixel .island__agent-session {
   font-size: 14px;
   font-weight: 400;
   -webkit-text-stroke: 0.3px currentColor;
@@ -43,15 +38,6 @@
   background: transparent;
 }
 
-.island--todo .icon-button {
-  color: var(--text-2);
-  background: var(--color-white-a09);
-}
-
-.island--todo .icon-button:hover {
-  color: var(--color-white);
-  background: var(--color-white-a16);
-}
 
 .icon-button {
   width: 34px;

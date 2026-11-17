@@ -11,7 +11,7 @@ const TICK_MS = 200;
 
 const PAGE_LOOK: KaraokeLook = { fill: "smooth", lit: "var(--text-1)", dim: "var(--text-3)", glow: false, follow: false };
 
-export function LyricsView({ lines, mediaState, offsetMs, intro = "todo", onPickLine }: {
+export function LyricsView({ lines, mediaState, offsetMs, intro = "song", onPickLine }: {
   lines: LyricLine[];
   mediaState: MediaState;
   offsetMs: number;

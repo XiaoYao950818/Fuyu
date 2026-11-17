@@ -10,7 +10,7 @@ import type { TrayCardProps } from "./types";
 export function CompactLayout(props: TrayCardProps) {
   const text = useTranslation().trayMenu;
   const { data, handlers } = props;
-  const features = shownFeatures(data.off, ["screenshot", "translate", "clipboard"]);
+  const features = shownFeatures(data.off, ["screenshot", "clipboard"]);
   return (
     <>
       <TrayCardHeader {...props} />

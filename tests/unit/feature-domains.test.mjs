@@ -20,9 +20,9 @@ function apiSources(dir = SRC, found = {}) {
 
 test("commands and events go to the built-in plugin whose api.ts alone names them", () => {
   const domains = ipcDomains(apiSources(), catalog.plugins);
-  const translation = namesOf(domains, "translation");
-  assert.ok(translation.commands.includes("translate_text") && translation.commands.includes("set_translation_shortcut"), translation.commands.join(", "));
-  assert.ok(translation.events.length >= 3, translation.events.join(", "));
+  const clipboard = namesOf(domains, "clipboard");
+  assert.ok(clipboard.commands.includes("get_clipboard_history") && clipboard.commands.includes("set_clipboard_history_settings"), clipboard.commands.join(", "));
+  assert.ok(clipboard.events.length >= 3, clipboard.events.join(", "));
   assert.ok(!domains.commands.has("is_session_locked") && !domains.events.has("foreground-fullscreen-changed"), "the timer shares these with the island and the agent push");
 });
 

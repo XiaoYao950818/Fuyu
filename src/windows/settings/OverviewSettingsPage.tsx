@@ -137,7 +137,7 @@ function FeatureCard({ feature, state, watch, onOpen }: { feature: SettingsFeatu
   const t = useTranslation();
   const id = useId();
   const page = FEATURE_PAGES[feature][0];
-  const name = feature === "agents" ? t.settings.categories.groups.agents : t.settings.categories[page];
+  const name = t.settings.categories[page];
   const Icon = CATEGORY_ICONS[page];
   return (
     <li className={`settings-overview__feature${state.on ? " settings-overview__feature--on" : ""}`} data-feature={feature} {...watch}>

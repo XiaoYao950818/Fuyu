@@ -37,7 +37,7 @@ export type SettingsPluginsText = {
   noPermissions: string;
   optionalPermission: string;
   permissionCount: (count: number) => string;
-  permission: Record<"todos:read" | "todos:write" | "notes:read" | "notes:write" | "agent-status:read" | "agent-status:write" | "island:notify" | "secrets" | "clipboard:read" | "messages:read" | "media:read" | "media:control" | "shelf:read" | "shelf:write" | "windows", string>;
+  permission: Record<"island:notify" | "secrets" | "clipboard:read" | "messages:read" | "media:read" | "media:control" | "shelf:read" | "shelf:write" | "windows", string>;
   needsApproval: string;
   keybindingConflict: (shortcuts: string) => string;
   sensitive: {
@@ -46,7 +46,6 @@ export type SettingsPluginsText = {
     once: string;
     deny: string;
     action: Record<
-      | "todos:read" | "todos:write" | "notes:read" | "notes:write" | "agent-status:read" | "agent-status:write"
       | "island:notify" | "secrets" | "clipboard:read" | "messages:read" | "media:read" | "media:control"
       | "shelf:read" | "shelf:write" | "windows" | "uri",
       string
@@ -127,7 +126,6 @@ export type SettingsPluginsText = {
     infoWhenRunning: string;
     settings: string;
     noSettings: string;
-    pets: { unset: string; none: string; failed: string; loading: string; missing: (id: string) => string; app: string };
     actions: string;
     copy: string;
     copied: string;
@@ -165,7 +163,7 @@ export type SettingsPluginsText = {
     noMatches: string;
     allCategories: string;
     spotlight: string;
-    category: Record<"productivity" | "todos" | "developer" | "media" | "messages" | "information" | "utilities" | "sounds", string>;
+    category: Record<"productivity" | "developer" | "media" | "messages" | "information" | "utilities" | "sounds", string>;
     official: string;
     publisher: (name: string) => string;
     trustAndInstall: string;
@@ -233,72 +231,6 @@ export type SettingsPluginsText = {
     autoUpdatedShort: (version: string) => string;
     preReleaseShort: (version: string) => string;
   };
-  ccConnect: {
-    group: string;
-    groupHint: string;
-    path: string;
-    pathHint: string;
-    run: string;
-    runHint: string;
-    title: string;
-    hint: string;
-    program: string;
-    notFound: string;
-    source: Record<"setting" | "running" | "path" | "downloaded" | "installed", string>;
-    state: string;
-    running: string;
-    notRunning: string;
-    noProjects: string;
-    noChats: string;
-    refresh: string;
-    download: string;
-    downloading: string;
-    downloadHint: string;
-    computer: string;
-    thisComputer: string;
-    reading: string;
-    remotePath: string;
-    remotePathHint: string;
-    remoteNotRunning: string;
-    remoteSetup: string;
-    runnerLabel: string;
-    runner: Record<"off" | "starting" | "running" | "external" | "noConfig" | "failed", string>;
-    platforms: Record<string, string>;
-    setup: {
-      title: string;
-      hint: string;
-      platform: string;
-      agent: string;
-      agentHint: string;
-      project: string;
-      projectHint: string;
-      workDir: string;
-      workDirHint: string;
-      steps: Record<"telegram" | "discord" | "feishu", string[]>;
-      token: string;
-      check: string;
-      find: string;
-      checking: string;
-      bot: (name: string) => string;
-      invite: string;
-      senders: string;
-      noSenders: string;
-      allowFrom: string;
-      allowFromHint: string;
-      allowFromInvalid: string;
-      add: string;
-      adding: string;
-      added: string;
-      feishuStart: string;
-      feishuWaiting: string;
-      feishuQr: string;
-      feishuOpen: string;
-      feishuCancel: string;
-      feishuRetry: string;
-      feishuDone: (allowFrom: string | null) => string;
-      feishuNoOwner: string;
-    };
-  };
   sshTunnel: {
     title: string;
     hint: string;
@@ -325,7 +257,7 @@ export type SettingsPluginsText = {
 
 export const zhCN: SettingsPluginsText = {
   allowThirdParty: "允许运行第三方插件",
-  warning: "插件是在你电脑上运行的程序，和你本人有同样的权限：可以读写文件、联网，也能读到这台电脑上保存的密码和授权码（包括岛屿保存的邮箱授权码和翻译密钥）。下面列出的权限只限制它能通过岛屿读写哪些数据。只安装你信任的插件。",
+  warning: "插件是在你电脑上运行的程序，和你本人有同样的权限：可以读写文件、联网，也能读到这台电脑上保存的密码和授权码（包括岛屿保存的邮箱授权码）。下面列出的权限只限制它能通过岛屿读写哪些数据。只安装你信任的插件。",
   folder: "插件目录",
   brokenState: (backup) => `插件设置文件读不出来，已按默认值重新开始：第三方插件的开关、授权、设置和信任的发布者都要重新设置。原文件备份在 ${backup}。`,
   openFolder: "打开",
@@ -363,12 +295,6 @@ export const zhCN: SettingsPluginsText = {
   optionalPermission: "可选，用到时询问",
   permissionCount: (count: number) => `${count} 项权限`,
   permission: {
-    "todos:read": "读取待办",
-    "todos:write": "添加、修改和删除待办",
-    "notes:read": "读取每日笔记",
-    "notes:write": "修改每日笔记",
-    "agent-status:read": "读取 AI Agent 状态",
-    "agent-status:write": "在状态灯上显示 AI Agent 状态",
     "island:notify": "在岛上显示通知",
     secrets: "在 Windows 凭据管理器中保存密码和令牌",
     "clipboard:read": "读取剪贴板历史中的文字（敏感，首次使用时询问）",
@@ -387,12 +313,6 @@ export const zhCN: SettingsPluginsText = {
     once: "本次",
     deny: "拒绝",
     action: {
-      "todos:read": "读取待办",
-      "todos:write": "修改待办",
-      "notes:read": "读取笔记",
-      "notes:write": "修改笔记",
-      "agent-status:read": "读取 AI Agent 状态",
-      "agent-status:write": "报告 AI Agent 状态",
       "island:notify": "在岛上显示通知",
       secrets: "保存自己的密钥",
       "media:control": "控制媒体播放",
@@ -487,14 +407,6 @@ export const zhCN: SettingsPluginsText = {
     infoWhenRunning: "插件运行后，会在这里显示它提供的信息。",
     settings: "设置",
     noSettings: "这个插件没有可以调整的设置。",
-    pets: {
-      unset: "未选择（显示眼睛）",
-      none: "没有找到宠物（显示眼睛）",
-      failed: "读不到宠物列表（显示眼睛）",
-      loading: "正在读取宠物…",
-      missing: (id) => `${id}（已找不到）`,
-      app: "本应用",
-    },
     actions: "操作",
     copy: "复制",
     copied: "已复制",
@@ -535,7 +447,6 @@ export const zhCN: SettingsPluginsText = {
     spotlight: "大家都在装",
     category: {
       productivity: "效率",
-      todos: "待办",
       developer: "开发",
       media: "媒体",
       messages: "消息",
@@ -610,101 +521,10 @@ export const zhCN: SettingsPluginsText = {
     autoUpdatedShort: (version: string) => `已自动更新到 v${version}`,
     preReleaseShort: (version: string) => `有预发布版 v${version}`,
   },
-  ccConnect: {
-    group: "cc-connect 手机连接",
-    groupHint: "让手机推送经 cc-connect 的机器人发到 Telegram、Discord 或飞书：Agent 等你时把问题、计划或回复连同接管命令发到手机，在手机上回 /cd、/switch 就能接着这个会话答。没装 cc-connect 也行：这里可以下载它、一步步建好机器人，并由岛让它一直运行。在 设置 → 插件（第 3 版）里关掉内置插件「cc-connect 手机连接」，这一节和推送的 cc-connect 通道一起停用。",
-    path: "cc-connect 程序路径",
-    pathHint: "留空自动找：正在运行的 cc-connect、PATH（npm i -g cc-connect 装在这里）、这里下载的那份，再看 C、D 盘 Program Files 和 Program Files (x86) 下的 cc-connect 文件夹。不搜全盘。",
-    run: "由岛启动 cc-connect",
-    runHint: "岛开着时让 cc-connect 在后台一直运行（不弹窗口，退出岛时一起退出）。已经在别处运行的 cc-connect 不接管。",
-    title: "找到的 cc-connect",
-    hint: "推送经下面列出的聊天发到手机：在上面的「手机推送」里把通道选成 cc-connect，再勾选聊天。",
-    program: "程序",
-    notFound: "没找到 cc-connect。点下面的「下载 cc-connect」，或在上面填它的路径。",
-    source: { setting: "插件设置", running: "正在运行", path: "PATH", downloaded: "岛下载的", installed: "安装目录" },
-    state: "状态",
-    running: "正在运行",
-    notRunning: "没在运行：推送要 cc-connect 在运行。打开上面的「由岛启动 cc-connect」，或自己启动它。",
-    noProjects: "还没有聊天：先在下面建一个机器人，或给已有的机器人发一句话。",
-    noChats: "还没有聊天",
-    refresh: "刷新",
-    download: "下载 cc-connect",
-    downloading: "正在下载…",
-    downloadHint: "从 GitHub 下载最新正式版，按发布的校验值核对后放在岛的数据文件夹里。",
-    computer: "电脑",
-    thisComputer: "本机",
-    reading: "正在经 SSH 读取…",
-    remotePath: "程序路径",
-    remotePathHint: "留空自动找：正在运行的那个，或登录 shell 的 PATH 里的。改了点刷新",
-    remoteNotRunning: "没在运行：推送要那台电脑上的 cc-connect 在运行，请在那台电脑上启动它。",
-    remoteSetup: "远程电脑的机器人在那台电脑上用 cc-connect 自己配置，岛只读取和经它发送。",
-    runnerLabel: "由岛启动",
-    runner: {
-      off: "未开启",
-      starting: "正在启动…",
-      running: "运行中",
-      external: "已有别处启动的 cc-connect，不接管",
-      noConfig: "等配置：先在下面建一个机器人",
-      failed: "启动失败",
-    },
-    platforms: { telegram: "Telegram", discord: "Discord", feishu: "飞书", lark: "Lark", weixin: "微信", qqbot: "QQ", qq: "QQ", slack: "Slack", dingtalk: "钉钉", wecom: "企业微信" },
-    setup: {
-      title: "新建机器人",
-      hint: "一个机器人对应 cc-connect 里的一个项目：在手机上和它聊，就是在这台电脑的工作文件夹里用 Claude Code 或 Codex，Claude Code 每次用工具都要你在手机上同意。",
-      platform: "平台",
-      agent: "Agent",
-      agentHint: "一个机器人只接一种 Agent，也只能接管这种 Agent 的会话。Codex 从只读模式开始（它没法在手机上问你），要改文件时在手机上用 /mode 切换。",
-      project: "项目名",
-      projectHint: "只用字母、数字、- 和 _。",
-      workDir: "工作文件夹",
-      workDirHint: "默认是岛建的一个空文件夹。Claude Code 读这个文件夹里的文件不会问你，所以别换成整个用户文件夹。在手机上开的会话从这里开始，之后可以用 /cd 换。",
-      steps: {
-        telegram: [
-          "在 Telegram 里找 @BotFather，发 /newbot，按提示给机器人起名，复制它最后给的 token。",
-          "把 token 粘到下面，用 Telegram 给你的新机器人随便发一句话，再点「识别」。",
-          "在列出的人里点选你自己，ID 就填进「谁能用」。",
-        ],
-        discord: [
-          "打开 Discord 开发者门户（discord.com/developers/applications），New Application → Bot → Reset Token，复制 token；同一页打开 Message Content Intent。",
-          "把 token 粘到下面点「检查」，再用出现的邀请链接把机器人拉进你的服务器。",
-          "Discord 设置 → 高级 → 打开开发者模式，右键自己的头像 →「复制用户 ID」，填进「谁能用」。",
-        ],
-        feishu: [
-          "点「扫码创建」，用飞书 App 扫出现的二维码，飞书会自动建好机器人并开通需要的权限。",
-          "扫码的人就是能用这个机器人的人；建好后在飞书里给机器人发一句话。",
-        ],
-      },
-      token: "机器人 token",
-      check: "检查",
-      find: "识别",
-      checking: "正在检查…",
-      bot: (name: string) => `机器人 ${name} 可用。`,
-      invite: "邀请进服务器",
-      senders: "给机器人发过消息的人，点选你自己：",
-      noSenders: "还没人给它发消息：用 Telegram 给机器人发一句话，再点「识别」。",
-      allowFrom: "谁能用（你的用户 ID）",
-      allowFromHint: "只有这些人能通过机器人使用这台电脑；多个 ID 用英文逗号隔开。",
-      allowFromInvalid: "ID 只能是字母、数字、- 和 _，多个用英文逗号隔开，不能是 *。",
-      add: "添加到 cc-connect",
-      adding: "正在添加…",
-      added:
-        "已加进 cc-connect 的配置。打开上面的「由岛启动 cc-connect」让它运行（已经开着的会自动重启；自己运行的 cc-connect 要重启一次），然后给机器人发一句话，聊天就会出现在上面。",
-      feishuStart: "扫码创建",
-      feishuWaiting: "正在准备二维码…",
-      feishuQr: "飞书扫码创建机器人的二维码",
-      feishuOpen: "在浏览器打开",
-      feishuCancel: "取消",
-      feishuRetry: "重新开始",
-      feishuDone: (allowFrom: string | null) =>
-        `飞书机器人建好了${allowFrom ? `，能用它的人：${allowFrom}` : ""}。打开「由岛启动 cc-connect」让它运行，再在飞书里给机器人发一句话。`,
-      feishuNoOwner:
-        "没拿到你的飞书用户 ID，现在组织里谁都能用这个机器人：给它发 /whoami，把得到的 User ID 填进 ~/.cc-connect/config.toml 里这个项目的 allow_from，再重启 cc-connect。",
-    },
-  },
   sshTunnel: {
     title: "主机",
-    hint: "主机来自 ~/.ssh/config 和 AI Agent → 远程电脑里添加的电脑。每台填一个服务器上的端口（1024–65535，别和别人的隧道重复），打开后在服务器上运行下面那行 export 就能用这里的代理。",
-    empty: "没有主机：在 ~/.ssh/config 里写 Host，或在 AI Agent → 远程电脑里添加。",
+    hint: "主机来自 ~/.ssh/config。每台填一个服务器上的端口（1024–65535，别和别人的隧道重复），打开后在服务器上运行下面那行 export 就能用这里的代理。",
+    empty: "没有主机：在 ~/.ssh/config 里写 Host。",
     port: "服务器端口",
     portInvalid: "端口要是 1024–65535 的整数",
     needsPort: "先填服务器端口",
@@ -741,7 +561,7 @@ export const zhCN: SettingsPluginsText = {
 
 export const en: SettingsPluginsText = {
   allowThirdParty: "Allow third-party plugins",
-  warning: "Plugins are programs that run on your computer with the same rights as you: they can read and write files, use the network, and read passwords and codes saved on this computer (including the mail codes and translation keys the island saves). The permissions below only limit which data they can use through the island. Only install plugins you trust.",
+  warning: "Plugins are programs that run on your computer with the same rights as you: they can read and write files, use the network, and read passwords and codes saved on this computer (including the mail codes the island saves). The permissions below only limit which data they can use through the island. Only install plugins you trust.",
   folder: "Plugins folder",
   brokenState: (backup) => `The plugin settings file could not be read, so plugins started over with the defaults: third-party plugins, permissions, settings and trusted publishers need setting up again. The original file is kept at ${backup}.`,
   openFolder: "Open",
@@ -779,12 +599,6 @@ export const en: SettingsPluginsText = {
   optionalPermission: "optional, asked when needed",
   permissionCount: (count: number) => (count === 1 ? "1 permission" : `${count} permissions`),
   permission: {
-    "todos:read": "Read todos",
-    "todos:write": "Add, change and delete todos",
-    "notes:read": "Read the daily note",
-    "notes:write": "Change the daily note",
-    "agent-status:read": "Read AI Agent status",
-    "agent-status:write": "Show AI Agent status on the light",
     "island:notify": "Show notifications on the island",
     secrets: "Keep passwords and tokens in Windows Credential Manager",
     "clipboard:read": "Read text from the clipboard history (sensitive: asks on first use)",
@@ -803,12 +617,6 @@ export const en: SettingsPluginsText = {
     once: "Once",
     deny: "Deny",
     action: {
-      "todos:read": "read your todos",
-      "todos:write": "change your todos",
-      "notes:read": "read your note",
-      "notes:write": "change your note",
-      "agent-status:read": "read AI agent statuses",
-      "agent-status:write": "report AI agent statuses",
       "island:notify": "show notifications on the island",
       secrets: "keep its own secrets",
       "media:control": "control media playback",
@@ -903,14 +711,6 @@ export const en: SettingsPluginsText = {
     infoWhenRunning: "Once the plugin runs, what it shares appears here.",
     settings: "Settings",
     noSettings: "This plugin has no settings.",
-    pets: {
-      unset: "None (shows the eyes)",
-      none: "No pets found (shows the eyes)",
-      failed: "Could not read the pets (shows the eyes)",
-      loading: "Reading pets…",
-      missing: (id) => `${id} (missing)`,
-      app: "this app",
-    },
     actions: "Actions",
     copy: "Copy",
     copied: "Copied",
@@ -951,7 +751,6 @@ export const en: SettingsPluginsText = {
     spotlight: "Most liked",
     category: {
       productivity: "Productivity",
-      todos: "Todos",
       developer: "Developer",
       media: "Media",
       messages: "Messages",
@@ -1026,101 +825,10 @@ export const en: SettingsPluginsText = {
     autoUpdatedShort: (version: string) => `Updated to ${version}`,
     preReleaseShort: (version: string) => `Pre-release ${version}`,
   },
-  ccConnect: {
-    group: "cc-connect phone link",
-    groupHint: "Sends the phone push through cc-connect's bots on Telegram, Discord or Feishu: when an agent waits for you, its question, plan or reply goes to your phone with the commands to take the session over there (/cd, /switch). No cc-connect yet? Download it here, set a bot up step by step, and the island keeps it running. Switching off the built-in plugin \"cc-connect phone link\" under Settings → Plugins (v3) turns this section and the push's cc-connect channel off.",
-    path: "cc-connect program",
-    pathHint: "Leave empty to find it: the running cc-connect, PATH (where npm i -g cc-connect puts it), the one downloaded here, then a cc-connect folder in Program Files or Program Files (x86) on C: and D:. The disks are not searched.",
-    run: "Keep cc-connect running",
-    runHint: "While the island runs, cc-connect runs in the background too (no window, it ends with the island). A cc-connect started elsewhere is left alone.",
-    title: "cc-connect found",
-    hint: "Pushes go to your phone through the chats below: under Phone push above, pick cc-connect as the channel and tick the chats.",
-    program: "Program",
-    notFound: "cc-connect was not found. Use Download cc-connect below, or enter its path above.",
-    source: { setting: "plugin setting", running: "running", path: "PATH", downloaded: "downloaded here", installed: "install folder" },
-    state: "State",
-    running: "Running",
-    notRunning: "Not running: pushes need cc-connect running. Turn on Keep cc-connect running above, or start it yourself.",
-    noProjects: "No chats yet: set a bot up below, or send an existing bot a message.",
-    noChats: "No chats yet",
-    refresh: "Refresh",
-    download: "Download cc-connect",
-    downloading: "Downloading…",
-    downloadHint: "Gets the latest release from GitHub, checks it against the published checksum, and keeps it in the island's data folder.",
-    computer: "Computer",
-    thisComputer: "This computer",
-    reading: "Reading over SSH…",
-    remotePath: "Program path",
-    remotePathHint: "Leave empty to find it: the one running, or the one on a login shell's PATH. Refresh after a change",
-    remoteNotRunning: "Not running: pushes need cc-connect running on that computer; start it there.",
-    remoteSetup: "A remote computer's bots are set up with cc-connect on that computer; the island only reads them and sends through it.",
-    runnerLabel: "Run by the island",
-    runner: {
-      off: "Off",
-      starting: "Starting…",
-      running: "Running",
-      external: "A cc-connect started elsewhere runs; left alone",
-      noConfig: "Waiting for a config: set a bot up below",
-      failed: "Failed to start",
-    },
-    platforms: { telegram: "Telegram", discord: "Discord", feishu: "Feishu", lark: "Lark", weixin: "WeChat", qqbot: "QQ", qq: "QQ", slack: "Slack", dingtalk: "DingTalk", wecom: "WeCom" },
-    setup: {
-      title: "Set up a bot",
-      hint: "One bot is one project in cc-connect: chatting with it on your phone is using Claude Code or Codex in the work folder on this computer; Claude Code asks you on the phone before every tool use.",
-      platform: "Platform",
-      agent: "Agent",
-      agentHint: "A bot drives one agent, and takes over only that agent's sessions. Codex starts read-only (it cannot ask you on the phone); switch with /mode on the phone when it should change files.",
-      project: "Project name",
-      projectHint: "Letters, digits, - and _ only.",
-      workDir: "Work folder",
-      workDirHint: "By default an empty folder the island makes. Claude Code reads what is in it without asking, so do not switch to your whole user folder. Sessions started from the phone begin here; /cd changes it later.",
-      steps: {
-        telegram: [
-          "In Telegram, open @BotFather, send /newbot, name the bot as it asks, and copy the token it gives you last.",
-          "Paste the token below, send your new bot any message in Telegram, then press Find me.",
-          "Pick yourself among the people listed; your ID goes into Who may use it.",
-        ],
-        discord: [
-          "Open the Discord Developer Portal (discord.com/developers/applications): New Application → Bot → Reset Token, and copy the token; on the same page turn on Message Content Intent.",
-          "Paste the token below and press Check, then invite the bot to your server with the link that appears.",
-          "Discord settings → Advanced → turn on Developer Mode, right-click your own avatar → Copy User ID, and put it into Who may use it.",
-        ],
-        feishu: [
-          "Press Create by QR code and scan the code with the Feishu app: Feishu makes the bot and grants what it needs.",
-          "Whoever scans may use the bot; once it is made, send it a message in Feishu.",
-        ],
-      },
-      token: "Bot token",
-      check: "Check",
-      find: "Find me",
-      checking: "Checking…",
-      bot: (name: string) => `Bot ${name} works.`,
-      invite: "Invite to a server",
-      senders: "People who wrote to the bot; pick yourself:",
-      noSenders: "Nobody has written to it yet: send the bot a message in Telegram, then press Find me.",
-      allowFrom: "Who may use it (your user ID)",
-      allowFromHint: "Only these people can use this computer through the bot; separate several IDs with commas.",
-      allowFromInvalid: "IDs are letters, digits, - and _, separated by commas, and never *.",
-      add: "Add to cc-connect",
-      adding: "Adding…",
-      added:
-        "Added to cc-connect's config. Turn on Keep cc-connect running above (a running one restarts by itself; restart a cc-connect you run yourself), then send the bot a message and the chat shows up above.",
-      feishuStart: "Create by QR code",
-      feishuWaiting: "Preparing the QR code…",
-      feishuQr: "QR code to create the Feishu bot",
-      feishuOpen: "Open in the browser",
-      feishuCancel: "Cancel",
-      feishuRetry: "Start over",
-      feishuDone: (allowFrom: string | null) =>
-        `The Feishu bot is ready${allowFrom ? `; it may be used by ${allowFrom}` : ""}. Turn on Keep cc-connect running, then send the bot a message in Feishu.`,
-      feishuNoOwner:
-        "Your Feishu user ID did not come back, so anyone in the organization can use this bot: send it /whoami, put the User ID into this project's allow_from in ~/.cc-connect/config.toml, and restart cc-connect.",
-    },
-  },
   sshTunnel: {
     title: "Hosts",
-    hint: "Hosts come from ~/.ssh/config and the computers added under AI Agent → Remote computers. Give each a port on the server (1024–65535, not one another tunnel uses); once it is on, run the export line below on the server to use the proxy here.",
-    empty: "No hosts: add a Host to ~/.ssh/config, or a computer under AI Agent → Remote computers.",
+    hint: "Hosts come from ~/.ssh/config. Give each a port on the server (1024–65535, not one another tunnel uses); once it is on, run the export line below on the server to use the proxy here.",
+    empty: "No hosts: add a Host to ~/.ssh/config.",
     port: "Server port",
     portInvalid: "The port must be a whole number from 1024 to 65535",
     needsPort: "Set the server port first",

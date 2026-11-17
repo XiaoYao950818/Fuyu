@@ -37,63 +37,9 @@ export type ErrorCode =
   | "inflink.releaseTimeout"
   | "inflink.noBetterNcm"
   | "inflink.write"
-  | "bark.server"
   | "recording.busy"
   | "recording.idle"
   | "recording.failed"
-  | "bark.scheme"
-  | "bark.key"
-  | "bark.noKey"
-  | "bark.unreachable"
-  | "bark.unknownKey"
-  | "bark.status"
-  | "ccConnect.token"
-  | "ccConnect.noTokenCheck"
-  | "ccConnect.telegramToken"
-  | "ccConnect.telegramBusy"
-  | "ccConnect.discordToken"
-  | "ccConnect.discordId"
-  | "ccConnect.projectName"
-  | "ccConnect.projectTaken"
-  | "ccConnect.workDir"
-  | "ccConnect.workDirCreate"
-  | "ccConnect.platform"
-  | "ccConnect.allowFrom"
-  | "ccConnect.feishuRunning"
-  | "ccConnect.feishuUnfinished"
-  | "ccConnect.tag"
-  | "ccConnect.asset"
-  | "ccConnect.checksumMissing"
-  | "ccConnect.checksum"
-  | "ccConnect.arch"
-  | "ccConnect.zip"
-  | "ccConnect.zipEmpty"
-  | "ccConnect.zipLarge"
-  | "ccConnect.unpack"
-  | "ccConnect.notAt"
-  | "ccConnect.notFound"
-  | "ccConnect.notFoundRun"
-  | "ccConnect.notDownloaded"
-  | "ccConnect.notReady"
-  | "ccConnect.chat"
-  | "ccConnect.emptyPush"
-  | "ccConnect.run"
-  | "ccConnect.agent"
-  | "ccConnect.host"
-  | "ccConnect.remoteNotFound"
-  | "ccConnect.remoteFailed"
-  | "ccConnect.remoteSystem"
-  | "ccConnect.remoteInstall"
-  | "ccConnect.remoteFeishu"
-  | "ccConnect.remoteChanged"
-  | "ccConnect.remoteWrite"
-  | "ccConnect.remoteNoConfig"
-  | "ccConnect.remoteStopped"
-  | "ccConnect.stdin"
-  | "ccConnect.timeout"
-  | "ccConnect.failed"
-  | "ccConnect.exited"
-  | "ccConnect.lost"
   | "clipboard.read"
   | "clipboard.open"
   | "clipboard.notLink"
@@ -107,61 +53,24 @@ export type ErrorCode =
   | "shortcut.update"
   | "shortcut.timeout"
   | "shortcut.taken"
-  | "calendar.save"
-  | "calendar.link"
-  | "calendar.linkScheme"
-  | "calendar.unreachable"
-  | "calendar.login"
-  | "calendar.status"
-  | "calendar.read"
-  | "calendar.tooLarge"
-  | "calendar.address"
-  | "calendar.https"
-  | "calendar.notCalendar"
-  | "calendar.noCalendars"
+  | "quick-commands.empty"
+  | "quick-commands.failed"
+  | "net-speed.read"
+  | "volume.read"
+  | "volume.set"
+  | "dock.read"
+  | "dock.activate"
+  | "dock.tray"
   | "home.envSet"
   | "home.notAbsolute"
   | "home.inUse"
   | "home.copy"
-  | "calendar.linkExpired"
-  | "calendar.notIcs"
-  | "calendar.corrupt"
-  | "calendar.secretMissing"
-  | "calendar.tooMany"
-  | "calendar.needLink"
-  | "calendar.needPassword"
-  | "calendar.needAccount"
-  | "translation.provider"
-  | "translation.noAddress"
-  | "translation.url"
-  | "translation.urlEmpty"
-  | "translation.urlLong"
-  | "translation.urlFull"
-  | "translation.urlCredentials"
-  | "translation.urlScheme"
   | "pluginsV3.builtinUnknown"
   | "pluginsV3.builtinEssential"
   | "pluginsV3.builtinSave"
   | "pluginsV3.builtinConfigKey"
   | "pluginsV3.builtinConfigValue"
   | "pluginsV3.builtinConfigSave"
-  | "translation.urlQuery"
-  | "translation.modelLong"
-  | "translation.noModel"
-  | "translation.noResult"
-  | "translation.cutOff"
-  | "translation.unfinished"
-  | "translation.copy"
-  | "translation.key"
-  | "translation.empty"
-  | "translation.tooLong"
-  | "translation.direction"
-  | "translation.noKey"
-  | "translation.status"
-  | "planUsage.key"
-  | "editorExtension.unknown"
-  | "editorExtension.noCli"
-  | "editorExtension.failed"
   | "mail.address"
   | "mail.attachmentDecode"
   | "mail.attachmentDownload"
@@ -230,16 +139,6 @@ export type ErrorCode =
   | "mail.tooManyRecipients"
   | "mail.unavailable"
   | "mail.update"
-  | "voiceInput.noDataDir"
-  | "voiceInput.deleteFailed"
-  | "voiceInput.downloadBusy"
-  | "voiceInput.downloadCancelled"
-  | "voiceInput.downloadFailed"
-  | "voiceInput.unpackFailed"
-  | "voiceInput.modelBroken"
-  | "voiceInput.micFailed"
-  | "voiceInput.micDenied"
-  | "voiceInput.noModel";
 
 export type ErrorsText = {
   withDetail: (text: string, detail: string) => string;
@@ -282,63 +181,9 @@ export const zhCN: ErrorsText = {
     "inflink.releaseTimeout": "向 GitHub（api.github.com）查询 InfLink-rs 的最新版本超时。",
     "inflink.noBetterNcm": "没找到 BetterNCM。先装 BetterNCM 并打开一次网易云，再试。",
     "inflink.write": "没能把 InfLink-rs 放进 BetterNCM 的插件文件夹。",
-    "bark.server": "Bark 服务器地址无效。",
     "recording.busy": "已经在录屏了。",
     "recording.idle": "现在没有在录屏。",
     "recording.failed": "录屏失败。",
-    "bark.scheme": "Bark 服务器地址要以 https:// 或 http:// 开头。",
-    "bark.key": "这不像 Bark 的设备 Key：在 Bark 里复制推送地址或其中那串字母数字。",
-    "bark.noKey": "还没有填 Bark 设备 Key。",
-    "bark.unreachable": "连不上 Bark 服务器。",
-    "bark.unknownKey": "Bark 不认这个设备 Key，请重新复制。",
-    "bark.status": ({ status }) => `Bark 返回 ${status}。`,
-    "ccConnect.token": "机器人 token 不对。",
-    "ccConnect.noTokenCheck": ({ platform }) => `${platform} 不用检查 token。`,
-    "ccConnect.telegramToken": "Telegram 不认这个 token，请从 BotFather 重新复制。",
-    "ccConnect.telegramBusy": "这个机器人正被别的程序（多半是 cc-connect）收消息，先停掉它再识别。",
-    "ccConnect.discordToken": "Discord 不认这个 token，请在开发者门户的 Bot 页重新生成并复制。",
-    "ccConnect.discordId": "Discord 没给出机器人的 id。",
-    "ccConnect.projectName": "项目名只能用字母、数字、- 和 _，最多 64 个字符。",
-    "ccConnect.projectTaken": ({ name }) => `cc-connect 已经有叫 ${name} 的项目了，换个名字。`,
-    "ccConnect.workDir": ({ path }) => `工作文件夹不存在：${path}`,
-    "ccConnect.workDirCreate": ({ path }) => `没能建出工作文件夹：${path}`,
-    "ccConnect.platform": ({ platform }) => `不支持的平台：${platform}`,
-    "ccConnect.allowFrom": "请填写你自己的用户 ID（多个用英文逗号隔开），不然谁找到机器人都能用这台电脑。",
-    "ccConnect.feishuRunning": "飞书扫码已经在进行了。",
-    "ccConnect.feishuUnfinished": "飞书扫码没有完成。",
-    "ccConnect.tag": ({ tag }) => `cc-connect 的版本号不对：${tag}`,
-    "ccConnect.asset": ({ tag, name }) => `cc-connect ${tag} 没有发布 ${name}。`,
-    "ccConnect.checksumMissing": ({ name }) => `checksums.txt 里没有 ${name}。`,
-    "ccConnect.checksum": "下载的 cc-connect 和发布的校验值对不上，已丢弃。",
-    "ccConnect.arch": ({ arch }) => `cc-connect 没有 ${arch} 版的 Windows 程序。`,
-    "ccConnect.zip": "cc-connect 的压缩包读不了。",
-    "ccConnect.zipEmpty": "cc-connect 的压缩包里没有程序。",
-    "ccConnect.zipLarge": "cc-connect 的程序大得不正常，已放弃。",
-    "ccConnect.unpack": "解压 cc-connect 失败。",
-    "ccConnect.notAt": ({ path }) => `找不到 cc-connect 程序：${path}`,
-    "ccConnect.notFound": "找不到 cc-connect 程序，请在插件里填写它的路径。",
-    "ccConnect.notFoundRun": "找不到 cc-connect 程序，请先下载或填写路径。",
-    "ccConnect.notDownloaded": "找不到 cc-connect 程序，请先下载。",
-    "ccConnect.notReady": "cc-connect 还没准备好。",
-    "ccConnect.chat": "cc-connect 项目或聊天无效。",
-    "ccConnect.emptyPush": "推送内容是空的。",
-    "ccConnect.run": "无法运行 cc-connect。",
-    "ccConnect.agent": ({ agent }) => `不支持的 Agent：${agent}`,
-    "ccConnect.host": ({ host }) => `「${host}」不是 SSH 主机名。`,
-    "ccConnect.remoteNotFound": ({ host }) => `${host} 上找不到 cc-connect 程序，请在 cc-connect 插件里选这台电脑、填写它的路径。`,
-    "ccConnect.remoteFailed": ({ host }) => `没能经 SSH 用上 ${host} 的 cc-connect。`,
-    "ccConnect.remoteSystem": ({ system }) => `cc-connect 没有给 ${system} 的程序。`,
-    "ccConnect.remoteInstall": ({ host }) => `没能在 ${host} 上装好 cc-connect。`,
-    "ccConnect.remoteFeishu": "另一台电脑上的飞书机器人要扫码建。",
-    "ccConnect.remoteChanged": ({ host }) => `${host} 上的 cc-connect 配置刚被改过，请再试一次。`,
-    "ccConnect.remoteWrite": ({ host }) => `没能写好 ${host} 上的 cc-connect 配置，已经还原。`,
-    "ccConnect.remoteNoConfig": ({ host }) => `${host} 上的 cc-connect 还没有项目。`,
-    "ccConnect.remoteStopped": ({ host }) => `${host} 上的 cc-connect 刚启动就停了。`,
-    "ccConnect.stdin": "无法把内容交给 cc-connect。",
-    "ccConnect.timeout": "cc-connect 10 秒没有回应。",
-    "ccConnect.failed": "cc-connect 出错。",
-    "ccConnect.exited": "cc-connect 退出了。",
-    "ccConnect.lost": "和 cc-connect 失去了联系。",
     "clipboard.read": "无法读取剪贴板。",
     "clipboard.open": "无法打开剪贴板。",
     "clipboard.notLink": "这不是网址。",
@@ -352,61 +197,24 @@ export const zhCN: ErrorsText = {
     "shortcut.update": "无法更新快捷键。",
     "shortcut.timeout": "快捷键更新超时。",
     "shortcut.taken": ({ shortcut }) => `快捷键 ${shortcut} 已被占用或无法注册。`,
-    "calendar.save": "无法保存日历设置。",
-    "calendar.link": "订阅链接无效。",
-    "calendar.linkScheme": "订阅链接要以 https:// 或 webcal:// 开头。",
-    "calendar.unreachable": "连不上日历。",
-    "calendar.login": "日历账号或密码不对。",
-    "calendar.status": ({ status }) => `日历返回 ${status}。`,
-    "calendar.read": "读取日历失败。",
-    "calendar.tooLarge": "日历文件太大。",
-    "calendar.address": "日历地址无效。",
-    "calendar.https": "日历地址要以 https:// 开头。",
-    "calendar.notCalendar": "这个地址不是日历，也找不到账号下的日历。",
-    "calendar.noCalendars": "找不到账号下的日历。",
+    "quick-commands.empty": "命令是空的。",
+    "quick-commands.failed": "命令没能跑起来。",
+    "net-speed.read": "读取网速失败。",
+    "volume.read": "读取音量失败。",
+    "volume.set": "调节音量失败。",
+    "dock.read": "读取运行中的应用失败。",
+    "dock.activate": "切换应用失败。",
+    "dock.tray": "点击托盘图标失败。",
     "home.envSet": ({ home }) => `家目录由环境变量 FUYU_HOME 指定（${home}），在这里改不了；要改请先去掉这个环境变量。`,
     "home.notAbsolute": "请填一个完整的文件夹路径，例如 D:\\Fuyu。",
     "home.inUse": ({ computer }) => `这个文件夹正在被电脑「${computer}」上的浮屿使用，先在那台电脑上退出浮屿。`,
     "home.copy": ({ path }) => `没能把数据复制到 ${path}。`,
-    "calendar.linkExpired": "订阅链接已失效，或没有权限。",
-    "calendar.notIcs": "这个链接不是日历（iCalendar）。",
-    "calendar.corrupt": "日历内容损坏。",
-    "calendar.secretMissing": "找不到保存的密码或订阅链接，请删掉这个日历再加一次。",
-    "calendar.tooMany": ({ max }) => `最多添加 ${max} 个日历。`,
-    "calendar.needLink": "请填写订阅链接。",
-    "calendar.needPassword": "请填写密码。",
-    "calendar.needAccount": "请填写账号。",
-    "translation.provider": ({ service }) => `不支持的翻译服务：${service}`,
-    "translation.noAddress": ({ service }) => `请先在翻译设置中填写${service}的地址。`,
-    "translation.url": "接口地址无效。",
-    "translation.urlEmpty": "请填写自定义接口地址。",
-    "translation.urlLong": "接口地址过长。",
-    "translation.urlFull": "接口地址无效，请填写完整的 https:// 地址。",
-    "translation.urlCredentials": "接口地址中不能包含用户名或密码，密钥请填在密钥栏。",
-    "translation.urlScheme": "接口地址必须使用 https（本机地址可用 http）。",
     "pluginsV3.builtinUnknown": ({ id }) => `没有叫 ${id} 的内置插件。`,
     "pluginsV3.builtinEssential": ({ id }) => `${id} 是浮屿必需的，不能关掉。`,
     "pluginsV3.builtinSave": ({ id }) => `没能保存 ${id} 的开关。`,
     "pluginsV3.builtinConfigKey": ({ id, key }) => `${key} 不能用作 ${id} 的设置名。`,
     "pluginsV3.builtinConfigValue": ({ id, key }) => `${id} 的设置 ${key} 只能是开关、数字或文字。`,
     "pluginsV3.builtinConfigSave": ({ id }) => `没能保存 ${id} 的设置。`,
-    "translation.urlQuery": "接口地址不能带查询参数。",
-    "translation.modelLong": "模型名称过长。",
-    "translation.noModel": ({ service }) => `请先在翻译设置中填写${service}的模型名称。`,
-    "translation.noResult": ({ service }) => `${service} 未返回译文。`,
-    "translation.cutOff": ({ service }) => `${service} 未完成翻译，请重试或缩短文本。`,
-    "translation.unfinished": ({ service }) => `${service} 未完成翻译。`,
-    "translation.copy": "无法复制译文。",
-    "translation.key": "请输入有效的 API 密钥。",
-    "translation.empty": "请输入要翻译的内容。",
-    "translation.tooLong": ({ max }) => `单次最多翻译 ${max} 个字符。`,
-    "translation.direction": "不支持的翻译方向。",
-    "translation.noKey": ({ service }) => `请先配置${service}的 API 密钥。`,
-    "translation.status": ({ service, status }) => `${service} 返回 HTTP ${status}，请检查密钥、模型名称或额度。`,
-    "planUsage.key": "API Key 格式不对。",
-    "editorExtension.unknown": "不支持这个编辑器。",
-    "editorExtension.noCli": ({ editor }) => `找不到 ${editor} 的命令行，打开 ${editor} 后再试一次。`,
-    "editorExtension.failed": "扩展没有装上。",
     "mail.address": "请输入有效的邮箱地址。",
     "mail.attachmentDecode": "无法解码附件，请在网页中下载。",
     "mail.attachmentDownload": "无法下载附件，请检查网络并重试。",
@@ -475,16 +283,6 @@ export const zhCN: ErrorsText = {
     "mail.tooManyRecipients": ({ max }) => `一封邮件最多 ${max} 个收件人。`,
     "mail.unavailable": "邮件已移除或暂不可用，请刷新收件箱。",
     "mail.update": "无法更新邮箱连接。",
-    "voiceInput.noDataDir": "找不到岛屿的数据文件夹。",
-    "voiceInput.deleteFailed": "删不掉语音模型。",
-    "voiceInput.downloadBusy": "语音模型正在下载。",
-    "voiceInput.downloadCancelled": "已取消下载。",
-    "voiceInput.downloadFailed": "语音模型下载失败，GitHub 和国内镜像都没连上；检查网络后再试。",
-    "voiceInput.unpackFailed": "语音模型解压失败；删掉后重新下载。",
-    "voiceInput.modelBroken": "语音模型加载失败；删掉后重新下载。",
-    "voiceInput.micFailed": "用不了麦克风；检查有没有接麦克风，以及系统隐私设置里是否允许浮屿使用麦克风。",
-    "voiceInput.micDenied": "浮屿没有麦克风权限；在系统设置 → 隐私与安全性 → 麦克风里打开。",
-    "voiceInput.noModel": "先在设置 → 语音输入里下载语音模型。",
   },
 };
 
@@ -524,63 +322,9 @@ export const en: ErrorsText = {
     "inflink.releaseTimeout": "Looking up the latest InfLink-rs on GitHub (api.github.com) timed out.",
     "inflink.noBetterNcm": "BetterNCM was not found. Install it, open NetEase Cloud Music once, then try again.",
     "inflink.write": "Could not put InfLink-rs into BetterNCM's plugins folder.",
-    "bark.server": "The Bark server address is not valid.",
     "recording.busy": "A recording is already running.",
     "recording.idle": "Nothing is being recorded.",
     "recording.failed": "The recording failed.",
-    "bark.scheme": "The Bark server address must start with https:// or http://.",
-    "bark.key": "That does not look like a Bark device key: copy the push URL in Bark, or the letters and digits in it.",
-    "bark.noKey": "No Bark device key yet.",
-    "bark.unreachable": "Could not reach the Bark server.",
-    "bark.unknownKey": "Bark does not know this device key; copy it again.",
-    "bark.status": ({ status }) => `Bark answered ${status}.`,
-    "ccConnect.token": "That bot token does not look right.",
-    "ccConnect.noTokenCheck": ({ platform }) => `${platform} has no token to check.`,
-    "ccConnect.telegramToken": "Telegram does not know this token; copy it again from BotFather.",
-    "ccConnect.telegramBusy": "Another program (most likely cc-connect) is receiving this bot's messages; stop it, then look again.",
-    "ccConnect.discordToken": "Discord does not know this token; reset and copy it on the Bot page of the Developer Portal.",
-    "ccConnect.discordId": "Discord did not give the bot's id.",
-    "ccConnect.projectName": "A project name takes letters, digits, - and _, up to 64 characters.",
-    "ccConnect.projectTaken": ({ name }) => `cc-connect already has a project called ${name}; pick another name.`,
-    "ccConnect.workDir": ({ path }) => `The work folder does not exist: ${path}`,
-    "ccConnect.workDirCreate": ({ path }) => `The work folder could not be made: ${path}`,
-    "ccConnect.platform": ({ platform }) => `Unsupported platform: ${platform}`,
-    "ccConnect.allowFrom": "Fill in your own user ID (several separated by commas), or anyone who finds the bot can use this computer.",
-    "ccConnect.feishuRunning": "A Feishu QR setup is already running.",
-    "ccConnect.feishuUnfinished": "The Feishu QR setup did not finish.",
-    "ccConnect.tag": ({ tag }) => `cc-connect's version tag is not valid: ${tag}`,
-    "ccConnect.asset": ({ tag, name }) => `cc-connect ${tag} has no ${name}.`,
-    "ccConnect.checksumMissing": ({ name }) => `checksums.txt does not list ${name}.`,
-    "ccConnect.checksum": "The downloaded cc-connect does not match the release's checksum; it was thrown away.",
-    "ccConnect.arch": ({ arch }) => `cc-connect has no Windows build for ${arch}.`,
-    "ccConnect.zip": "Could not read the cc-connect zip.",
-    "ccConnect.zipEmpty": "The cc-connect zip has no program in it.",
-    "ccConnect.zipLarge": "The cc-connect program is unusually large; gave up.",
-    "ccConnect.unpack": "Could not unpack cc-connect.",
-    "ccConnect.notAt": ({ path }) => `cc-connect is not at ${path}`,
-    "ccConnect.notFound": "cc-connect was not found; fill in its path in the plugin's settings.",
-    "ccConnect.notFoundRun": "cc-connect was not found; download it or fill in its path first.",
-    "ccConnect.notDownloaded": "cc-connect was not found; download it first.",
-    "ccConnect.notReady": "cc-connect is not ready yet.",
-    "ccConnect.chat": "The cc-connect project or chat is not valid.",
-    "ccConnect.emptyPush": "The push has no text.",
-    "ccConnect.run": "Could not run cc-connect.",
-    "ccConnect.agent": ({ agent }) => `Unsupported agent: ${agent}`,
-    "ccConnect.host": ({ host }) => `"${host}" is not an SSH host name.`,
-    "ccConnect.remoteNotFound": ({ host }) => `cc-connect was not found on ${host}; pick that computer on the cc-connect plugin page and fill in its path.`,
-    "ccConnect.remoteFailed": ({ host }) => `cc-connect on ${host} could not be used over SSH.`,
-    "ccConnect.remoteSystem": ({ system }) => `cc-connect has no build for ${system}.`,
-    "ccConnect.remoteInstall": ({ host }) => `cc-connect could not be installed on ${host}.`,
-    "ccConnect.remoteFeishu": "A Feishu bot on another computer is set up by scanning its code.",
-    "ccConnect.remoteChanged": ({ host }) => `cc-connect's settings on ${host} changed meanwhile; try again.`,
-    "ccConnect.remoteWrite": ({ host }) => `cc-connect's settings on ${host} could not be written; they were put back.`,
-    "ccConnect.remoteNoConfig": ({ host }) => `cc-connect on ${host} has no projects yet.`,
-    "ccConnect.remoteStopped": ({ host }) => `cc-connect on ${host} stopped right after starting.`,
-    "ccConnect.stdin": "Could not hand the text to cc-connect.",
-    "ccConnect.timeout": "cc-connect did not answer within 10 seconds.",
-    "ccConnect.failed": "cc-connect failed.",
-    "ccConnect.exited": "cc-connect stopped.",
-    "ccConnect.lost": "Lost track of cc-connect.",
     "clipboard.read": "Could not read the clipboard.",
     "clipboard.open": "Could not open the clipboard.",
     "clipboard.notLink": "This is not a web address.",
@@ -594,61 +338,24 @@ export const en: ErrorsText = {
     "shortcut.update": "Could not change the shortcut.",
     "shortcut.timeout": "Changing the shortcut took too long.",
     "shortcut.taken": ({ shortcut }) => `The shortcut ${shortcut} is taken or cannot be registered.`,
-    "calendar.save": "Could not save the calendar settings.",
-    "calendar.link": "The subscription link is not valid.",
-    "calendar.linkScheme": "The subscription link must start with https:// or webcal://.",
-    "calendar.unreachable": "Could not reach the calendar.",
-    "calendar.login": "The calendar account or password is wrong.",
-    "calendar.status": ({ status }) => `The calendar answered ${status}.`,
-    "calendar.read": "Could not read the calendar.",
-    "calendar.tooLarge": "The calendar is too large.",
-    "calendar.address": "The calendar address is not valid.",
-    "calendar.https": "The calendar address must start with https://.",
-    "calendar.notCalendar": "This address is not a calendar, and no calendars were found for the account.",
-    "calendar.noCalendars": "No calendars were found for the account.",
+    "quick-commands.empty": "The command is empty.",
+    "quick-commands.failed": "The command could not run.",
+    "net-speed.read": "Could not read the network speed.",
+    "volume.read": "Could not read the volume.",
+    "volume.set": "Could not change the volume.",
+    "dock.read": "Could not read the running apps.",
+    "dock.activate": "Could not switch to the app.",
+    "dock.tray": "Could not click the tray icon.",
     "home.envSet": ({ home }) => `The home folder is set by the FUYU_HOME environment variable (${home}) and cannot be changed here; remove the variable first.`,
     "home.notAbsolute": "Enter a full folder path, such as D:\\Fuyu.",
     "home.inUse": ({ computer }) => `Fuyu on "${computer}" is using this folder. Quit Fuyu there first.`,
     "home.copy": ({ path }) => `Could not copy the data to ${path}.`,
-    "calendar.linkExpired": "The subscription link has expired, or does not allow access.",
-    "calendar.notIcs": "This link is not a calendar (iCalendar).",
-    "calendar.corrupt": "The calendar is damaged.",
-    "calendar.secretMissing": "The saved password or link is missing; remove this calendar and add it again.",
-    "calendar.tooMany": ({ max }) => `At most ${max} calendars.`,
-    "calendar.needLink": "Fill in the subscription link.",
-    "calendar.needPassword": "Fill in the password.",
-    "calendar.needAccount": "Fill in the account.",
-    "translation.provider": ({ service }) => `Unsupported translation service: ${service}`,
-    "translation.noAddress": ({ service }) => `Fill in the address of ${service} in the translation settings first.`,
-    "translation.url": "The service address is not valid.",
-    "translation.urlEmpty": "Fill in the custom service address.",
-    "translation.urlLong": "The service address is too long.",
-    "translation.urlFull": "The service address is not valid; fill in the whole https:// address.",
-    "translation.urlCredentials": "The service address cannot hold a user name or password; put the key in the key field.",
-    "translation.urlScheme": "The service address must use https (http only for this computer).",
     "pluginsV3.builtinUnknown": ({ id }) => `There is no built-in plugin ${id}.`,
     "pluginsV3.builtinEssential": ({ id }) => `${id} is essential to Fuyu and cannot be switched off.`,
     "pluginsV3.builtinSave": ({ id }) => `Could not save the switch for ${id}.`,
     "pluginsV3.builtinConfigKey": ({ id, key }) => `${key} cannot be a setting of ${id}.`,
     "pluginsV3.builtinConfigValue": ({ id, key }) => `The setting ${key} of ${id} must be on or off, a number or text.`,
     "pluginsV3.builtinConfigSave": ({ id }) => `Could not save the settings of ${id}.`,
-    "translation.urlQuery": "The service address cannot have query parameters.",
-    "translation.modelLong": "The model name is too long.",
-    "translation.noModel": ({ service }) => `Fill in the model name for ${service} in the translation settings first.`,
-    "translation.noResult": ({ service }) => `${service} returned no translation.`,
-    "translation.cutOff": ({ service }) => `${service} did not finish the translation; try again or shorten the text.`,
-    "translation.unfinished": ({ service }) => `${service} did not finish the translation.`,
-    "translation.copy": "Could not copy the translation.",
-    "translation.key": "Enter a valid API key.",
-    "translation.empty": "Enter the text to translate.",
-    "translation.tooLong": ({ max }) => `At most ${max} characters at a time.`,
-    "translation.direction": "Unsupported translation direction.",
-    "translation.noKey": ({ service }) => `Set up the API key for ${service} first.`,
-    "translation.status": ({ service, status }) => `${service} answered HTTP ${status}; check the key, the model name or the quota.`,
-    "planUsage.key": "That does not look like an API key.",
-    "editorExtension.unknown": "That editor is not supported.",
-    "editorExtension.noCli": ({ editor }) => `Could not find ${editor}'s command line. Open ${editor} and try again.`,
-    "editorExtension.failed": "Could not install the extension.",
     "mail.address": "Enter a valid email address.",
     "mail.attachmentDecode": "Could not decode the attachment; download it in the web mail.",
     "mail.attachmentDownload": "Could not download the attachment; check the network and try again.",
@@ -717,15 +424,5 @@ export const en: ErrorsText = {
     "mail.tooManyRecipients": ({ max }) => `At most ${max} recipients in one mail.`,
     "mail.unavailable": "The mail was removed or is not available; refresh the inbox.",
     "mail.update": "Could not update the mail connection.",
-    "voiceInput.noDataDir": "Could not find the island's data folder.",
-    "voiceInput.deleteFailed": "Could not delete the speech model.",
-    "voiceInput.downloadBusy": "The speech model is already downloading.",
-    "voiceInput.downloadCancelled": "The download was cancelled.",
-    "voiceInput.downloadFailed": "Could not download the speech model from GitHub or the mirrors; check the network and try again.",
-    "voiceInput.unpackFailed": "Could not unpack the speech model; delete it and download it again.",
-    "voiceInput.modelBroken": "The speech model could not be loaded; delete it and download it again.",
-    "voiceInput.micFailed": "Could not use the microphone; check that one is connected and that Fuyu may use it in the system privacy settings.",
-    "voiceInput.micDenied": "Fuyu may not use the microphone; allow it in System Settings → Privacy & Security → Microphone.",
-    "voiceInput.noModel": "Download the speech model in Settings → Voice input first.",
   },
 };

@@ -10,7 +10,7 @@ import { NotchPopupBand } from "./NotchPopupBand";
 import { IslandHeader } from "./IslandHeader";
 import { IconButtonTooltip } from "../../components/IconButtonTooltip";
 import type { PluginViewEntry } from "../../features/plugin-views/api";
-import type { CollapsedSlots, IslandMode, IslandPage, NativeGlassState } from "./types";
+import type { CollapsedSlots, IslandMode, IslandPage, IslandTab, NativeGlassState } from "./types";
 import { useGlassPointer } from "./useGlassPointer";
 import { useIslandPreparing } from "./useIslandPreparing";
 import { usePageFadeIn } from "./usePageFadeIn";
@@ -25,6 +25,7 @@ import { IslandSideBubble } from "./IslandSideBubble";
 import { AlertPopup, useActiveAlert } from "./NotchAlert";
 import { IslandDragHint } from "./IslandDragHint";
 import { sideBubbleTop } from "./sideColumn";
+import type { PageTabDrag } from "./usePageTabDrag";
 import type { IslandSide } from "./useIslandSide";
 import { ISLAND_OUTLINE_STYLE } from "./islandOutline";
 import "./IslandOutline.css";
@@ -49,7 +50,6 @@ type IslandShellProps = {
   onResetPosition: () => void;
   minimizesToTray: boolean;
   onMinimize: () => void;
-  onOpenTranslator: (() => void) | null;
   notice?: { content: ReactNode; actions: ReactNode } | null;
   onOpenSettings: (section?: "updates") => void;
   onTuck: () => void;
@@ -59,7 +59,8 @@ type IslandShellProps = {
   hoverSwitchPage: boolean;
   hoverSwitchDelayMs: number;
   overlay?: ReactNode;
-  pluginPageButtons?: ReactNode;
+  tabs?: readonly IslandTab[];
+  tabDrag?: PageTabDrag;
   pluginViews?: readonly PluginViewEntry[];
   onOpenPluginPage?: (page: `plugin:${string}`) => void;
   collapsedSlots?: CollapsedSlots;
@@ -88,7 +89,6 @@ export function IslandShell({
   onResetPosition,
   minimizesToTray,
   onMinimize,
-  onOpenTranslator,
   notice,
   onOpenSettings,
   onTuck,
@@ -98,7 +98,8 @@ export function IslandShell({
   hoverSwitchPage,
   hoverSwitchDelayMs,
   overlay,
-  pluginPageButtons,
+  tabs,
+  tabDrag,
   pluginViews,
   onOpenPluginPage,
   collapsedSlots,
@@ -114,7 +115,6 @@ export function IslandShell({
   const contributed = useIslandContributed();
   const { status } = contributed;
   const agentVisualState = status?.state ?? "idle";
-  const agentStatusLabel = status?.label ?? "";
   const sideLayout = useSideColumnRows({ onOpenPage }, collapsedSlots?.gauges ?? []);
   const sideHot = contributed.preview?.hot ?? null;
   const sideHotIndex = sideLayout.shown.findIndex((row) => row.id === sideHot);
@@ -203,25 +203,24 @@ export function IslandShell({
           inert={!isExpanded}
         >
           <DevWatermark place="panel" />
-          {popup && notch && <NotchPopupBand page={page} agentVisualState={agentVisualState} onCollapse={onCollapse} />}
+          {popup && notch && <NotchPopupBand onCollapse={onCollapse} />}
           <IslandHeader
             page={page}
             features={features}
             showTitle={showTitle}
             isDetached={isDetached}
-            agentVisualState={agentVisualState}
-            agentStatusLabel={agentStatusLabel}
             onPageChange={onPageChange}
             onCollapse={onCollapse}
             onOpenSettings={onOpenSettings}
-            onOpenTranslator={onOpenTranslator}
             onResetPosition={onResetPosition}
             minimizesToTray={minimizesToTray}
             onMinimize={onMinimize}
             pageDigitModifiers={pageDigitModifiers}
             hoverSwitchPage={hoverSwitchPage}
             hoverSwitchDelayMs={hoverSwitchDelayMs}
-            pluginPageButtons={pluginPageButtons}
+            tabs={tabs}
+            pluginViews={pluginViews}
+            tabDrag={tabDrag}
           />
           <div ref={contentRef} className="island__content">{children}</div>
         </div>

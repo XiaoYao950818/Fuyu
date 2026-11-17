@@ -78,13 +78,7 @@ export const ISLAND_SIDE_COVER_HEIGHT = 40;
 export const LINE_PRIORITY = {
   peek: 70,
   screenshotPeek: 69,
-  meeting: 60,
-  agentInterjection: 50,
-  lyricsFirst: 45,
-  agentTitle: 40,
-  lyrics: 35,
-  todoTitle: 20,
-  todoCount: 10,
+  lyrics: 45,
 } as const;
 
 type Entry = { owner: string; id: string; seq: number; list: readonly IslandContribution[]; key: string };

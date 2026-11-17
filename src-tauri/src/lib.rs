@@ -8,6 +8,16 @@ mod clipboard_history;
 mod coexist;
 mod dev_lane;
 mod device_events;
+#[cfg_attr(not(windows), path = "device_battery/unsupported.rs")]
+mod device_battery;
+#[cfg_attr(not(windows), path = "dock/unsupported.rs")]
+mod dock;
+#[cfg_attr(not(windows), path = "music_island/unsupported.rs")]
+mod music_island;
+#[cfg_attr(not(windows), path = "quick_commands/unsupported.rs")]
+mod quick_commands;
+#[cfg_attr(not(windows), path = "file_search/unsupported.rs")]
+mod file_search;
 #[cfg_attr(target_os = "macos", path = "device_use/macos.rs")]
 mod device_use;
 mod file_shelf;
@@ -18,11 +28,14 @@ mod local_api;
 mod lyrics;
 mod media_control;
 mod messages_plugin;
+#[cfg_attr(not(windows), path = "net_speed/unsupported.rs")]
+mod net_speed;
+#[cfg_attr(not(windows), path = "volume/unsupported.rs")]
+mod volume;
 #[cfg(windows)]
 mod messenger_activation;
 mod notification_diagnostics;
 mod onboarding_window;
-mod pets;
 mod phone_push;
 mod plugin_host;
 mod plugin_kernel;
@@ -261,6 +274,13 @@ pub fn run() {
             calendar;
             agent_approval;
             claude_usage;
+            device_battery;
+            dock;
+            music_island;
+            quick_commands;
+            file_search;
+            net_speed;
+            volume;
             device_use;
             media_control;
             lyrics;
@@ -279,7 +299,6 @@ pub fn run() {
             ssh_tunnel;
             phone_push;
             cc_connect;
-            pets;
             platform_support;
             tray;
             tray_menu;

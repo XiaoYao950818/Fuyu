@@ -27,7 +27,6 @@ export type ClipboardHistorySettings = {
   linkPreview?: boolean;
   flattenTerminalCommands?: boolean;
   localApiRead?: boolean;
-  aiPrompts?: ClipboardAiPrompt[];
   popupPinned?: boolean;
   popupPinX?: number | null;
   popupPinY?: number | null;
@@ -44,8 +43,6 @@ export type ClipboardPrivacySettings = {
   maxTextKb: number;
   recordRemote: boolean;
 };
-
-export type ClipboardAiPrompt = { id: string; title: string; prompt: string };
 
 export type ClipboardCaptureStatus = { paused: boolean; pausedUntil?: number | null; ignoreNext: boolean };
 
